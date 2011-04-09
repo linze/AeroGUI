@@ -1,0 +1,118 @@
+\section{Caso de uso general}
+  \paragraph{Escenario principal de éxito}
+  \begin{enumerate}
+    \item El usuario accede al punto de venta.
+    \item El punto de venta muestra una ventana con una descripción de sus servicios y preguntando el login.
+    \item El usuario se logea.
+    \item El punto de venta muestra un menú con las opciones disponibles.
+    \item El usuario elige la opción que desea, si es que desea alguna.
+    \item El punto de venta le da acceso a la opción deseada.
+    \item El usuario concluye el uso de la opción deseada.
+    \item El punto de venta vuelve al paso 6 hasta que no desea realizar más operaciones.
+    \item El usuario cierra el punto de venta.
+  \end{enumerate}
+  
+  \paragraph{Extensiones}
+  \begin{enumerate}
+    \item[2-3] Si el usuario no dispone de credenciales, se le ofrece la capacidad de registrarse.
+  \end{enumerate}
+
+\section{FUN001: Consulta de viajes}
+  \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
+  \paragraph{Escenario principal de éxito}
+  \begin{enumerate}
+    \item El usuario selecciona que desea realizar una consulta de viajes.
+    \item El punto de venta le muestra las consultas que puede realizar.
+    \item El usuario elige la opción que desea, si es que desea alguna.
+    \item El punto de venta le da acceso a la consulta deseada.
+    \item El usuario concluye el acceso a la consulta deseada.
+    \item El punto de venta vuelve al paso 2 hasta que no desea realizar más consultas.
+    \item El usuario cierra la vista de consultas.
+  \end{enumerate}
+
+  \subsection{CONS01: Consultas desde un origen}
+    \emph{Este caso de uso se enmarca en los pasos 3 y 4 en caso de uso del requisito FUN001.}
+    \paragraph{Escenario principal de éxito}
+    \begin{enumerate}
+      \item El usuario selecciona que desea consultar las tarifas desde un origen.
+      \item El punto de venta da a elegir al usuario el origen de entre los que dispone información.
+      \item El usuario selecciona un origen.
+      \item El usuario pulsa el botón para realizar la consulta.
+      \item El punto de venta muestra las tarifas para todos los transportes directos y todos los destinos desde el origen indicado.
+      \item El usuario cierra la consulta.
+    \end{enumerate}
+
+    \paragraph{Extensiones}
+    \begin{enumerate}
+      \item[2] En caso de no disponer ninguna información, se muestra un aviso al usuario y se va directamente al paso 6.
+      \item[3] Si el usuario no encuentra el origen que desea en la lista, va directamente al paso 6.
+    \end{enumerate}
+
+  \subsection{CONS02: Consulta de rutas entre dos ciudades}
+    \emph{Este caso de uso se enmarca en los pasos 3 y 4 en caso de uso del requisito FUN001.}
+    \paragraph{Escenario principal de éxito}
+    \begin{enumerate}
+      \item El usuario selecciona que desea consultar las rutas compuestas entre dos ciudades.
+      \item El punto de venta da a elegir al usuario el origen y el destino de entre los que dispone información.
+      \item El usuario selecciona un origen y un destino.
+      \item El usuario pulsa el botón para realizar la consulta.
+      \item El punto de venta muestra los horarios de los diferentes transportes 
+      % TODO: This use case required to be completed!! I do not understand some things of the idea.
+    \end{enumerate}
+
+    \paragraph{Cuestiones abiertas}
+    \begin{itemize}
+       \item En los pasos 2 y 3. ¿Se da a elegir también la hora de salida o se buscan todas las posibilidades?
+    \end{itemize}
+
+  \subsection{CONS03: Consulta de tarifas de transportes directos para dos ciudades}
+    \emph{Este caso de uso se enmarca en los pasos 3 y 4 en caso de uso del requisito FUN001.}
+    \paragraph{Escenario principal de éxito}
+    \begin{enumerate}
+      \item 
+    \end{enumerate}
+
+  \subsection{CONS04: Información de viajes concretos}
+    \emph{Este caso de uso se enmarca en los pasos 3 y 4 en caso de uso del requisito FUN001.}
+    % TODO: Ask and complete it. It is mentioned but not explained in the text.
+
+\section{FUN002: Reserva de viajes}
+  \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
+
+\section{FUN003: Compra de billetes}
+  \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
+
+\section{FUN004a: Login}
+  \emph{Este caso de uso se enmarca en los pasos 2 y 3 del caso de uso general.}
+  \paragraph{Escenario principal de éxito}
+  \begin{enumerate}
+    \item El punto de venta muestra una ventana con una descripción de sus servicios y pidiendo sus credenciales.
+    \item El usuario introduce sus credenciales.
+    \item El usuario pulsa el botón para logearse.
+    \item El punto de venta comprueba que sus credenciales son correctas.
+    \item El punto de venta muestra un menú con las opciones disponibles.
+  \end{enumerate}
+  \paragraph{Extensiones}
+  \begin{enumerate}
+    \item[4] Si las credenciales son incorrectas, se notifica y se vuelve al paso 1.
+  \end{enumerate}
+
+\section{FUN004b: Registro}
+  \emph{Este caso de uso se enmarca en los pasos 2 y 3 del caso de uso general.}
+  \paragraph{Escenario principal de éxito}
+  \begin{enumerate}
+    \item El usuario pulsa el botón de registro.
+    \item El punto de venta muestra una ventana pidiendo la dirección de correo electrónico y dos veces la contraseña.
+    \item El usuario intoduce los datos pedidos.
+    \item El usuario pulsa el botón para validar el registro.
+    \item El punto de venta valida que la dirección de correo electrónico es válida, que no está repetida y que las contraseñas coinciden.
+    \item El punto de venta notifica al usuario de que se ha registrado correctamente en el sistema.
+    \item El punto de venta cierra la ventana de registro.
+  \end{enumerate}
+  \paragraph{Extesiones}
+  \begin{enumerate}
+     \item[5] Si alguna validación falla, se le notifica al usuario y se vuelve al paso 2, pero manteniendo los datos previamente introducidos.
+  \end{enumerate}
+
+
+  
