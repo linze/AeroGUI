@@ -1,0 +1,13 @@
+# Ignore everything
+*
+**/*
+
+# Except documents
+!*.pdf
+!*.html
+!*.odt
+!*.txt
+!**/*.pdf
+!**/*.html
+!**/*.odt
+!**/*.txt
