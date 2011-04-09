@@ -1,0 +1,14 @@
+# Ignore all LaTeX backup files
+**/*.backup
+**/*.*~
+
+# Ignore all LaTeX production files
+**/*.aux
+**/*.pdf
+**/*.dvi
+**/*.toc
+**/*.out
+**/*.idx
+
+# Ignore other LaTeX files
+**/*.log
