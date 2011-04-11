@@ -1,0 +1,10 @@
+window_sizes 1346 697 320 1020 498 120
+diagrams
+  active  classdiagram_ref 128134 // domain
+    1040 514 100 4 0 0
+end
+show_stereotypes
+open
+  class_ref 128390 // Ticket
+end
+end

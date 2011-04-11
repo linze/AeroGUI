@@ -3,7 +3,7 @@
 <pre>
 [P] Escribir especificación de requisitos
 [D] Escribir casos de uso para esos requisitos
-[ ] Diseñar un diagrama de dominio
+[D] Diseñar un diagrama de dominio
 [ ] Diseñar la interfaz gráfica de usuario
 </pre>
 Leyenda:
