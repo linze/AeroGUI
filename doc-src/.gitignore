@@ -12,3 +12,6 @@
 
 # Ignore other LaTeX files
 **/*.log
+
+# Ignore BOUML session
+**/**/*.session

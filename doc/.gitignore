@@ -2,6 +2,9 @@
 *
 **/*
 
+# Except folders
+!**
+
 # Except documents
 !*.pdf
 !*.html
@@ -11,3 +14,7 @@
 !**/*.html
 !**/*.odt
 !**/*.txt
+
+# Except diagrams
+!*.png
+!**/*.png

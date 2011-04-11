@@ -1,6 +1,6 @@
 format 70
 "domain"
-  revision 3
+  revision 4
   modified_by 6 "notrace"
 
 
@@ -130,7 +130,7 @@ ${members}}
       end
     end
 
-    class 135174 "Flota"
+    class 135174 "Fleet"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -285,6 +285,18 @@ ${members}}
 "
 	    classrelation_ref 136966 // <association>
       end
+
+      classrelation 145542 // <composition>
+	relation 143366 *---
+	  a role_name "" multiplicity "1" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145542 // <composition>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145670 // <composition>
+      end
     end
 
     class 135686 "Transport"
@@ -369,6 +381,40 @@ ${members}}
 "
 	    classrelation_ref 137478 // <composition>
       end
+
+      classrelation 145286 // <composition>
+	relation 143238 *---
+	  a role_name "" multiplicity "2" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145286 // <composition>
+	  b role_name "" multiplicity "1" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145414 // <composition>
+      end
+
+      attribute 142470 "state"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 145798 // <composition>
+	relation 143494 *---
+	  a role_name "" multiplicity "2" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145798 // <composition>
+	  b role_name "" multiplicity "1" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145926 // <composition>
+      end
     end
 
     class 135814 "Price"
@@ -408,6 +454,10 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 145158 // <composition>
+	relation_ref 143110 // <composition>
       end
     end
 
@@ -516,6 +566,80 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+    end
+
+    class 142726 "Class"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 145030 // <composition>
+	relation 143110 *---
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145030 // <composition>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 145158 // <composition>
+      end
+
+      classrelation 145414 // <composition>
+	relation_ref 143238 // <composition>
+      end
+
+      classrelation 145670 // <composition>
+	relation_ref 143366 // <composition>
+      end
+
+      classrelation 146054 // <association>
+	relation 143622 ----
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 146054 // <association>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 146182 // <association>
+      end
+    end
+
+    class 142854 "SeatsLeft"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 142598 "quantity"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 145926 // <composition>
+	relation_ref 143494 // <composition>
+      end
+
+      classrelation 146182 // <association>
+	relation_ref 143622 // <association>
       end
     end
   end
