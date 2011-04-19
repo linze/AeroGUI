@@ -50,6 +50,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -165,7 +166,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
-        jButton8.setText("jButton5");
+        jButton8.setText("Estado");
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -175,8 +176,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel2.setText("Consultar rutas entre dos ciudades.");
 
-        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jLabel3.setText("Consultar tarifas de transporte directo entre dos ciudades.");
+
+        jLabel11.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel11.setText("Consultar el estado actual de un transporte.");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -195,7 +199,8 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel11))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -217,7 +222,9 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addGap(62, 62, 62)
                         .addComponent(jLabel2)
                         .addGap(68, 68, 68)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3)
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel11)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -228,7 +235,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel4.setText("Reservar contenido del carrito.");
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
@@ -379,6 +386,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
