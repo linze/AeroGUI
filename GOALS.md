@@ -2,9 +2,9 @@
 ## Iteración 1
 <pre>
 [P] Escribir especificación de requisitos
-[D] Escribir casos de uso para esos requisitos
-[D] Diseñar un diagrama de dominio
-[ ] Diseñar la interfaz gráfica de usuario
+[P] Escribir casos de uso para esos requisitos
+[P] Diseñar un diagrama de dominio
+[D] Diseñar la interfaz gráfica de usuario
 </pre>
 Leyenda:
 <pre>

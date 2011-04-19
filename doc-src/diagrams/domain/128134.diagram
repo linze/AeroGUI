@@ -22,7 +22,7 @@ classcanvas 128518 class_ref 135430 // User
 end
 classcanvas 128646 class_ref 135558 // Ticket
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 430 110 2000
+  xyz 431 104 2000
 end
 classcanvas 128774 class_ref 135686 // Transport
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -52,10 +52,8 @@ classcanvas 131718 class_ref 142854 // SeatsLeft
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 651 346 2000
 end
-textcanvas 132102 "refers to"
-  xyzwh 638 321 2006 54 15
-note 132230 "Seats explanation should be improved"
-  xyzwh 684 259 2000 147 49
+note 132230 "They're two class: normal and business"
+  xyzwh 641 259 2000 153 49
 relationcanvas 129414 relation_ref 134918 // <composition>
   from ref 128006 z 2001 to ref 128518
   no_role_a no_role_b
@@ -84,7 +82,7 @@ end
 relationcanvas 130054 relation_ref 135558 // <directional aggregation>
   from ref 128390 z 2001 to ref 128646
   no_role_a no_role_b
-  multiplicity_a_pos 395 135 3000 multiplicity_b_pos 359 135 3000
+  multiplicity_a_pos 396 135 3000 multiplicity_b_pos 359 135 3000
 end
 relationcanvas 130182 relation_ref 135686 // <association>
   from ref 128390 z 2001 to ref 128518
@@ -94,7 +92,7 @@ end
 relationcanvas 130310 relation_ref 135814 // <association>
   from ref 128646 z 2001 to ref 128774
   no_role_a no_role_b
-  multiplicity_a_pos 438 292 3000 multiplicity_b_pos 422 155 3000
+  multiplicity_a_pos 439 292 3000 multiplicity_b_pos 423 161 3000
 end
 relationcanvas 130566 relation_ref 136070 // <composition>
   from ref 128774 z 2001 to ref 129030
@@ -117,6 +115,7 @@ relationcanvas 131078 relation_ref 136582 // <composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131334 relation_ref 143110 // <composition>
+  decenter_begin 531
   from ref 131206 z 2001 to ref 128902
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -126,17 +125,7 @@ relationcanvas 131462 relation_ref 143238 // <composition>
   no_role_a no_role_b
   multiplicity_a_pos 563 321 3000 multiplicity_b_pos 506 357 3000
 end
-relationcanvas 131590 relation_ref 143366 // <composition>
-  from ref 128646 z 2001 to ref 131206
-  no_role_a no_role_b
-  multiplicity_a_pos 565 271 3000 no_multiplicity_b
-end
-relationcanvas 131846 relation_ref 143494 // <composition>
-  from ref 128774 z 2001 to ref 131718
-  no_role_a no_role_b
-  multiplicity_a_pos 632 378 3000 multiplicity_b_pos 506 378 3000
-end
-relationcanvas 131974 relation_ref 143622 // <association>
+relationcanvas 132358 relation_ref 150150 // <composition>
   from ref 131206 z 2001 to ref 131718
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

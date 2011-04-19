@@ -1,6 +1,6 @@
 format 70
 "domain"
-  revision 4
+  revision 5
   modified_by 6 "notrace"
 
 
@@ -296,6 +296,16 @@ ${members}}
 	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
 	    classrelation_ref 145670 // <composition>
+      end
+
+      attribute 149126 "class"
+	private explicit_type ""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 
@@ -611,6 +621,18 @@ ${members}}
 "
 	    classrelation_ref 146182 // <association>
       end
+
+      classrelation 152710 // <composition>
+	relation 150150 *---
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 152710 // <composition>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 152838 // <composition>
+      end
     end
 
     class 142854 "SeatsLeft"
@@ -640,6 +662,10 @@ ${members}}
 
       classrelation 146182 // <association>
 	relation_ref 143622 // <association>
+      end
+
+      classrelation 152838 // <composition>
+	relation_ref 150150 // <composition>
       end
     end
   end
