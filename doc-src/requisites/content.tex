@@ -5,9 +5,18 @@
       \item[FUN001] La aplicación ha de permitir la consulta de viajes.
       \begin{description}
 	\item[CONS01] Se podrá consultar las tarifas desde un origen.
-	\item[CONS02] Se podrá consultar las rutas entre dos ciudades.
+	\item[CONS02] Se podrá consultar las rutas y horarios entre dos ciudades.
+	\begin{description}
+	  \item[CONS02.1] Se incluirá los trayectos compuestos. 
+	  \item[CONS02.2] No se mostrarán las rutas de más de 32 horas que no incluyan tren o barco.
+	  \item[CONS02.3] No se mostrarán las rutas de más de 48 horas que se realicen únicamente en tren.
+	  \item[CONS02.4] No se mostrarán las rutas de más de 5 días que incluyan barco.
+	\end{description}
 	\item[CONS03] Se podrá consultar las tarifas de transporte directo entre dos ciudades.
-	\item[CONS04] Se podrá consultar la información de un viaje en concreto.
+	\begin{description}
+	  \item[CONS03.1] Las consultas estarán ordenadas por precio.
+	\end{description}
+	\item[CONS04] Se podrá consultar la información de un transporte directo en concreto.
       \end{description}
 
       \item[FUN002] La aplicación ha de permitir la reserva de viajes.
@@ -24,10 +33,14 @@
       \item[FUN004] La aplicación ha de disponer de un sistema de login.
       \begin{description}
 	\item[LOGI01] Se podrá realizar un registro desde la aplicación.
-	\item[LOGI02] Se podrá modificar o cancelar el registro.
+	\item[LOGI02] Para identificarse se usará la combinación de correo electrónico y contraseña.
+	\item[LOGI03] La pantalla de login ha de mostrar los servicios ofrecidos.
       \end{description}
 
       \item[FUN005] Los datos han de guardarse de forma persistente.
+
+      \item[FUN006] El usuario ha de poder actualizar sus datos.
+      \item[FUN007] El usuario ha de poder eliminar sus datos.
     \end{description}
 
 
@@ -39,12 +52,12 @@
     \end{description}
 
 
-  \section{Requisitos de confiabilidad}
+%   \section{Requisitos de confiabilidad}
     % Frecuencia de fallo, capacidad de recuperación
     % TODO: Requisitos de confiabilidad
 
 
-  \section{Requisitos de rendimiento}
+%   \section{Requisitos de rendimiento}
     % Tiempo de repuesta, disponibilidad, uso de recursos
     % TODO: Requisitos de rendimiento
 

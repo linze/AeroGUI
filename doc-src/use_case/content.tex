@@ -43,6 +43,8 @@
       \item El usuario selecciona un origen.
       \item El usuario pulsa el botón para realizar la consulta.
       \item El punto de venta muestra las tarifas para todos los transportes directos y todos los destinos desde el origen indicado.
+      \item El usuario añade al carrito el trasnporte que desea.
+      \item El punto de venta notifica al usuario de que este ha sido añadido.
       \item El usuario cierra la consulta.
     \end{enumerate}
 
@@ -61,8 +63,11 @@
       \item El punto de venta da a elegir al usuario el origen y el destino de entre los que dispone información.
       \item El usuario selecciona un origen y un destino.
       \item El usuario pulsa el botón para realizar la consulta.
-      \item El punto de venta muestra los horarios de los diferentes transportes 
-      % TODO: This use case required to be completed!! I do not understand some things of the idea.
+      \item El punto de venta muestra una lista con las diferentes rutas.
+      \item El usuario pulsa en cada elemento de la lista para obtener más información al respecto.
+      \item El usuario añade al carrito la ruta que desea.
+      \item El punto de venta notifica al usuario de que esta ha sido añadida.
+      \item El usuario cierra la consulta.
     \end{enumerate}
 
     \paragraph{Cuestiones abiertas}
@@ -74,16 +79,36 @@
     \emph{Este caso de uso se enmarca en los pasos 3 y 4 en caso de uso del requisito FUN001.}
     \paragraph{Escenario principal de éxito}
     \begin{enumerate}
-      \item 
+      \item El usuario selecciona que desea consultar las rutas directas entre dos ciudades.
+      \item El punto de venta le da a elegir al usuario el origen y el destino entre los que dispone información.
+      \item El usuario selecciona un origen y un destino.
+      \item El usuario pulsa el botón para realizar la consulta.
+      \item El punto de venta muestra la información sobre los trayectos directos.
+      \item El usuario añade los que desee al carrito.
+      \item El punto de venta notifica que han sido añadidos.
+      \item El usuario cierra la consulta.
     \end{enumerate}
 
   \subsection{CONS04: Información de viajes concretos}
     \emph{Este caso de uso se enmarca en los pasos 3 y 4 en caso de uso del requisito FUN001.}
-    % TODO: Ask and complete it. It is mentioned but not explained in the text.
+    \paragraph{Escenario principal de éxito}
+    \begin{enumerate}
+      \item El usuario selecciona que desea consultar información sobre un trayecto directo en concreto.
+      \item El punto de venta le pide el usuario el identificador del transporte y trayecto.
+      \item El usuario rellena los datos indicados.
+      \item El punto de venta muestra los detalles (origen, destino, fecha y hora de la salida y la llegada y el estado) del transporte.
+      \item El usuario cierra la ventana.
+    \end{enumerate}
+    \paragraph{Extensiones}
+    \begin{enumerate}
+      \item[4.] En caso de no disponer de datos sobre el identificador introducido se le notificará al usuario del error.
+    \end{enumerate}
+
+
 
 \section{FUN002: Reserva de viajes}
   \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
-  \paragrah{Escenario principal de éxito}
+  \paragraph{Escenario principal de éxito}
   \begin{enumerate}
     \item El punto de venta muestra una ventana con el contenido del carrito de compra.
     \item El punto de venta pide al usuario que acepte o cancele.
@@ -101,6 +126,23 @@
 
 \section{FUN003: Compra de billetes}
   \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
+  \paragraph{Escenario principal de éxito}
+  \begin{enumerate}
+    \item El usuario selecciona que desea abonar un viaje reservado.
+    \item El punto de venta muestra una ventana donde se puede seleccionar la reserva que se desea abonar.
+    \item El usuario selecciona la reserva y hace clic en el botón para realizar el pago.
+    \item El punto de venta muestra una ventana preguntando el titular de la tarjeta, el número de esta y el código de verificación.
+    \item El usuario introduce los datos y pulsa el botón para continuar.
+    \item El punto de venta valida los datos.
+    \item El punto de venta notifica que los billetes han sido abonados
+    \item El punto de venta cierra las dos ventanas.
+  \end{enumerate}
+  \paragraph{Extensiones}
+  \begin{enumerate}
+    \item[7.] Si el billete no ha sido abonado se le informa al usuario de la causa del error (dando muy pocos detalles si es de carácter técnico) y se le permite modificar los datos introducidos.
+  \end{enumerate}
+
+
 
 \section{FUN004a: Login}
   \emph{Este caso de uso se enmarca en los pasos 2 y 3 del caso de uso general.}
