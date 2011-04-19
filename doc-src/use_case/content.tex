@@ -11,10 +11,9 @@
     \item El punto de venta vuelve al paso 6 hasta que no desea realizar más operaciones.
     \item El usuario cierra el punto de venta.
   \end{enumerate}
-  
   \paragraph{Extensiones}
   \begin{enumerate}
-    \item[2-3] Si el usuario no dispone de credenciales, se le ofrece la capacidad de registrarse.
+    \item[2-3.] Si el usuario no dispone de credenciales, se le ofrece la capacidad de registrarse.
   \end{enumerate}
 
 \section{FUN001: Consulta de viajes}
@@ -25,9 +24,14 @@
     \item El punto de venta le muestra las consultas que puede realizar.
     \item El usuario elige la opción que desea, si es que desea alguna.
     \item El punto de venta le da acceso a la consulta deseada.
+    \item El usuario añade al carrito los productos que desee, indicando la cantidad.
     \item El usuario concluye el acceso a la consulta deseada.
     \item El punto de venta vuelve al paso 2 hasta que no desea realizar más consultas.
     \item El usuario cierra la vista de consultas.
+  \end{enumerate}
+  \paragraph{Extensiones}
+  \begin{enumerate}
+    \item[5.] Si no se dispone de asientos suficientes, se notifica el error.
   \end{enumerate}
 
   \subsection{CONS01: Consultas desde un origen}
@@ -42,10 +46,11 @@
       \item El usuario cierra la consulta.
     \end{enumerate}
 
+
     \paragraph{Extensiones}
     \begin{enumerate}
-      \item[2] En caso de no disponer ninguna información, se muestra un aviso al usuario y se va directamente al paso 6.
-      \item[3] Si el usuario no encuentra el origen que desea en la lista, va directamente al paso 6.
+      \item[2.] En caso de no disponer ninguna información, se muestra un aviso al usuario y se va directamente al paso 6.
+      \item[3.] Si el usuario no encuentra el origen que desea en la lista, va directamente al paso 6.
     \end{enumerate}
 
   \subsection{CONS02: Consulta de rutas entre dos ciudades}
@@ -78,6 +83,21 @@
 
 \section{FUN002: Reserva de viajes}
   \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
+  \paragrah{Escenario principal de éxito}
+  \begin{enumerate}
+    \item El punto de venta muestra una ventana con el contenido del carrito de compra.
+    \item El punto de venta pide al usuario que acepte o cancele.
+    \item El usuario acepta realizar la reserva del contenido mostrado.
+    \item El punto de venta procede a reservar el contenido del carrito.
+    \item El punto de venta notifica al usuario del éxito.
+    \item El punto de venta cierra la ventana de reserva.
+  \end{enumerate}
+  \paragraph{Extensiones}
+  \begin{enumerate}
+    \item[5.] Si por el contrario el resultado ha sido un error, se le notifica al usuario de este y de la posible causa (sin entrar en detalles si esta fuese técnica).
+  \end{enumerate}
+
+
 
 \section{FUN003: Compra de billetes}
   \emph{Este caso de uso se enmarca en los pasos 7 y 8 del caso de uso general.}
@@ -94,7 +114,7 @@
   \end{enumerate}
   \paragraph{Extensiones}
   \begin{enumerate}
-    \item[4] Si las credenciales son incorrectas, se notifica y se vuelve al paso 1.
+    \item[4.] Si las credenciales son incorrectas, se notifica y se vuelve al paso 1.
   \end{enumerate}
 
 \section{FUN004b: Registro}
@@ -102,7 +122,7 @@
   \paragraph{Escenario principal de éxito}
   \begin{enumerate}
     \item El usuario pulsa el botón de registro.
-    \item El punto de venta muestra una ventana pidiendo la dirección de correo electrónico y dos veces la contraseña.
+    \item El punto de venta muestra una ventana pidiendo los datos personales (nombre, apellido y dirección) y los datos de acceso (correo electrónico y contraseña).
     \item El usuario intoduce los datos pedidos.
     \item El usuario pulsa el botón para validar el registro.
     \item El punto de venta valida que la dirección de correo electrónico es válida, que no está repetida y que las contraseñas coinciden.
@@ -111,8 +131,5 @@
   \end{enumerate}
   \paragraph{Extesiones}
   \begin{enumerate}
-     \item[5] Si alguna validación falla, se le notifica al usuario y se vuelve al paso 2, pero manteniendo los datos previamente introducidos.
+     \item[5.] Si alguna validación falla, se le notifica al usuario y se vuelve al paso 2, pero manteniendo los datos previamente introducidos.
   \end{enumerate}
-
-
-  
