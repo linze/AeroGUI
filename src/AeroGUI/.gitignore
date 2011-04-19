@@ -1,0 +1,10 @@
+# Ignore the build directories
+build/
+dist/
+
+# Ignore the project folder to avoid non-sense conflicts
+nbproject/
+
+# Except the project file!
+!nbproject/project.properties
+!nbproject/project.xml
