@@ -1,6 +1,6 @@
 format 74
 "classes"
-  revision 6
+  revision 7
   modified_by 6 "notrace"
 
 
@@ -70,7 +70,7 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 128006 "_travels"
+      attribute 128006 "_journeys"
 	private explicit_type "ArrayList<JourneyInfo>"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
@@ -78,8 +78,8 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	get_oper operation_ref 145414 // get__travels
-	set_oper operation_ref 145542 // set__travels
+	get_oper operation_ref 145414 // getJourneys
+	set_oper operation_ref 145542 // setJourneys
       end
 
       attribute 129798 "_datafilename"
@@ -170,13 +170,13 @@ ${members}}
 	set_of_attribute attribute_ref 129798 // _datafilename
       end
 
-      operation 145414 "get__travels"
+      operation 145414 "getJourneys"
 	force_body_gen const cpp_inline public explicit_return_type "ArrayList<JourneyInfo>"
 	nparams 0
 	
 	cpp_name_spec "get${Name}"
 	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
-  return _travels;
+  return _journeys;
 }
 "
 	java_name_spec "get${Name}"
@@ -186,17 +186,17 @@ ${members}}
 	python_name_spec "get${Name}"
 	
 	idl_name_spec "get${Name}"
-	get_of_attribute attribute_ref 128006 // _travels
+	get_of_attribute attribute_ref 128006 // _journeys
       end
 
-      operation 145542 "set__travels"
+      operation 145542 "setJourneys"
 	force_body_gen public explicit_return_type "void"
 	nparams 1
 	  param in name "value" explicit_type "ArrayList<JourneyInfo>"
 	
 	cpp_name_spec "set_${name}"
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  _travels = ${p0};
+  _journeys = ${p0};
 }
 "
 	java_name_spec "set${Name}"
@@ -206,7 +206,7 @@ ${members}}
 	python_name_spec "set${Name}"
 	
 	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 128006 // _travels
+	set_of_attribute attribute_ref 128006 // _journeys
       end
 
       classrelation 128134 // <association>
@@ -1068,6 +1068,18 @@ ${members}}
 	set_oper operation_ref 153222 // setPasswordHash
       end
 
+      operation 175878 "User"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
       operation 152070 "getFirstname"
 	force_body_gen const cpp_inline public explicit_return_type "string"
 	nparams 0
@@ -1416,7 +1428,6 @@ ${members}}
 	
 	
       end
-
     end
 
     class 148230 "Travel"
@@ -1874,6 +1885,5 @@ ${members}}
 	set_of_attribute attribute_ref 150790 // _travels
       end
     end
-
   end
 end
