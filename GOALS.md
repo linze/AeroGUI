@@ -2,7 +2,7 @@
 ## Iteración 1
 <pre>
 [P] Diseñar un diagrama de clases
-[ ] Implementar la adquisición de datos desde el fichero viajes.txt
+[D] Implementar la adquisición de datos desde el fichero viajes.txt
 [ ] Implementar la consulta de información de un transporte en concreto (Req. CONS04)
 </pre>
 Leyenda:

@@ -1,0 +1,34 @@
+package classes;
+
+public class ClassInfo {
+    private Price _price;
+    private Integer _seatsLeft;
+
+    public ClassInfo() {
+    }
+
+    public ClassInfo(Price price, Integer seatsLeft) {
+        this._price = price;
+        this._seatsLeft = seatsLeft;
+    }
+
+    public Price getPrice() {
+        return _price;
+    }
+
+    public void setPrice(Price price) {
+        this._price = price;
+    }
+
+    public Integer getSeatsLeft() {
+        return _seatsLeft;
+    }
+
+    public void setSeatsLeft(Integer seatsLeft) {
+        this._seatsLeft = seatsLeft;
+    }
+
+
+    
+
+}
