@@ -1,6 +1,6 @@
 format 74
 "classes"
-  revision 5
+  revision 6
   modified_by 6 "notrace"
 
 
@@ -32,10 +32,12 @@ format 74
   
   class_color yellow duration_color transparent continuation_color gray note_color blue fragment_color transparent subject_color transparent usecase_color yellow package_color transparent component_color green artifact_color green deploymentnode_color gray state_color yellow stateaction_color transparent activity_color transparent activityregion_color transparent activitypartition_color transparent activityaction_color transparent parameterpin_color white 
   font_size 9
-  diagram_format A4-Landscape
+  diagram_format A3-Landscape
 
   mark_for_import
   
+  ncouples 1
+  key "html dir" value "/tmp/example/"
   classview 128006 "classes"
     //class diagram settings
     draw_all_relations default hide_attributes no hide_operations no hide_getset_operations no show_members_full_definition yes show_members_visibility yes show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization yes show_attribute_modifiers yes member_max_width 0 show_parameter_dir no show_parameter_name yes package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -53,11 +55,11 @@ format 74
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     classdiagram 128134 "classes"
-      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4-Landscape
+      draw_all_relations no hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A2-Landscape
     end
 
-    class 128006 "TravelsHandler"
+    class 128006 "JourneyHandler"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -69,15 +71,15 @@ ${members}}
       explicit_switch_type ""
       
       attribute 128006 "_travels"
-	private explicit_type "ArrayList"
+	private explicit_type "ArrayList<JourneyInfo>"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	get_oper operation_ref 145414 // getTravels
-	set_oper operation_ref 145542 // setTravels
+	get_oper operation_ref 145414 // get__travels
+	set_oper operation_ref 145542 // set__travels
       end
 
       attribute 129798 "_datafilename"
@@ -92,7 +94,7 @@ ${members}}
 	set_oper operation_ref 145286 // setDatafilename
       end
 
-      operation 128646 "TravelsHandler"
+      operation 128646 "JourneyHandler"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "datafilename" explicit_type "string"
@@ -106,7 +108,7 @@ ${members}}
       end
 
       operation 128518 "load"
-	public explicit_return_type ""
+	public explicit_return_type "void"
 	nparams 0
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
@@ -118,7 +120,7 @@ ${members}}
       end
 
       operation 128390 "save"
-	public explicit_return_type ""
+	public explicit_return_type "void"
 	nparams 0
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
@@ -168,8 +170,8 @@ ${members}}
 	set_of_attribute attribute_ref 129798 // _datafilename
       end
 
-      operation 145414 "getTravels"
-	force_body_gen const cpp_inline public explicit_return_type "ArrayList"
+      operation 145414 "get__travels"
+	force_body_gen const cpp_inline public explicit_return_type "ArrayList<JourneyInfo>"
 	nparams 0
 	
 	cpp_name_spec "get${Name}"
@@ -187,10 +189,10 @@ ${members}}
 	get_of_attribute attribute_ref 128006 // _travels
       end
 
-      operation 145542 "setTravels"
+      operation 145542 "set__travels"
 	force_body_gen public explicit_return_type "void"
 	nparams 1
-	  param in name "value" explicit_type "ArrayList"
+	  param in name "value" explicit_type "ArrayList<JourneyInfo>"
 	
 	cpp_name_spec "set_${name}"
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
@@ -206,9 +208,27 @@ ${members}}
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 128006 // _travels
       end
+
+      classrelation 128134 // <association>
+	relation_ref 128006 // <association>
+      end
+
+      classrelation 128390 // <dependency>
+	relation 128262 -_->
+	  a default
+	    classrelation_ref 128390 // <dependency>
+	  b parent class_ref 128262 // JourneyInfo
+      end
+
+      classrelation 128774 // <dependency>
+	relation 128646 -_->
+	  a default
+	    classrelation_ref 128774 // <dependency>
+	  b parent class_ref 128134 // JourneysFileParser
+      end
     end
 
-    class 128134 "TravelsFileParser"
+    class 128134 "JourneysFileParser"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -220,7 +240,7 @@ ${members}}
       explicit_switch_type ""
       
       operation 128006 "loadData"
-	class_operation public explicit_return_type "ArrayList<TravelInfo>"
+	class_operation public explicit_return_type "ArrayList<JourneyInfo>"
 	nparams 1
 	  param in name "file" explicit_type "string"
 	
@@ -235,7 +255,7 @@ ${members}}
       operation 128262 "saveData"
 	class_operation public explicit_return_type "void"
 	nparams 2
-	  param in name "travels" explicit_type "ArrayList<TravelInfo>"
+	  param in name "journeys" explicit_type "ArrayList<JourneyInfo>"
 	  param in name "file" explicit_type "string"
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
@@ -247,7 +267,7 @@ ${members}}
       end
     end
 
-    class 128262 "TravelInfo"
+    class 128262 "JourneyInfo"
       visibility public 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -665,6 +685,20 @@ ${members}}
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 129542 // _businessinfo
       end
+
+      classrelation 128262 // <dependency>
+	relation 128134 -_->
+	  a default
+	    classrelation_ref 128262 // <dependency>
+	  b parent class_ref 128006 // JourneyHandler
+      end
+
+      classrelation 128518 // <dependency>
+	relation 128390 -_->
+	  a default
+	    classrelation_ref 128518 // <dependency>
+	  b parent class_ref 128390 // ClassInfo
+      end
     end
 
     class 128390 "ClassInfo"
@@ -778,6 +812,13 @@ ${members}}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 129030 // _seatsLeft
+      end
+
+      classrelation 128646 // <dependency>
+	relation 128518 -_->
+	  a default
+	    classrelation_ref 128646 // <dependency>
+	  b parent class_ref 128518 // Price
       end
     end
 
@@ -906,11 +947,27 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
+      comment "Search JourneyInfo in JourneyHandler which meets some requirements."
       operation 135174 "doTravelInfoSearch"
-	class_operation public explicit_return_type "ArrayList<TravelInfo>"
+	class_operation public explicit_return_type "ArrayList<JourneyInfo>"
 	nparams 2
-	  param in name "travelshandler" type class_ref 128006 // TravelsHandler
+	  param in name "travelshandler" type class_ref 128006 // JourneyHandler
 	  param in name "id" explicit_type "int"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Search for an specific JourneyInfo."
+      end
+
+      operation 135302 "doOriginSearch"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "travelshandler" type class_ref 128006 // JourneyHandler
+	  param in name "origin" explicit_type "string"
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
   ${body}}
@@ -920,18 +977,23 @@ ${members}}
 	
       end
 
-      operation 135302 "doOriginSearch"
-	class_operation public explicit_return_type ""
-	nparams 2
-	  param in name "travelshandler" type class_ref 128006 // TravelsHandler
-	  param in name "origin" explicit_type "string"
-	
-	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
+      classrelation 128006 // <association>
+	relation 128006 ----
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	
-	
-	
+	    classrelation_ref 128006 // <association>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128134 // <association>
+      end
+
+      classrelation 128902 // <dependency>
+	relation 128774 -_->
+	  a default
+	    classrelation_ref 128902 // <dependency>
+	  b parent class_ref 128006 // JourneyHandler
       end
     end
 
@@ -1226,6 +1288,20 @@ ${members}}
 	
 	
       end
+
+      classrelation 129158 // <dependency>
+	relation 129030 -_->
+	  a default
+	    classrelation_ref 129158 // <dependency>
+	  b parent class_ref 148230 // Travel
+      end
+
+      classrelation 129798 // <dependency>
+	relation 129542 -_->
+	  a default
+	    classrelation_ref 129798 // <dependency>
+	  b parent class_ref 154886 // Operation
+      end
     end
 
     class 148102 "UsersHandler"
@@ -1247,10 +1323,103 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+	get_oper operation_ref 166790 // getUsers
+	set_oper operation_ref 166918 // setUsers
       end
+
+      classrelation 129030 // <dependency>
+	relation 128902 -_->
+	  a default
+	    classrelation_ref 129030 // <dependency>
+	  b parent class_ref 141574 // User
+      end
+
+      operation 166790 "getUsers"
+	force_body_gen const cpp_inline public explicit_return_type "ArrayList<User>"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _users;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 143366 // _users
+      end
+
+      operation 167046 "getUser"
+	public return_type class_ref 141574 // User
+	nparams 1
+	  param in name "user" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 166918 "setUsers"
+	force_body_gen protected explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "ArrayList<User>"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _users = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 143366 // _users
+      end
+
+      operation 166406 "checkLogin"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "user" explicit_type "string"
+	  param in name "password" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 166534 "register"
+	public explicit_return_type "void"
+	nparams 5
+	  param in name "fname" explicit_type "string"
+	  param in name "lname" explicit_type "string"
+	  param in name "address" explicit_type "string"
+	  param in name "email" explicit_type "string"
+	  param in name "password" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
     end
 
-    class 148230 "Operation"
+    class 148230 "Travel"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -1261,16 +1430,6 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 143494 "_state"
-	private explicit_type "string"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       attribute 143622 "_ntravelers"
 	private explicit_type "int"
 	cpp_decl ""
@@ -1279,20 +1438,147 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+	get_oper operation_ref 167942 // getNtravelers
+	set_oper operation_ref 168070 // setNtravelers
+	comment "Number of travelers. This will be equal for all the journeys of the travel."
       end
 
-      attribute 143750 "_tickets"
-	private explicit_type "ArrayList<Ticket>"
+      attribute 143750 "_journeys"
+	private explicit_type "ArrayList<Journey>"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+	get_oper operation_ref 168198 // getJourneys
+	set_oper operation_ref 168326 // setJourneys
+      end
+
+      classrelation 129286 // <association>
+	relation 129158 ----
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129286 // <association>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129414 // <association>
+      end
+
+      classrelation 129542 // <dependency>
+	relation 129286 -_->
+	  a default
+	    classrelation_ref 129542 // <dependency>
+	  b parent class_ref 148358 // Journey
+      end
+
+      operation 168454 "Travel"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 168582 "Travel"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "journeys" explicit_type "ArrayList<Journey>"
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${t0} ${p0}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 167942 "getNtravelers"
+	force_body_gen const cpp_inline public explicit_return_type "int"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _ntravelers;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 143622 // _ntravelers
+      end
+
+      operation 168070 "setNtravelers"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "int"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _ntravelers = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 143622 // _ntravelers
+      end
+
+      operation 168198 "getJourneys"
+	force_body_gen const cpp_inline public explicit_return_type "ArrayList<Journey>"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _journeys;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 143750 // _journeys
+      end
+
+      operation 168326 "setJourneys"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "ArrayList<Journey>"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _journeys = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 143750 // _journeys
       end
     end
 
-    class 148358 "Ticket"
+    class 148358 "Journey"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -1311,6 +1597,8 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+	get_oper operation_ref 168710 // getTravelid
+	set_oper operation_ref 168838 // setTravelid
       end
 
       attribute 144006 "_price"
@@ -1321,7 +1609,271 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+	get_oper operation_ref 168966 // getPrice
+	set_oper operation_ref 169094 // setPrice
+      end
+
+      classrelation 129414 // <association>
+	relation_ref 129158 // <association>
+      end
+
+      classrelation 129670 // <dependency>
+	relation 129414 -_->
+	  a default
+	    classrelation_ref 129670 // <dependency>
+	  b parent class_ref 128518 // Price
+      end
+
+      operation 169222 "Jurney"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 169350 "Journey"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "travelid" explicit_type "int"
+	  param in name "price" type class_ref 128518 // Price
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 168710 "getTravelid"
+	force_body_gen const cpp_inline public explicit_return_type "int"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _travelid;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 143878 // _travelid
+      end
+
+      operation 168838 "setTravelid"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "int"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _travelid = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 143878 // _travelid
+      end
+
+      operation 168966 "getPrice"
+	force_body_gen const cpp_inline public return_type class_ref 128518 // Price
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _price;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 144006 // _price
+      end
+
+      operation 169094 "setPrice"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 128518 // Price
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _price = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 144006 // _price
       end
     end
+
+    class 154886 "Operation"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 150534 "_state"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	get_oper operation_ref 167174 // getState
+	set_oper operation_ref 167302 // setState
+      end
+
+      attribute 150790 "_travels"
+	private explicit_type "ArrayList<Travel>"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	get_oper operation_ref 167430 // getTravels
+	set_oper operation_ref 167558 // setTravels
+      end
+
+      classrelation 129926 // <dependency>
+	relation 129670 -_->
+	  a default
+	    classrelation_ref 129926 // <dependency>
+	  b parent class_ref 148230 // Travel
+      end
+
+      operation 167686 "Operation"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 167814 "Operation"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "travels" explicit_type "ArrayList<Travel>"
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${t0} ${p0}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 167174 "getState"
+	force_body_gen const cpp_inline public explicit_return_type "string"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _state;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 150534 // _state
+      end
+
+      operation 167302 "setState"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "string"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _state = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 150534 // _state
+      end
+
+      operation 167430 "getTravels"
+	force_body_gen const cpp_inline public explicit_return_type "ArrayList<Travel>"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _travels;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 150790 // _travels
+      end
+
+      operation 167558 "setTravels"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "ArrayList<Travel>"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _travels = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 150790 // _travels
+      end
+    end
+
   end
 end
