@@ -3,23 +3,23 @@ package classes;
 import java.util.ArrayList;
 
 public class Operation {
-    private OperationState _state;
+    private OperationStatus _status;
     private ArrayList<Travel> _travels;
 
     public Operation() {
     }
 
-    public Operation(OperationState _state, ArrayList<Travel> _travels) {
-        this._state = _state;
+    public Operation(OperationStatus _state, ArrayList<Travel> _travels) {
+        this._status = _state;
         this._travels = _travels;
     }
 
-    public OperationState getState() {
-        return _state;
+    public OperationStatus getStatus() {
+        return _status;
     }
 
-    public void setState(OperationState _state) {
-        this._state = _state;
+    public void setStatus(OperationStatus _status) {
+        this._status = _status;
     }
 
     public ArrayList<Travel> getTravels() {

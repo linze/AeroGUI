@@ -5,6 +5,7 @@ import java.util.Date;
 public class JourneyInfo {
     private String _id;
     private String _type;
+    private String _status;
     private String _origin;
     private String _destination;
     private Date _departure;
@@ -77,5 +78,13 @@ public class JourneyInfo {
 
     public void setType(String _type) {
         this._type = _type;
+    }
+
+    public String getStatus() {
+        return _status;
+    }
+
+    public void setStatus(String _status) {
+        this._status = _status;
     }
 }

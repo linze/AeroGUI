@@ -1,5 +1,5 @@
 package classes;
 
-public enum OperationState {
+public enum OperationStatus {
     ON_CART, RESERVED, BOUGHT
 }

@@ -1,6 +1,6 @@
 format 74
 "classes"
-  revision 9
+  revision 11
   modified_by 6 "notrace"
 
 
@@ -300,6 +300,18 @@ ${members}}
 	idl_decl ""
 	get_oper operation_ref 142342 // getType
 	set_oper operation_ref 142470 // setType
+      end
+
+      attribute 170502 "_status"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	get_oper operation_ref 196614 // getStatus
+	set_oper operation_ref 196742 // setStatus
       end
 
       attribute 128390 "_origin"
@@ -698,6 +710,45 @@ ${members}}
 	  a default
 	    classrelation_ref 128518 // <dependency>
 	  b parent class_ref 128390 // ClassInfo
+      end
+
+      operation 196614 "getStatus"
+	force_body_gen const cpp_inline public explicit_return_type "string"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _status;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 170502 // _status
+      end
+
+      operation 196742 "setStatus"
+	force_body_gen public explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "string"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _status = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 170502 // _status
       end
     end
 
@@ -1861,7 +1912,7 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 150534 "_state"
+      attribute 150534 "_status"
 	private explicit_type "string"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
@@ -1869,8 +1920,8 @@ ${members}}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	get_oper operation_ref 167174 // getState
-	set_oper operation_ref 167302 // setState
+	get_oper operation_ref 167174 // getStatus
+	set_oper operation_ref 167302 // setStatus
       end
 
       attribute 150790 "_travels"
@@ -1917,13 +1968,13 @@ ${members}}
 	
       end
 
-      operation 167174 "getState"
+      operation 167174 "getStatus"
 	force_body_gen const cpp_inline public explicit_return_type "string"
 	nparams 0
 	
 	cpp_name_spec "get_${name}"
 	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
-  return _state;
+  return _status;
 }
 "
 	java_name_spec "get${Name}"
@@ -1933,17 +1984,17 @@ ${members}}
 	python_name_spec "get${Name}"
 	
 	idl_name_spec "get_${name}"
-	get_of_attribute attribute_ref 150534 // _state
+	get_of_attribute attribute_ref 150534 // _status
       end
 
-      operation 167302 "setState"
+      operation 167302 "setStatus"
 	force_body_gen public explicit_return_type "void"
 	nparams 1
 	  param in name "value" explicit_type "string"
 	
 	cpp_name_spec "set_${name}"
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  _state = ${p0};
+  _status = ${p0};
 }
 "
 	java_name_spec "set${Name}"
@@ -1953,7 +2004,7 @@ ${members}}
 	python_name_spec "set${Name}"
 	
 	idl_name_spec "set_${name}"
-	set_of_attribute attribute_ref 150534 // _state
+	set_of_attribute attribute_ref 150534 // _status
       end
 
       operation 167430 "getTravels"
