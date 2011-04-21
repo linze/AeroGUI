@@ -6,22 +6,13 @@
 
 package aerogui;
 
-import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class frmPrincipal extends javax.swing.JFrame {
     
     /** Creates new form frmPrincipal */
     public frmPrincipal() {
-        try {
-            ComponentsBox.initialize();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ComponentsBox.initialize();
+        frmLogin fl = new frmLogin(this, true);
+        fl.setVisible(true);
         initComponents();
     }
 

@@ -1,34 +1,34 @@
 package classes;
 
-public class ClassInfo {
-    private Price _price = new Price();
-    private Integer _seatsLeft;
+import java.io.Serializable;
 
-    public ClassInfo() {
-    }
+public class ClassInfo implements Serializable {
 
-    public ClassInfo(Price price, Integer seatsLeft) {
+  private Price _price =  new Price();
+  private Integer _seatsLeft;
+
+  public ClassInfo() {
+  }
+
+  public ClassInfo(Price price, Integer seatsLeft) {
         this._price = price;
         this._seatsLeft = seatsLeft;
-    }
+  }
 
-    public Price getPrice() {
+  public Price getPrice() {
         return _price;
-    }
+  }
 
-    public void setPrice(Price price) {
+  public void setPrice(Price price) {
         this._price = price;
-    }
+  }
 
-    public Integer getSeatsLeft() {
+  public Integer getSeatsLeft() {
         return _seatsLeft;
-    }
+  }
 
-    public void setSeatsLeft(Integer seatsLeft) {
+  public void setSeatsLeft(Integer seatsLeft) {
         this._seatsLeft = seatsLeft;
-    }
-
-
-    
+  }
 
 }

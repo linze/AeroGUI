@@ -319,7 +319,7 @@ public class frmConsultaEstado extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            JourneyInfo ji = TravelSearch.doJourneyInfoSearch(txtSearchId.getText(), ComponentsBox.journeyhandler);
+            JourneyInfo ji = TravelSearch.doJourneyInfoSearch(txtSearchId.getText(), ComponentsBox.journeyshandler);
             txtId.setText(ji.getId());
             txtType.setText(ji.getType());
             txtOrigin.setText(ji.getOrigin());

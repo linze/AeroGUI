@@ -10,9 +10,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 public class JourneysFileParser {
-    public static ArrayList<JourneyInfo> loadData(String file) throws FileNotFoundException, ParseException {
+    
+  public static ArrayList<JourneyInfo> loadData(String file) throws FileNotFoundException, ParseException
+  {
         ArrayList<JourneyInfo> result = new ArrayList<JourneyInfo>();
 
         BufferedReader bi = new BufferedReader(new FileReader(file));
@@ -56,9 +57,10 @@ public class JourneysFileParser {
         
         // Return the result ArrayList
         return result;
-    }
+  }
 
-    public static void saveData(ArrayList<JourneyInfo> journeysinfo, String file) throws IOException {
+  public static void saveData(ArrayList<JourneyInfo> journeysinfo, String file) throws IOException
+  {
        PrintWriter pw = new PrintWriter(new FileWriter(file));
 
        JourneyInfo ji;
@@ -80,6 +82,6 @@ public class JourneysFileParser {
        }
 
        pw.close();
-    }
+  }
 
 }

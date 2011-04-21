@@ -1,34 +1,81 @@
+
 package classes;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 
 public class UsersHandler {
-    private ArrayList<User> _users = new ArrayList<User>();
+  private UsersList _userslist =  new UsersList();
+  private String _activeuseremail =  null;
+  private User _activeuser =  null;
+  private String _datafilename =  "data.bin";
 
-    public UsersHandler() {
-    }
+  public UsersHandler() {
+  }
 
-    public UsersHandler(ArrayList<User> _users) {
-        this._users = _users;
-    }
+  public UsersHandler(String datafile) {
+        this._datafilename = datafile;
+  }
 
-    public ArrayList<User> getUsers() {
-        return _users;
-    }
+  public void load() throws FileNotFoundException, IOException, ClassNotFoundException, ParseException {
+        this._userslist = UsersFileParser.loadData(this._datafilename);
+  }
 
-    protected void setUsers(ArrayList<User> _users) {
-        this._users = _users;
-    }
+  public void save() throws FileNotFoundException, IOException {
+        UsersFileParser.saveData(this._userslist, this._datafilename);
+  }
 
-    // TODO: Check if this works as supposed
-    public User getUser(String email) {
-        for (int i=0; i<this._users.size(); i++) {
-          if (this._users.get(i).getEmail().equals(email))
-              return this._users.get(i);
+  public User getActiveuser() {
+        return _activeuser;
+  }
+
+  public void setActiveuser(User _activeuser) {
+        this._activeuser = _activeuser;
+  }
+
+  public String getActiveuseremail() {
+        return _activeuseremail;
+  }
+
+  public void setActiveuseremail(String _activeuseremail) {
+        this._activeuseremail = _activeuseremail;
+  }
+
+  public String getDatafilename() {
+        return _datafilename;
+  }
+
+  public void setDatafilename(String _datafile) {
+        this._datafilename = _datafile;
+  }
+
+  public boolean login(String email, String password) {
+        try {
+            User logUser = this._userslist.getUser(email);
+            return logUser.isPassword(password);
+        } catch (NotFoundException ex) {
+            return false;
         }
-        // TODO: Raise a exception here instead of returning null
-        return null;
-    }
-    
+
+  }
+
+  public boolean register(String fname, String lname, String address, String email, String password) {
+        try {
+            this._userslist.getUser(email);
+            return false;
+        } catch (NotFoundException ex) {
+            User newUser = new User();
+            newUser.setFirstname(fname);
+            newUser.setLastname(lname);
+            newUser.setAddress(address);
+            newUser.setEmail(email);
+            newUser.setPassword(password);
+
+            this._userslist.getUsers().add(newUser);
+
+            return true;
+        }
+  }
 
 }

@@ -1,8 +1,8 @@
+
 package classes;
 
-public class NotFoundException extends Exception{
-
-    public NotFoundException() {
-    }
+public class NotFoundException extends Exception {
+  public NotFoundException() {
+  }
 
 }

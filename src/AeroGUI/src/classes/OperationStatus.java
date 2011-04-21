@@ -1,5 +1,8 @@
+
 package classes;
 
 public enum OperationStatus {
-    ON_CART, RESERVED, BOUGHT
+  ON_CART,
+  RESERVED,
+  BOUGHT,;
 }
