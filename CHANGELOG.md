@@ -1,4 +1,12 @@
 # Documento de historia de cambios
+## Iteracción 2
+<ul>
+    <li>Diseñado un diagrama de clases</li>
+    <li>Implementada una versión básica de todas las clases</li>
+    <li>Implementada la adquisición y guardado de datos con el fichero viajes.txt</li>
+    <li>Implementada la consulta de información de un transporte en concreto (Req. CONS04)</li>
+</ul>
+
 ## Iteracción 1
 <ul>
     <li>Desarrollada la primera especificación de requisitos.</li>

@@ -1,10 +1,11 @@
 # Documento de objetivos para la iteracción
-## Iteración 2
+## Iteración 3
 <pre>
-[X] Diseñar un diagrama de clases
-[X] Implementar una versión básica de todas las clases
-[X] Implementar la adquisición de datos desde el fichero viajes.txt
-[X] Implementar la consulta de información de un transporte en concreto (Req. CONS04)
+[ ] Diseñar el diagrama de secuencia para el registro
+[ ] Diseñar el diagrama de secuencia para el login
+[ ] Implementar el registro (Req. LOGI01)
+[ ] Implementar el login (Req. LOGI02)
+[ ] Implementar la serialización en las clases que se necesita
 </pre>
 Leyenda:
 <pre>
@@ -15,9 +16,7 @@ Leyenda:
 </pre>
 ## Posibles siguientes objetivos
 <ul>
-    <li>Crear disparadores para nuevas ventanas</li>
-    <li>Hacer funcionar botones de cerrar y salida</li>
+    <li>Realizar gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)</li>
     <li>Hacer funcionar botonera de cambio de panel de frmPrincipal</li>
-    <li>Implementar el sistema de login</li>
     <li>Diseñar diagramas de secuencia para casos frecuentes</li>
 </ul>
