@@ -10,8 +10,8 @@ public class JourneyInfo {
     private String _destination;
     private Date _departure;
     private Date _arrival;
-    private ClassInfo _touristinfo;
-    private ClassInfo _businessinfo;
+    private ClassInfo _touristinfo = new ClassInfo();
+    private ClassInfo _businessinfo = new ClassInfo();
 
     public JourneyInfo() {
     }

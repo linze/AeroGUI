@@ -3,7 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 public class JourneyHandler {
-    private ArrayList<JourneyHandler> _journeysinfo;
+    private ArrayList<JourneyHandler> _journeysinfo = new ArrayList<JourneyHandler>();
     private String _datafilename;
 
     public JourneyHandler() {

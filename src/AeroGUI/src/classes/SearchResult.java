@@ -3,7 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 public class SearchResult {
-    private ArrayList<TravelInfo> _travelsinfo;
+    private ArrayList<TravelInfo> _travelsinfo = new ArrayList<TravelInfo>();
 
     public SearchResult() {
     }

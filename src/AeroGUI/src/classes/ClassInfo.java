@@ -1,7 +1,7 @@
 package classes;
 
 public class ClassInfo {
-    private Price _price;
+    private Price _price = new Price();
     private Integer _seatsLeft;
 
     public ClassInfo() {

@@ -3,7 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 public class UsersHandler {
-    private ArrayList<User> _users;
+    private ArrayList<User> _users = new ArrayList<User>();
 
     public UsersHandler() {
     }

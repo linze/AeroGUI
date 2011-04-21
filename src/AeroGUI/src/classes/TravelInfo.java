@@ -3,7 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 public class TravelInfo {
-    private ArrayList<JourneyInfo> _journeysinfo;
+    private ArrayList<JourneyInfo> _journeysinfo = new ArrayList<JourneyInfo>();
 
     public TravelInfo() {
     }

@@ -8,7 +8,7 @@ public class User {
     private String _address;
     private String _email;
     private String _password;
-    private ArrayList<Operation> _operations;
+    private ArrayList<Operation> _operations = new ArrayList<Operation>();
 
     public User() {
     }

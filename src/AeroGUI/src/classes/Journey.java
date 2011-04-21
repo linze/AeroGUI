@@ -2,7 +2,7 @@ package classes;
 
 public class Journey {
     private Integer _travelid;
-    private Price _price;
+    private Price _price = new Price();
 
     public Journey() {
     }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Operation {
     private OperationStatus _status;
-    private ArrayList<Travel> _travels;
+    private ArrayList<Travel> _travels = new ArrayList<Travel>();
 
     public Operation() {
     }

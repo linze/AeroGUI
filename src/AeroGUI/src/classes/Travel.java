@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Travel {
     private Integer _ntravelers;
-    private ArrayList<Journey> _journeys;
+    private ArrayList<Journey> _journeys = new ArrayList<Journey>();
 
     public Travel() {
     }
