@@ -6,12 +6,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JourneysFileParser {
-    public static ArrayList<JourneyInfo> loadData(String file) throws FileNotFoundException {
+    public static ArrayList<JourneyInfo> loadData(String file) throws FileNotFoundException, ParseException {
         ArrayList<JourneyInfo> result = new ArrayList<JourneyInfo>();
 
         BufferedReader bi = new BufferedReader(new FileReader(file));
@@ -31,17 +32,17 @@ public class JourneysFileParser {
                 journeyinfo.setDestination(lineinfo[3]);
                 
                 // TODO: Check email to know teachers answer and date-time format
-                journeyinfo.setDeparture(null);
-                journeyinfo.setArrival(null);
+                journeyinfo.getDeparture().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[4] + " " + lineinfo[5]));
+                journeyinfo.getArrival().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[6] + " " + lineinfo[7]));
 
                 // Classes information
-                journeyinfo.getTouristinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[6]));
-                journeyinfo.getTouristinfo().setSeatsLeft(Integer.parseInt(lineinfo[7]));
-                journeyinfo.getBusinessinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[8]));
-                journeyinfo.getBusinessinfo().setSeatsLeft(Integer.parseInt(lineinfo[9]));
+                journeyinfo.getTouristinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[8]));
+                journeyinfo.getTouristinfo().setSeatsLeft(Integer.parseInt(lineinfo[9]));
+                journeyinfo.getBusinessinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[10]));
+                journeyinfo.getBusinessinfo().setSeatsLeft(Integer.parseInt(lineinfo[11]));
 
                 // State information
-                journeyinfo.setStatus(lineinfo[10]);
+                journeyinfo.setStatus(lineinfo[12]);
 
                 // Append the new JourneyInfo
                 result.add(journeyinfo);
@@ -67,9 +68,10 @@ public class JourneysFileParser {
            pw.print(ji.getType() + "#");
            pw.print(ji.getOrigin() + "#");
            pw.print(ji.getDestination() + "#");
-           // FIXME: Add Date print when teachers reply
-           pw.print("FIXME" + "#");
-           pw.print("FIXME" + "#");
+           pw.print(JourneyInfo.DATEFORMAT.format(ji.getDeparture().getTime()) + "#");
+           pw.print(JourneyInfo.TIMEFORMAT.format(ji.getDeparture().getTime()) + "#");
+           pw.print(JourneyInfo.DATEFORMAT.format(ji.getArrival().getTime()) + "#");
+           pw.print(JourneyInfo.TIMEFORMAT.format(ji.getArrival().getTime()) + "#");
            pw.print(Double.toString(ji.getTouristinfo().getPrice().getQuantity()) + "#");
            pw.print(Integer.toString(ji.getTouristinfo().getSeatsLeft()) + "#");
            pw.print(Double.toString(ji.getBusinessinfo().getPrice().getQuantity()) + "#");

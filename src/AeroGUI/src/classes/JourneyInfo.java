@@ -1,26 +1,31 @@
 package classes;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class JourneyInfo {
+    public static final SimpleDateFormat DATEFORMAT = new SimpleDateFormat("d-MM-yyyy");
+    public static final SimpleDateFormat TIMEFORMAT = new SimpleDateFormat("H:mm");
+    public static final SimpleDateFormat DATETIMEFORMAT = new SimpleDateFormat("d-MM-yyyy H:mm");
     private String _id;
     private String _type;
     private String _status;
     private String _origin;
     private String _destination;
-    private Date _departure;
-    private Date _arrival;
+    private Calendar _departure = new GregorianCalendar();
+    private Calendar _arrival = new GregorianCalendar();
     private ClassInfo _touristinfo = new ClassInfo();
     private ClassInfo _businessinfo = new ClassInfo();
 
     public JourneyInfo() {
     }
 
-    public Date getArrival() {
+    public Calendar getArrival() {
         return _arrival;
     }
 
-    public void setArrival(Date _arrival) {
+    public void setArrival(Calendar _arrival) {
         this._arrival = _arrival;
     }
 
@@ -32,11 +37,11 @@ public class JourneyInfo {
         this._businessinfo = _businessinfo;
     }
 
-    public Date getDeparture() {
+    public Calendar getDeparture() {
         return _departure;
     }
 
-    public void setDeparture(Date _departure) {
+    public void setDeparture(Calendar _departure) {
         this._departure = _departure;
     }
 
