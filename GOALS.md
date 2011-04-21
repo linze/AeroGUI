@@ -2,6 +2,7 @@
 ## Iteración 2
 <pre>
 [X] Diseñar un diagrama de clases
+[X] Implementar una versión básica de todas las clases
 [X] Implementar la adquisición de datos desde el fichero viajes.txt
 [X] Implementar la consulta de información de un transporte en concreto (Req. CONS04)
 </pre>
