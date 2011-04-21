@@ -32,4 +32,9 @@ public class Price {
         this._currency = currency;
     }
 
+    @Override
+    public String toString() {
+        return Double.toString(_quantity) + " " + _currency;
+    }
+
 }

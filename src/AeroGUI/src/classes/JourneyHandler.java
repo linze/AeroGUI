@@ -1,15 +1,18 @@
 package classes;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class JourneyHandler {
-    private ArrayList<JourneyHandler> _journeysinfo = new ArrayList<JourneyHandler>();
+    private ArrayList<JourneyInfo> _journeysinfo = new ArrayList<JourneyInfo>();
     private String _datafilename;
 
     public JourneyHandler() {
     }
 
-    public JourneyHandler(ArrayList<JourneyHandler> _journeysinfo, String _datafilename) {
+    public JourneyHandler(ArrayList<JourneyInfo> _journeysinfo, String _datafilename) {
         this._journeysinfo = _journeysinfo;
         this._datafilename = _datafilename;
     }
@@ -22,20 +25,20 @@ public class JourneyHandler {
         this._datafilename = _datafilename;
     }
 
-    public ArrayList<JourneyHandler> getJourneysInfo() {
+    public ArrayList<JourneyInfo> getJourneysInfo() {
         return _journeysinfo;
     }
 
-    public void setJourneysInfo(ArrayList<JourneyHandler> _journeysinfo) {
+    public void setJourneysInfo(ArrayList<JourneyInfo> _journeysinfo) {
         this._journeysinfo = _journeysinfo;
     }
 
-    public void load() {
-        // TODO: Implement this
+    public void load() throws FileNotFoundException, ParseException {
+        this._journeysinfo = JourneysFileParser.loadData(this._datafilename);
     }
 
-    public void save() {
-        // TODO: Implement this
+    public void save() throws IOException {
+        JourneysFileParser.saveData(this._journeysinfo, this._datafilename);
     }
 
 

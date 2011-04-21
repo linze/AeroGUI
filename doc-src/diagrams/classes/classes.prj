@@ -1,6 +1,6 @@
 format 74
 "classes"
-  revision 12
+  revision 13
   modified_by 6 "notrace"
 
 
@@ -59,7 +59,7 @@ format 74
       size A2-Landscape
     end
 
-    class 128006 "JourneyHandler"
+    class 128006 "JourneysHandler"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -94,7 +94,7 @@ ${members}}
 	set_oper operation_ref 145286 // setDatafilename
       end
 
-      operation 128646 "JourneyHandler"
+      operation 128646 "JourneysHandler"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "datafilename" explicit_type "string"
@@ -702,7 +702,7 @@ ${members}}
 	relation 128134 -_->
 	  a default
 	    classrelation_ref 128262 // <dependency>
-	  b parent class_ref 128006 // JourneyHandler
+	  b parent class_ref 128006 // JourneysHandler
       end
 
       classrelation 128518 // <dependency>
@@ -998,6 +998,18 @@ ${members}}
 	
 	
       end
+
+      operation 203270 "toString"
+	public explicit_return_type "string"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
     end
 
     class 135046 "TravelSearch"
@@ -1015,7 +1027,7 @@ ${members}}
       operation 135174 "doJourneyInfoSearch"
 	class_operation public return_type class_ref 128262 // JourneyInfo
 	nparams 2
-	  param in name "travelshandler" type class_ref 128006 // JourneyHandler
+	  param in name "journeyshandler" type class_ref 128006 // JourneysHandler
 	  param in name "id" explicit_type "int"
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
@@ -1030,7 +1042,7 @@ ${members}}
       operation 135302 "doOriginSearch"
 	class_operation public return_type class_ref 161414 // SearchResult
 	nparams 2
-	  param in name "travelshandler" type class_ref 128006 // JourneyHandler
+	  param in name "journeyshandler" type class_ref 128006 // JourneysHandler
 	  param in name "origin" explicit_type "string"
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
@@ -1057,7 +1069,7 @@ ${members}}
 	relation 128774 -_->
 	  a default
 	    classrelation_ref 128902 // <dependency>
-	  b parent class_ref 128006 // JourneyHandler
+	  b parent class_ref 128006 // JourneysHandler
       end
 
       classrelation 136710 // <dependency>
@@ -2198,6 +2210,52 @@ ${members}}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 157446 // _journeysinfo
+      end
+    end
+
+    class 168070 "ComponentsBox"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 177030 "usershandler"
+	class_attribute public type class_ref 148102 // UsersHandler
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 177158 "journeyshandler"
+	class_attribute public type class_ref 128006 // JourneysHandler
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 143238 // <dependency>
+	relation 142982 -_->
+	  a default
+	    classrelation_ref 143238 // <dependency>
+	  b parent class_ref 128006 // JourneysHandler
+      end
+
+      classrelation 143366 // <dependency>
+	relation 143110 -_->
+	  a default
+	    classrelation_ref 143366 // <dependency>
+	  b parent class_ref 148102 // UsersHandler
       end
     end
   end

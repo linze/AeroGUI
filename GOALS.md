@@ -1,9 +1,9 @@
 # Documento de objetivos para la iteracción
-## Iteración 1
+## Iteración 2
 <pre>
-[P] Diseñar un diagrama de clases
-[D] Implementar la adquisición de datos desde el fichero viajes.txt
-[ ] Implementar la consulta de información de un transporte en concreto (Req. CONS04)
+[X] Diseñar un diagrama de clases
+[X] Implementar la adquisición de datos desde el fichero viajes.txt
+[X] Implementar la consulta de información de un transporte en concreto (Req. CONS04)
 </pre>
 Leyenda:
 <pre>
