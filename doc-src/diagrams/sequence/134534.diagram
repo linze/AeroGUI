@@ -1,0 +1,109 @@
+format 75
+
+classinstance 128006 class_ref 129286 // Usuario
+  drawing_mode actor  name ""   xyz 3 4 2005 life_line_z 2000
+classinstance 128134 class_ref 129414 // GUI
+  name ""   xyz 316 4 2005 life_line_z 2000
+classinstancecanvas 128262 classinstance_ref 128390 // usershandler
+  xyz 570 4 2010 life_line_z 2000
+end
+classinstancecanvas 129798 classinstance_ref 128518 // newuser
+  xyz 792 150 2015 life_line_z 2000
+end
+note 131718 "Successful registration example"
+  xyzwh 851 7 2000 225 39
+note 131846 "NOTE: It lacks of data saving interactivity!"
+  xyzwh 823 52 2000 287 37
+durationcanvas 128390 classinstance_ref 128006 // :Usuario
+  xyzwh 24 71 2010 11 373
+end
+durationcanvas 128518 classinstance_ref 128134 // :GUI
+  xyzwh 335 72 2010 11 372
+end
+durationcanvas 128774 classinstance_ref 128262 // usershandler:UsersHandler
+  xyzwh 651 89 2010 11 335
+  overlappingdurationcanvas 129030
+    xyzwh 657 107 2020 11 25
+  end
+end
+durationcanvas 129926 classinstance_ref 129798 // newuser:User
+  xyzwh 833 200 2010 11 26
+end
+durationcanvas 130182 classinstance_ref 129798 // newuser:User
+  xyzwh 833 242 2010 11 25
+end
+durationcanvas 130438 classinstance_ref 129798 // newuser:User
+  xyzwh 833 277 2010 11 25
+end
+durationcanvas 130694 classinstance_ref 129798 // newuser:User
+  xyzwh 833 318 2010 11 25
+end
+durationcanvas 130950 classinstance_ref 129798 // newuser:User
+  xyzwh 833 356 2010 11 25
+end
+msg 128646 synchronous
+  from durationcanvas_ref 128390
+  to durationcanvas_ref 128518
+  yz 73 2015 explicitmsg "register(fname, lname, address, email, password)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 30 58
+msg 128902 synchronous
+  from durationcanvas_ref 128518
+  to durationcanvas_ref 128774
+  yz 91 2020 explicitmsg "register(fname, lname, address, email, password)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 348 77
+reflexivemsg 129158 synchronous
+  to durationcanvas_ref 129030
+  yz 107 2025 explicitmsg "getUser(email)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 688 104
+selfreflexivemsg 129670
+  to durationcanvas_ref 129030
+  yz 124 3005 explicitmsg "e1"
+  stereotype "<<NotFoundException>>" xyz 666 133 3000
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 723 120
+msg 130054 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 129926
+  yz 204 2015 explicitmsg "setFirstname(fname)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 679 190
+msg 130310 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 130182
+  yz 246 2015 explicitmsg "setLastname(lname)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 681 230
+msg 130566 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 130438
+  yz 280 2015 explicitmsg "setAddress(address)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 684 265
+msg 130822 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 130694
+  yz 319 2015 explicitmsg "setEmail(email)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 699 304
+msg 131078 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 130950
+  yz 357 2015 explicitmsg "setPassword(password)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 675 342
+msg 131462 return
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 128518
+  yz 403 2015 explicitmsg "true"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 484 388
+msg 131590 return
+  from durationcanvas_ref 128518
+  to durationcanvas_ref 128390
+  yz 427 2015 explicitmsg "true"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 171 412
+end
