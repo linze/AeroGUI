@@ -38,8 +38,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         btnOriginSearch = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnDirectSearch = new javax.swing.JButton();
+        btnPathSearch = new javax.swing.JButton();
         btnJourneyInfoSearch = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -159,15 +159,20 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
-        jButton6.setText("Directo");
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDirectSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
+        btnDirectSearch.setText("Directo");
+        btnDirectSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDirectSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDirectSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDirectSearchActionPerformed(evt);
+            }
+        });
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
-        jButton7.setText("Rutas");
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPathSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
+        btnPathSearch.setText("Rutas");
+        btnPathSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPathSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         btnJourneyInfoSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         btnJourneyInfoSearch.setText("Estado");
@@ -202,8 +207,8 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnOriginSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPathSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDirectSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -220,9 +225,9 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnOriginSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7)
+                        .addComponent(btnPathSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
+                        .addComponent(btnDirectSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnJourneyInfoSearch))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -384,6 +389,12 @@ public class frmPrincipal extends javax.swing.JFrame {
         fce.setVisible(true);
     }//GEN-LAST:event_btnJourneyInfoSearchActionPerformed
 
+    private void btnDirectSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDirectSearchActionPerformed
+        frmConsultaDirecto fcd = new frmConsultaDirecto();
+        fcd.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        fcd.setVisible(true);
+    }//GEN-LAST:event_btnDirectSearchActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -396,9 +407,11 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDirectSearch;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnJourneyInfoSearch;
     private javax.swing.JButton btnOriginSearch;
+    private javax.swing.JButton btnPathSearch;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -406,8 +419,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

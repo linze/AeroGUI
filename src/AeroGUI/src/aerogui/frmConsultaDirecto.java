@@ -11,15 +11,27 @@
 
 package aerogui;
 
+import classes.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author notrace
  */
 public class frmConsultaDirecto extends javax.swing.JFrame {
+    private SearchResult _sr;
+    private JourneyInfo _currentji;
 
     /** Creates new form frmConsultaDirecto */
     public frmConsultaDirecto() {
         initComponents();
+        txtOriginSearch.removeAllItems();
+        txtDestinationSearch.removeAllItems();
+        ArrayList<String> origins = ComponentsBox.journeyshandler.getOrigins();
+        for (int i=0; i<origins.size(); i++) {
+            txtOriginSearch.addItem(origins.get(i));
+        }        
     }
 
     /** This method is called from within the constructor to
@@ -33,32 +45,32 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        txtOriginSearch = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        txtDestinationSearch = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbResults = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtOrigin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtDestination = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtDeparture = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtPrice = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        txtSeats = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        txtClass = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtType = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtArrival = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,11 +79,22 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
 
         jLabel1.setText("Origen");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtOriginSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtOriginSearch.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txtOriginSearchItemStateChanged(evt);
+            }
+        });
 
         jLabel9.setText("Destino");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtDestinationSearch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtDestinationSearch.setEnabled(false);
+        txtDestinationSearch.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txtDestinationSearchItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -81,11 +104,11 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtOriginSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDestinationSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(255, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -93,24 +116,29 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOriginSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDestinationSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbResults.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Origen", "Destino", "Tipo", "Precio"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbResults.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbResultsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbResults);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -125,34 +153,46 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
 
         jLabel2.setText("Origen");
 
-        jTextField1.setEnabled(false);
+        txtOrigin.setEnabled(false);
 
         jLabel3.setText("Destino");
 
-        jTextField2.setEnabled(false);
+        txtDestination.setEnabled(false);
 
         jLabel4.setText("Salida");
 
-        jTextField3.setEnabled(false);
+        txtDeparture.setEnabled(false);
 
         jLabel6.setText("Precio");
 
-        jTextField5.setEnabled(false);
+        txtPrice.setEnabled(false);
 
         jLabel7.setText("Asientos");
 
+        txtSeats.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+        txtSeats.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtSeatsStateChanged(evt);
+            }
+        });
+
         jLabel8.setText("Clase");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
+        txtClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txtClassItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setText("Tipo");
 
-        jTextField4.setEnabled(false);
+        txtType.setEnabled(false);
 
         jLabel10.setText("Llegada");
 
-        jTextField6.setText("00/00/00 00:00");
-        jTextField6.setEnabled(false);
+        txtArrival.setText("00/00/00 00:00");
+        txtArrival.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -166,9 +206,9 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, 0, 135, Short.MAX_VALUE))
+                    .addComponent(txtOrigin, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(txtDestination, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(txtClass, 0, 135, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
@@ -176,17 +216,17 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSpinner1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                    .addComponent(txtArrival, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSeats)
+                    .addComponent(txtDeparture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                    .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -195,29 +235,34 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtArrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton2.setText("Cerrar");
+        btnClose.setText("Cerrar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Añadir al carrito");
 
@@ -227,7 +272,7 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -237,7 +282,7 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
                 .addContainerGap(47, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2))
+                .addComponent(btnClose))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -281,6 +326,99 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtDestinationSearchItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtDestinationSearchItemStateChanged
+        // Clear details view
+        this._currentji = null;
+        updateDetails();
+
+        // Do the search
+        String origin = (String)txtOriginSearch.getSelectedItem();
+        String destination = (String)txtDestinationSearch.getSelectedItem();
+        this._sr = TravelSearch.doDirectSearch(origin, destination, ComponentsBox.journeyshandler);
+        tbResults.removeAll();
+
+        // Create results representation
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[]{"Origen", "Destino", "Tipo", "Precio"});
+
+        JourneyInfo current;
+        for (int i=0; i < this._sr.getTravelsinfo().size(); i++) {
+            // We access to position 0 because origin searchs have only one step
+            current = this._sr.getTravelsinfo().get(i).getJourneysinfo().get(0);
+            model.addRow(new Object[]{current.getOrigin(),
+                current.getDestination(),
+                current.getType(),
+                "Tur: " + current.getTouristinfo().getPrice().toString() +
+                " Ejec: " + current.getBusinessinfo().getPrice().toString()});
+        }
+
+        // Show the results
+        tbResults.setModel(model);
+    }//GEN-LAST:event_txtDestinationSearchItemStateChanged
+
+    private void txtOriginSearchItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtOriginSearchItemStateChanged
+        String origin = (String)txtOriginSearch.getSelectedItem();
+        txtDestinationSearch.removeAllItems();
+        ArrayList<String> destinations = ComponentsBox.journeyshandler.getDestinations(origin);
+        for (int i=0; i<destinations.size(); i++) {
+            txtDestinationSearch.addItem(destinations.get(i));
+        }
+        txtDestinationSearch.setEnabled(true);
+    }//GEN-LAST:event_txtOriginSearchItemStateChanged
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void txtClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtClassItemStateChanged
+        updateActualRecord();
+        updateDetails();
+    }//GEN-LAST:event_txtClassItemStateChanged
+
+    private void tbResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbResultsMouseClicked
+        updateActualRecord();
+        updateDetails();
+    }//GEN-LAST:event_tbResultsMouseClicked
+
+    private void txtSeatsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtSeatsStateChanged
+        updateActualRecord();
+        updateDetails();
+    }//GEN-LAST:event_txtSeatsStateChanged
+
+    private void updateActualRecord() {
+        Integer i = tbResults.getSelectedRow();
+        this._currentji = this._sr.getTravelsinfo().get(i).getJourneysinfo().get(0);
+    }
+
+    private double calcPrice() {
+        Integer seats = (Integer)txtSeats.getValue();
+        String selectedclass = (String)txtClass.getSelectedItem();
+        if (selectedclass.equals("Turista")) {
+            return this._currentji.getTouristinfo().getPrice().getQuantity() * seats;
+        } else {
+            return this._currentji.getBusinessinfo().getPrice().getQuantity() * seats;
+        }
+
+    }
+
+    private void updateDetails() {
+        if (this._currentji != null) {
+            txtOrigin.setText(this._currentji.getOrigin());
+            txtDestination.setText(this._currentji.getDestination());
+            txtDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(this._currentji.getDeparture().getTime()));
+            txtArrival.setText(JourneyInfo.DATETIMEFORMAT.format(this._currentji.getArrival().getTime()));
+            txtType.setText(this._currentji.getType());
+            txtPrice.setText(Double.toString(calcPrice()));
+        } else {
+            txtOrigin.setText("");
+            txtDestination.setText("");
+            txtDeparture.setText("");
+            txtArrival.setText("");
+            txtType.setText("");
+            txtPrice.setText("");
+        }
+    }
+    
     /**
     * @param args the command line arguments
     */
@@ -293,11 +431,8 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClose;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -314,14 +449,17 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTable tbResults;
+    private javax.swing.JTextField txtArrival;
+    private javax.swing.JComboBox txtClass;
+    private javax.swing.JTextField txtDeparture;
+    private javax.swing.JTextField txtDestination;
+    private javax.swing.JComboBox txtDestinationSearch;
+    private javax.swing.JTextField txtOrigin;
+    private javax.swing.JComboBox txtOriginSearch;
+    private javax.swing.JTextField txtPrice;
+    private javax.swing.JSpinner txtSeats;
+    private javax.swing.JTextField txtType;
     // End of variables declaration//GEN-END:variables
 
 }

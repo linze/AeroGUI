@@ -373,6 +373,7 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
             txtPrice.setText("");
         }
     }
+    
     private void tbResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbResultsMouseClicked
         updateActualRecord();
         updateDetails();
