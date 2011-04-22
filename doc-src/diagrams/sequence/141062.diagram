@@ -1,0 +1,59 @@
+format 75
+
+classinstance 128006 class_ref 128902 // Usuario
+  drawing_mode actor  name ""   xyz 11 4 2005 life_line_z 2000
+classinstance 128134 class_ref 128390 // GUI
+  name ""   xyz 170 4 2005 life_line_z 2000
+classinstance 128262 class_ref 142854 // TravelSearch
+  name ""   xyz 412 4 2010 life_line_z 2000
+classinstancecanvas 128390 classinstance_ref 141574 // journeyshandler
+  xyz 554 4 2015 life_line_z 2000
+end
+note 130182 "Successful origin search example"
+  xyzwh 795 5 2000 245 35
+durationcanvas 128518 classinstance_ref 128006 // :Usuario
+  xyzwh 32 66 2010 11 148
+end
+durationcanvas 128646 classinstance_ref 128134 // :GUI
+  xyzwh 189 71 2010 11 139
+end
+durationcanvas 128902 classinstance_ref 128262 // :TravelSearch
+  xyzwh 453 81 2010 11 108
+end
+durationcanvas 129158 classinstance_ref 128390 // journeyshandler:JourneysHandler
+  xyzwh 654 96 2010 11 45
+end
+msg 128774 synchronous
+  from durationcanvas_ref 128518
+  to durationcanvas_ref 128646
+  yz 71 2015 explicitmsg "searchOrigin(origin)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 56 57
+msg 129030 synchronous
+  from durationcanvas_ref 128646
+  to durationcanvas_ref 128902
+  yz 86 2015 explicitmsg "doOriginSearch(journeyshandler, origin)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 205 73
+msg 129286 synchronous
+  from durationcanvas_ref 128902
+  to durationcanvas_ref 129158
+  yz 98 2015 explicitmsg "getJourneys()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 516 83
+msg 129414 return
+  from durationcanvas_ref 129158
+  to durationcanvas_ref 128902
+  yz 114 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 129542 return
+  from durationcanvas_ref 128902
+  to durationcanvas_ref 128646
+  yz 178 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 130054 return
+  from durationcanvas_ref 128646
+  to durationcanvas_ref 128518
+  yz 196 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+end

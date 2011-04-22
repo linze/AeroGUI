@@ -1,7 +1,7 @@
 # Documento de objetivos para la iteracción
 ## Iteración 4
 <pre>
-[ ] Diseñar diagrama de sequencia de la consulta de tarifas desde un origen
+[P] Diseñar diagrama de sequencia de la consulta de tarifas desde un origen
 [ ] Implementar consulta de tarifas desde un origen (Req. CONS01)
 [ ] Implementar consulta de tarifas de transporte directo entre dos ciudades (Req. CONS03)
 </pre>
