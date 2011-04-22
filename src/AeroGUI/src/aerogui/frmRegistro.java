@@ -11,6 +11,9 @@
 
 package aerogui;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -202,15 +205,19 @@ public class frmRegistro extends javax.swing.JDialog {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         if (checkFields()) {
-            boolean result;
-            result = ComponentsBox.usershandler.register(txtFname.getText(),
-                    txtLname.getText(), txtAddress.getText(),
-                    txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
-            if (!result) {
-                JOptionPane.showMessageDialog(this, "La dirección de correo electrónico ya existe.");
-            } else {
-                JOptionPane.showMessageDialog(this, "¡El registro se ha llevado a cabo con éxito!");
-                this.dispose();
+            try {
+                boolean result;
+                result = ComponentsBox.usershandler.register(txtFname.getText(), txtLname.getText(), txtAddress.getText(), txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
+                ComponentsBox.saveAll();
+                if (!result) {
+                    JOptionPane.showMessageDialog(this, "La dirección de correo electrónico ya existe.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "¡El registro se ha llevado a cabo con éxito!");
+                    this.dispose();
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Se ha producido un error al actualizar el fichero de datos.");
+                Logger.getLogger(frmRegistro.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnRegisterActionPerformed

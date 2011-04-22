@@ -1,11 +1,11 @@
 # Documento de objetivos para la iteracción
 ## Iteración 3
 <pre>
-[ ] Diseñar el diagrama de secuencia para el registro
-[ ] Diseñar el diagrama de secuencia para el login
-[ ] Implementar el registro (Req. LOGI01)
-[ ] Implementar el login (Req. LOGI02)
-[ ] Implementar la serialización en las clases que se necesita
+[X] Diseñar el diagrama de secuencia para el registro
+[X] Diseñar el diagrama de secuencia para el login
+[X] Implementar el registro (Req. LOGI01)
+[X] Implementar el login (Req. LOGI02)
+[X] Implementar la serialización en las clases que se necesita
 </pre>
 Leyenda:
 <pre>
