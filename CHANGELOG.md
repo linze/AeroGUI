@@ -1,4 +1,11 @@
 # Documento de historia de cambios
+## Iteracción 4
+<ul>
+    <li>Diseñado un diagrama de sequencia de la consulta de tarifas desde un origen</li>
+    <li>Implementada la consulta de tarifas desde un origen (Req. CONS01)</li>
+    <li>Implementada la consulta de tarifas de transporte directo entre dos ciudades (Req. CONS03)</li>
+</ul>
+
 ## Iteracción 3
 <ul>
     <li>Diseñado un diagrama de secuencia para el registro</li>

@@ -1,9 +1,10 @@
 # Documento de objetivos para la iteracción
-## Iteración 4
+## Iteración 5
 <pre>
-[X] Diseñar diagrama de sequencia de la consulta de tarifas desde un origen
-[X] Implementar consulta de tarifas desde un origen (Req. CONS01)
-[X] Implementar consulta de tarifas de transporte directo entre dos ciudades (Req. CONS03)
+[ ] Implementar la botonera de cambio de panel del menú principal
+[ ] Diseñar la interfaz gráfica del carrito
+[ ] Implementar la adición de elementos al carrito
+[ ] Implementar la visualización del carrito
 </pre>
 
 ### Leyenda:
@@ -17,10 +18,7 @@
 
 ## Posibles siguientes objetivos
 <ul>
-    <li>Implementar el carrito de compra</li>
     <li>Implementar la reserva de objetos en el carrito</li>
     <li>Implementar la compra de elementos reservados</li>
     <li>Realizar gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)</li>
-    <li>Hacer funcionar botonera de cambio de panel de frmPrincipal</li>
-    <li>Diseñar diagramas de secuencia para casos frecuentes</li>
 </ul>
