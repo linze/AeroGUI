@@ -4,6 +4,8 @@ package classes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UsersHandler {
   private UsersList _userslist =  new UsersList();
@@ -30,7 +32,7 @@ public class UsersHandler {
         return _activeuser;
   }
 
-  public void setActiveuser(User _activeuser) {
+  protected void setActiveuser(User _activeuser) {
         this._activeuser = _activeuser;
   }
 
@@ -38,8 +40,18 @@ public class UsersHandler {
         return _activeuseremail;
   }
 
-  public void setActiveuseremail(String _activeuseremail) {
+  protected void setActiveuseremail(String _activeuseremail) {
         this._activeuseremail = _activeuseremail;
+  }
+
+  public void setActive(String email) {
+        try {
+            User activeuser = this._userslist.getUser(email);
+            this.setActiveuser(activeuser);
+            this.setActiveuseremail(email);
+        } catch (NotFoundException ex) {
+            Logger.getLogger(UsersHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
   }
 
   public String getDatafilename() {

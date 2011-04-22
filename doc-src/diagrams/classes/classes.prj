@@ -1,6 +1,6 @@
-format 74
+format 75
 "classes"
-  revision 13
+  revision 14
   modified_by 6 "notrace"
 
 
@@ -33,6 +33,8 @@ format 74
   class_color yellow duration_color transparent continuation_color gray note_color blue fragment_color transparent subject_color transparent usecase_color yellow package_color transparent component_color green artifact_color green deploymentnode_color gray state_color yellow stateaction_color transparent activity_color transparent activityregion_color transparent activitypartition_color transparent activityaction_color transparent parameterpin_color white 
   font_size 9
   diagram_format A3-Landscape
+
+  image_root_dir ""
 
   mark_for_import
   
@@ -1450,7 +1452,7 @@ ${members}}
       end
     end
 
-    class 148102 "UsersHandler"
+    class 148102 "UsersList"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -1530,37 +1532,6 @@ ${members}}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 143366 // _users
-      end
-
-      operation 166406 "checkLogin"
-	public explicit_return_type "bool"
-	nparams 2
-	  param in name "user" explicit_type "string"
-	  param in name "password" explicit_type "string"
-	
-	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 166534 "register"
-	public explicit_return_type "void"
-	nparams 5
-	  param in name "fname" explicit_type "string"
-	  param in name "lname" explicit_type "string"
-	  param in name "address" explicit_type "string"
-	  param in name "email" explicit_type "string"
-	  param in name "password" explicit_type "string"
-	
-	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
       end
     end
 
@@ -2225,7 +2196,7 @@ ${members}}
       explicit_switch_type ""
       
       attribute 177030 "usershandler"
-	class_attribute public type class_ref 148102 // UsersHandler
+	class_attribute public type class_ref 148102 // UsersList
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
@@ -2255,7 +2226,294 @@ ${members}}
 	relation 143110 -_->
 	  a default
 	    classrelation_ref 143366 // <dependency>
-	  b parent class_ref 148102 // UsersHandler
+	  b parent class_ref 148102 // UsersList
+      end
+
+      classrelation 149894 // <dependency>
+	relation 149638 -_->
+	  a default
+	    classrelation_ref 149894 // <dependency>
+	  b parent class_ref 174598 // UsersHandler
+      end
+    end
+
+    class 174598 "UsersHandler"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 183686 "_userslist"
+	private type class_ref 148102 // UsersList
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 183814 "_activeuser"
+	private type class_ref 141574 // User
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	get_oper operation_ref 210310 // getActiveuser
+	set_oper operation_ref 210438 // setActiveuser
+      end
+
+      attribute 183942 "_activeuseremail"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	get_oper operation_ref 210566 // getActiveuseremail
+	set_oper operation_ref 210694 // setActiveuseremail
+      end
+
+      attribute 184070 "_datafilename"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 209798 "UsersHandler"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 209926 "UsersHandler"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "datafilename" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${t0} ${p0}${)}${throws} {
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 210054 "load"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 210182 "save"
+	public explicit_return_type ""
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 210310 "getActiveuser"
+	force_body_gen const cpp_inline public return_type class_ref 141574 // User
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _activeuser;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 183814 // _activeuser
+      end
+
+      operation 210438 "setActiveuser"
+	force_body_gen protected explicit_return_type "void"
+	nparams 1
+	  param in name "value" type class_ref 141574 // User
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _activeuser = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 183814 // _activeuser
+      end
+
+      operation 210566 "getActiveuseremail"
+	force_body_gen const cpp_inline public explicit_return_type "string"
+	nparams 0
+	
+	cpp_name_spec "get_${name}"
+	final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  return _activeuseremail;
+}
+"
+	java_name_spec "get${Name}"
+	php_final 
+	php_name_spec "get${Name}"
+	
+	python_name_spec "get${Name}"
+	
+	idl_name_spec "get_${name}"
+	get_of_attribute attribute_ref 183942 // _activeuseremail
+      end
+
+      operation 210694 "setActiveuseremail"
+	force_body_gen protected explicit_return_type "void"
+	nparams 1
+	  param in name "value" explicit_type "string"
+	
+	cpp_name_spec "set_${name}"
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  _activeuseremail = ${p0};
+}
+"
+	java_name_spec "set${Name}"
+	
+	php_name_spec "set${Name}"
+	
+	python_name_spec "set${Name}"
+	
+	idl_name_spec "set_${name}"
+	set_of_attribute attribute_ref 183942 // _activeuseremail
+      end
+
+      operation 210822 "setActive"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "email" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 166406 "login"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "user" explicit_type "string"
+	  param in name "password" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 166534 "register"
+	public explicit_return_type "void"
+	nparams 5
+	  param in name "fname" explicit_type "string"
+	  param in name "lname" explicit_type "string"
+	  param in name "address" explicit_type "string"
+	  param in name "email" explicit_type "string"
+	  param in name "password" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      classrelation 150022 // <dependency>
+	relation 149766 -_->
+	  a default
+	    classrelation_ref 150022 // <dependency>
+	  b parent class_ref 148102 // UsersList
+      end
+
+      classrelation 150150 // <dependency>
+	relation 149894 -_->
+	  a default
+	    classrelation_ref 150150 // <dependency>
+	  b parent class_ref 174726 // UsersFileParser
+      end
+    end
+
+    class 174726 "UsersFileParser"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 210950 "loadData"
+	class_operation public return_type class_ref 148102 // UsersList
+	nparams 1
+	  param in name "file" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 211078 "saveData"
+	class_operation public explicit_return_type "void"
+	nparams 2
+	  param in name "userslist" type class_ref 148102 // UsersList
+	  param in name "file" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
       end
     end
   end

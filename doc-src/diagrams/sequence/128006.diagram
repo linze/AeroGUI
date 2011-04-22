@@ -1,70 +1,88 @@
 format 75
 
 classinstance 128518 class_ref 128390 // GUI
-  name ""   xyz 189 4 2010 life_line_z 2000
+  name ""   xyz 182 4 2010 life_line_z 2000
 classinstancecanvas 128646 classinstance_ref 128262 // usershandler
-  xyz 338 4 2015 life_line_z 2000
+  xyz 288 4 2015 life_line_z 2000
 end
 classinstance 130054 class_ref 128902 // Usuario
   drawing_mode actor  name ""   xyz 11 4 2005 life_line_z 2000
 classinstance 131462 class_ref 129158 // User
-  name ""   xyz 566 4 2005 life_line_z 2000
+  name ""   xyz 616 4 2005 life_line_z 2000
 note 133254 "Successful login example"
-  xyzwh 643 9 2000 179 35
+  xyzwh 687 4 2000 179 35
+classinstancecanvas 133382 classinstance_ref 135046 // userslist
+  xyz 487 4 2020 life_line_z 2000
+end
 durationcanvas 130182 classinstance_ref 130054 // :Usuario
-  xyzwh 32 63 2010 11 154
+  xyzwh 32 65 2010 11 206
 end
 durationcanvas 130310 classinstance_ref 128518 // :GUI
-  xyzwh 208 63 2010 11 145
+  xyzwh 201 63 2010 11 192
 end
 durationcanvas 130566 classinstance_ref 128646 // usershandler:UsersHandler
-  xyzwh 419 63 2010 11 126
-  overlappingdurationcanvas 130950
-    xyzwh 425 91 2020 11 25
-  end
+  xyzwh 369 63 2010 11 126
 end
 durationcanvas 131590 classinstance_ref 131462 // :User
-  xyzwh 585 125 2010 11 43
+  xyzwh 635 125 2010 11 43
+end
+durationcanvas 133510 classinstance_ref 133382 // userslist:UsersList
+  xyzwh 541 73 2010 11 30
+end
+durationcanvas 133894 classinstance_ref 128646 // usershandler:UsersHandler
+  xyzwh 369 219 2010 11 25
 end
 msg 130438 synchronous
   from durationcanvas_ref 130182
   to durationcanvas_ref 130310
-  yz 64 2015 explicitmsg "login(email, password)"
+  yz 66 2015 explicitmsg "login(email, password)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 58 49
+  label_xy 58 51
 msg 130694 synchronous
   from durationcanvas_ref 130310
   to durationcanvas_ref 130566
-  yz 64 2020 explicitmsg "checkLogin(email, password)"
+  yz 64 2020 explicitmsg "login(email, password)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 229 49
-reflexivemsg 131078 synchronous
-  to durationcanvas_ref 130950
-  yz 91 2025 explicitmsg "getUser(email)"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 455 88
+  label_xy 222 49
 msg 131718 synchronous
   from durationcanvas_ref 130566
   to durationcanvas_ref 131590
   yz 133 2025 explicitmsg "isPassword(password)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 442 118
+  label_xy 392 118
 msg 132870 return
   from durationcanvas_ref 131590
   to durationcanvas_ref 130566
   yz 155 2015 explicitmsg "true"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 493 140
+  label_xy 443 140
 msg 132998 return
   from durationcanvas_ref 130566
   to durationcanvas_ref 130310
   yz 178 2015 explicitmsg "true"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 305 163
+  label_xy 298 163
 msg 133126 return
   from durationcanvas_ref 130310
   to durationcanvas_ref 130182
-  yz 197 2015 explicitmsg "true"
+  yz 244 2015 explicitmsg "true"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 111 182
+  label_xy 111 229
+msg 133638 synchronous
+  from durationcanvas_ref 130566
+  to durationcanvas_ref 133510
+  yz 73 2025 explicitmsg "getUser(email)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 427 58
+msg 133766 return
+  from durationcanvas_ref 133510
+  to durationcanvas_ref 130566
+  yz 92 2030 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 134022 synchronous
+  from durationcanvas_ref 130310
+  to durationcanvas_ref 133894
+  yz 219 2015 explicitmsg "setActive(email)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 240 204
 end

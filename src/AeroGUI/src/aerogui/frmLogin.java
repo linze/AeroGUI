@@ -126,7 +126,7 @@ public class frmLogin extends javax.swing.JDialog {
         boolean result;
         result = ComponentsBox.usershandler.login(txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
         if (result == true) {
-            ComponentsBox.usershandler.setActiveuseremail(txtEmail.getText());
+            ComponentsBox.usershandler.setActive(txtEmail.getText());
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "La combinación de usuario y contraseña no es válida.");

@@ -1,6 +1,6 @@
 format 75
 "sequence"
-  revision 2
+  revision 3
   modified_by 6 "notrace"
 
 
@@ -57,7 +57,7 @@ format 75
     show_infonote default drawing_language default show_stereotype_properties default
     sequencediagram 128006 "login_ok"
       show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
-      overlapping_bars size A4
+      overlapping_bars size A3
     end
 
     class 128902 "Usuario"
@@ -118,6 +118,27 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
+    end
+
+    class 136198 "UsersList"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    classinstance 135046 "userslist"
+      type class_ref 136198 // UsersList
+      attributes
+        end
+      relations
+        end
     end
   end
 
@@ -209,6 +230,19 @@ ${members}}
         end
       relations
         end
+    end
+
+    class 136326 "ComponentsBox"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
     end
   end
 end

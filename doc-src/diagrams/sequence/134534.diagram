@@ -8,38 +8,47 @@ classinstancecanvas 128262 classinstance_ref 128390 // usershandler
   xyz 570 4 2010 life_line_z 2000
 end
 classinstancecanvas 129798 classinstance_ref 128518 // newuser
-  xyz 792 150 2015 life_line_z 2000
+  xyz 782 150 2015 life_line_z 2000
 end
 note 131718 "Successful registration example"
-  xyzwh 851 7 2000 225 39
-note 131846 "NOTE: It lacks of data saving interactivity!"
-  xyzwh 823 52 2000 287 37
+  xyzwh 1148 5 2000 225 39
+classinstancecanvas 131974 classinstance_ref 135046 // userslist
+  xyz 856 4 2005 life_line_z 2000
+end
+classinstance 132870 class_ref 136326 // ComponentsBox
+  name ""   xyz 1011 4 2010 life_line_z 2000
 durationcanvas 128390 classinstance_ref 128006 // :Usuario
-  xyzwh 24 71 2010 11 373
+  xyzwh 24 71 2010 11 415
 end
 durationcanvas 128518 classinstance_ref 128134 // :GUI
-  xyzwh 335 72 2010 11 372
+  xyzwh 335 72 2010 11 414
 end
 durationcanvas 128774 classinstance_ref 128262 // usershandler:UsersHandler
-  xyzwh 651 89 2010 11 335
-  overlappingdurationcanvas 129030
-    xyzwh 657 107 2020 11 25
-  end
+  xyzwh 651 88 2010 11 336
 end
 durationcanvas 129926 classinstance_ref 129798 // newuser:User
-  xyzwh 833 200 2010 11 26
+  xyzwh 823 200 2010 11 26
 end
 durationcanvas 130182 classinstance_ref 129798 // newuser:User
-  xyzwh 833 242 2010 11 25
+  xyzwh 823 242 2010 11 29
 end
 durationcanvas 130438 classinstance_ref 129798 // newuser:User
-  xyzwh 833 277 2010 11 25
+  xyzwh 823 277 2010 11 25
 end
 durationcanvas 130694 classinstance_ref 129798 // newuser:User
-  xyzwh 833 318 2010 11 25
+  xyzwh 823 318 2010 11 25
 end
 durationcanvas 130950 classinstance_ref 129798 // newuser:User
-  xyzwh 833 356 2010 11 25
+  xyzwh 823 356 2010 11 25
+end
+durationcanvas 132102 classinstance_ref 131974 // userslist:UsersList
+  xyzwh 910 97 2010 11 40
+end
+durationcanvas 132486 classinstance_ref 131974 // userslist:UsersList
+  xyzwh 910 385 2010 11 29
+end
+durationcanvas 132998 classinstance_ref 132870 // :ComponentsBox
+  xyzwh 1062 434 2010 11 25
 end
 msg 128646 synchronous
   from durationcanvas_ref 128390
@@ -50,60 +59,74 @@ msg 128646 synchronous
 msg 128902 synchronous
   from durationcanvas_ref 128518
   to durationcanvas_ref 128774
-  yz 91 2020 explicitmsg "register(fname, lname, address, email, password)"
+  yz 90 2020 explicitmsg "register(fname, lname, address, email, password)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 348 77
-reflexivemsg 129158 synchronous
-  to durationcanvas_ref 129030
-  yz 107 2025 explicitmsg "getUser(email)"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 688 104
-selfreflexivemsg 129670
-  to durationcanvas_ref 129030
-  yz 124 3005 explicitmsg "e1"
-  stereotype "<<NotFoundException>>" xyz 666 133 3000
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 723 120
+  label_xy 348 76
 msg 130054 synchronous
   from durationcanvas_ref 128774
   to durationcanvas_ref 129926
-  yz 204 2015 explicitmsg "setFirstname(fname)"
+  yz 208 2015 explicitmsg "setFirstname(fname)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 679 190
+  label_xy 679 194
 msg 130310 synchronous
   from durationcanvas_ref 128774
   to durationcanvas_ref 130182
-  yz 246 2015 explicitmsg "setLastname(lname)"
+  yz 250 2015 explicitmsg "setLastname(lname)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 681 230
+  label_xy 681 234
 msg 130566 synchronous
   from durationcanvas_ref 128774
   to durationcanvas_ref 130438
-  yz 280 2015 explicitmsg "setAddress(address)"
+  yz 283 2015 explicitmsg "setAddress(address)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 684 265
+  label_xy 683 272
 msg 130822 synchronous
   from durationcanvas_ref 128774
   to durationcanvas_ref 130694
-  yz 319 2015 explicitmsg "setEmail(email)"
+  yz 328 2015 explicitmsg "setEmail(email)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 699 304
+  label_xy 699 313
 msg 131078 synchronous
   from durationcanvas_ref 128774
   to durationcanvas_ref 130950
-  yz 357 2015 explicitmsg "setPassword(password)"
+  yz 363 2015 explicitmsg "setPassword(password)"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 675 342
+  label_xy 675 348
 msg 131462 return
   from durationcanvas_ref 128774
   to durationcanvas_ref 128518
-  yz 403 2015 explicitmsg "true"
+  yz 413 2015 explicitmsg "true"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 484 388
+  label_xy 484 398
 msg 131590 return
   from durationcanvas_ref 128518
   to durationcanvas_ref 128390
-  yz 427 2015 explicitmsg "true"
+  yz 475 2015 explicitmsg "true"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 171 412
+  label_xy 171 460
+msg 132230 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 132102
+  yz 97 2015 explicitmsg "getUser(email)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 756 82
+msg 132358 return
+  from durationcanvas_ref 132102
+  to durationcanvas_ref 128774
+  yz 117 2020 explicitmsg "e1"
+  stereotype "<<NotFoundException>>" xyz 716 133 3000
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 789 122
+msg 132614 synchronous
+  from durationcanvas_ref 128774
+  to durationcanvas_ref 132486
+  yz 403 2015 explicitmsg "getUsers().add(newuser)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 709 388
+msg 133126 synchronous
+  from durationcanvas_ref 128518
+  to durationcanvas_ref 132998
+  yz 441 2015 explicitmsg "saveAll()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 677 426
 end
