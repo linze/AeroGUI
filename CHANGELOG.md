@@ -1,4 +1,13 @@
 # Documento de historia de cambios
+## Iteracción 3
+<ul>
+    <li>Diseñado un diagrama de secuencia para el registro</li>
+    <li>Diseñado un diagrama de secuencia para el login</li>
+    <li>Implementado el registro (Req. LOGI01)</li>
+    <li>Implementado el login (Req. LOGI02)</li>
+    <li>Implementada la persistencia de datos (Req. FUN005)</li>
+</ul>
+
 ## Iteracción 2
 <ul>
     <li>Diseñado un diagrama de clases</li>
