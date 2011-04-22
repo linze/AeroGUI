@@ -1,7 +1,7 @@
 # Documento de objetivos para la iteracción
 ## Iteración 5
 <pre>
-[ ] Implementar la botonera de cambio de panel del menú principal
+[X] Implementar la botonera de cambio de panel del menú principal
 [ ] Diseñar la interfaz gráfica del carrito
 [ ] Implementar la adición de elementos al carrito
 [ ] Implementar la visualización del carrito
