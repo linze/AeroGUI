@@ -1,6 +1,6 @@
 format 75
 "classes"
-  revision 14
+  revision 16
   modified_by 6 "notrace"
 
 
@@ -209,6 +209,43 @@ ${members}}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 128006 // _journeys
+      end
+
+      operation 224390 "getOrigins"
+	public explicit_return_type "ArrayList<String>"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 224518 "getDestinations"
+	public explicit_return_type "ArrayList<String>"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 224646 "getDestinations"
+	public explicit_return_type "ArrayList<String>"
+	nparams 1
+	  param in name "origin" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
       end
 
       classrelation 128134 // <association>
@@ -1048,6 +1085,21 @@ ${members}}
 	  param in name "origin" explicit_type "string"
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 217606 "doDirectSearch"
+	class_operation public return_type class_ref 161414 // SearchResult
+	nparams 3
+	  param in name "origin" explicit_type "string"
+	  param in name "destination" explicit_type "string"
+	  param in name "journeyshandler" type class_ref 128006 // JourneysHandler
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
   ${body}}
 "
 	
@@ -2112,6 +2164,19 @@ ${members}}
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 157318 // _travels
       end
+
+      operation 217734 "addTravelInfo"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "travelinfo" type class_ref 161542 // TravelInfo
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
     end
 
     class 161542 "TravelInfo"
@@ -2181,6 +2246,19 @@ ${members}}
 	
 	idl_name_spec "set_${name}"
 	set_of_attribute attribute_ref 157446 // _journeysinfo
+      end
+
+      operation 217862 "addJourneyInfo"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "journeyinfo" type class_ref 128262 // JourneyInfo
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
       end
     end
 

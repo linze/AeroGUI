@@ -2,8 +2,8 @@
 ## Iteración 4
 <pre>
 [P] Diseñar diagrama de sequencia de la consulta de tarifas desde un origen
-[D] Implementar consulta de tarifas desde un origen (Req. CONS01)
-[ ] Implementar consulta de tarifas de transporte directo entre dos ciudades (Req. CONS03)
+[P] Implementar consulta de tarifas desde un origen (Req. CONS01)
+[P] Implementar consulta de tarifas de transporte directo entre dos ciudades (Req. CONS03)
 </pre>
 
 ### Leyenda:
