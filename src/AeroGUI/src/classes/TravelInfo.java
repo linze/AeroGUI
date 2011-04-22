@@ -20,4 +20,8 @@ public class TravelInfo {
         this._journeysinfo = _journeysinfo;
   }
 
+  public void addJourneyInfo(JourneyInfo ji) {
+        this._journeysinfo.add(ji);
+  }
+
 }

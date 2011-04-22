@@ -9,6 +9,10 @@ public class JourneyHandler {
 
   private String _datafilename;
 
+
+  /*
+   * Constructors
+   */
   public JourneyHandler() {
   }
 
@@ -17,6 +21,9 @@ public class JourneyHandler {
         this._datafilename = _datafilename;
   }
 
+  /*
+   * Attributes operations
+   */
   public String getDatafilename() {
         return _datafilename;
   }
@@ -33,6 +40,9 @@ public class JourneyHandler {
         this._journeysinfo = _journeysinfo;
   }
 
+  /*
+   * Handler data saving operations
+   */
   public void load() throws FileNotFoundException, ParseException {
         this._journeysinfo = JourneysFileParser.loadData(this._datafilename);
   }
@@ -41,4 +51,47 @@ public class JourneyHandler {
         JourneysFileParser.saveData(this._journeysinfo, this._datafilename);
   }
 
+  /*
+   * Extensions
+   */
+  public ArrayList<String> getOrigins() {
+      ArrayList<String> result = new ArrayList<String>();
+
+      String current;
+      for (int i=0; i<this._journeysinfo.size(); i++) {
+          current = this._journeysinfo.get(i).getOrigin();
+          if (!result.contains(current)) {
+              result.add(current);
+          }
+      }
+      return result;
+  }
+
+  public ArrayList<String> getDestinations() {
+      ArrayList<String> result = new ArrayList<String>();
+
+      String current;
+      for (int i=0; i<this._journeysinfo.size(); i++) {
+          current = this._journeysinfo.get(i).getDestination();
+          if (!result.contains(current)) {
+              result.add(current);
+          }
+      }
+      return result;
+  }
+
+  public ArrayList<String> getDestinations(String origin) {
+      ArrayList<String> result = new ArrayList<String>();
+
+      JourneyInfo current;
+      for (int i=0; i<this._journeysinfo.size(); i++) {
+          current = this._journeysinfo.get(i);
+          if (current.getOrigin().equals(origin)) {
+              if (!result.contains(current.getDestination())) {
+                  result.add(current.getDestination());
+              }
+          }
+      }
+      return result;
+  }
 }

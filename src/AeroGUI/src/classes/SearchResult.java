@@ -20,4 +20,8 @@ public class SearchResult {
         this._travelsinfo = _travelsinfo;
   }
 
+  public void addTravelInfo(TravelInfo t) {
+        this._travelsinfo.add(t);
+  }
+
 }
