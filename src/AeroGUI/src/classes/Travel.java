@@ -1,9 +1,10 @@
 
 package classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Travel {
+public class Travel implements Serializable {
   private Integer _ntravelers;
   private ArrayList<Journey> _journeys =  new ArrayList<Journey>();
 

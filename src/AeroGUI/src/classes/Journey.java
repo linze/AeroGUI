@@ -1,7 +1,9 @@
 
 package classes;
 
-public class Journey {
+import java.io.Serializable;
+
+public class Journey implements Serializable {
   private String _journeyinfoid;
   private String _journeyclass;
 

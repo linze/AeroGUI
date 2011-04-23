@@ -12,23 +12,28 @@
 package aerogui;
 
 import classes.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author notrace
  */
 public class frmCart extends javax.swing.JDialog {
-    private Operation _cart;
+    private Operation _cart = ComponentsBox.usershandler.getActiveuser().getCart();;
+    private Travel _currenttr = null;
+    private ArrayList<JourneyInfo> _currentjis = null;
+    private Journey _currentj = null;
+    private JourneyInfo _currentji = null;
 
     /** Creates new form frmCart */
     public frmCart(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this._cart = ComponentsBox.usershandler.getActiveuser().getCart();
-
+        
         DefaultListModel dlm = new DefaultListModel();
         String origin;
         String destination;
@@ -87,7 +92,6 @@ public class frmCart extends javax.swing.JDialog {
         txtOrigin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         txtArrival = new javax.swing.JTextField();
         txtDeparture = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -95,7 +99,6 @@ public class frmCart extends javax.swing.JDialog {
         txtPrice = new javax.swing.JTextField();
         txtType = new javax.swing.JTextField();
         txtClass = new javax.swing.JTextField();
-        txtSeats = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         btnRemoveAll = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
@@ -111,9 +114,9 @@ public class frmCart extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+                .addGap(44, 44, 44)
                 .addComponent(btnRemoveTravel)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,22 +125,27 @@ public class frmCart extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        txtTravels.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTravelsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtTravels);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -158,7 +166,7 @@ public class frmCart extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(219, 219, 219)
                 .addComponent(btnRemoveJourney)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,20 +183,25 @@ public class frmCart extends javax.swing.JDialog {
 
             }
         ));
+        tblJourneys.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblJourneysMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblJourneys);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -276,7 +289,7 @@ public class frmCart extends javax.swing.JDialog {
                         .addComponent(txtDestination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13)
                         .addComponent(txtArrival1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(49, Short.MAX_VALUE)))
+                    .addContainerGap(47, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Descripción del viaje", jPanel5);
@@ -295,8 +308,6 @@ public class frmCart extends javax.swing.JDialog {
 
         jLabel10.setText("Llegada");
 
-        jLabel7.setText("Asientos");
-
         txtArrival.setEnabled(false);
 
         txtDeparture.setEnabled(false);
@@ -311,13 +322,10 @@ public class frmCart extends javax.swing.JDialog {
 
         txtClass.setEnabled(false);
 
-        txtSeats.setEnabled(false);
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -329,14 +337,12 @@ public class frmCart extends javax.swing.JDialog {
                     .addComponent(txtOrigin, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                     .addComponent(txtDestination, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                     .addComponent(txtClass, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSeats)
                     .addComponent(txtArrival, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtDeparture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -351,7 +357,7 @@ public class frmCart extends javax.swing.JDialog {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 131, Short.MAX_VALUE)
+            .addGap(0, 129, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -369,13 +375,11 @@ public class frmCart extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(jLabel10)
                     .addComponent(txtArrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
                     .addComponent(txtClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jLabel8))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Descripción de la etapa", jPanel7);
@@ -394,19 +398,19 @@ public class frmCart extends javax.swing.JDialog {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(btnRemoveAll)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnClose)
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                    .addComponent(btnRemoveAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(133, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClose)
-                    .addComponent(btnRemoveAll))
+                .addContainerGap(96, Short.MAX_VALUE)
+                .addComponent(btnRemoveAll)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClose)
                 .addContainerGap())
         );
 
@@ -417,38 +421,152 @@ public class frmCart extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTabbedPane1)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveJourneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveJourneyActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnRemoveJourneyActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    private void txtTravelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTravelsMouseClicked
+        onTravelChange();
+    }//GEN-LAST:event_txtTravelsMouseClicked
+
+    private void tblJourneysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJourneysMouseClicked
+        onJourneyChange();
+    }//GEN-LAST:event_tblJourneysMouseClicked
+
+    private void onTravelChange() {
+        this._currenttr = this._cart.getTravels().get(txtTravels.getSelectedIndex());
+        this._currentjis = new ArrayList<JourneyInfo>();
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[]{"Origen", "Destino", "Tipo", "Precio"});
+
+        JourneyInfo ji;
+        Journey j;
+        for (int i=0; i<_currenttr.getJourneys().size(); i++) {
+            try {
+                j = this._currenttr.getJourneys().get(i);
+                ji = TravelSearch.doJourneyInfoSearch(j.getJourneyinfoid(), ComponentsBox.journeyshandler);
+                this._currentjis.add(ji);
+                if (j.getJourneyclass().equals("Turista")) {
+                    model.addRow(new Object[]{ji.getOrigin(),
+                        ji.getDestination(),
+                        ji.getType(),
+                        ji.getTouristinfo().getPrice().toString()});
+                } else {
+                    model.addRow(new Object[]{ji.getOrigin(),
+                        ji.getDestination(),
+                        ji.getType(),
+                        ji.getBusinessinfo().getPrice().toString()});
+                }
+            } catch (NotFoundException ex) {
+                Logger.getLogger(frmCart.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        tblJourneys.setModel(model);
+
+        updateTravelDetails();
+    }
+
+    private void onJourneyChange() {
+        try {
+            this._currentj = this._currenttr.getJourneys().get(tblJourneys.getSelectedRow());
+            this._currentji = TravelSearch.doJourneyInfoSearch(_currentj.getJourneyinfoid(), ComponentsBox.journeyshandler);
+
+            updateJourneyDetails();
+        } catch (NotFoundException ex) {
+            Logger.getLogger(frmCart.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void updateTravelDetails() {
+        if (this._currenttr != null) {
+            try {
+                JourneyInfo firstji = TravelSearch.doJourneyInfoSearch(_currenttr.getOriginJourneyId(), ComponentsBox.journeyshandler);
+                JourneyInfo lastji = TravelSearch.doJourneyInfoSearch(_currenttr.getDestinationJourneyId(), ComponentsBox.journeyshandler);
+                txtOrigin1.setText(firstji.getOrigin());
+                txtDestination1.setText(lastji.getDestination());
+                txtDeparture1.setText(JourneyInfo.DATETIMEFORMAT.format(firstji.getDeparture().getTime()));
+                txtArrival1.setText(JourneyInfo.DATETIMEFORMAT.format(lastji.getArrival().getTime()));
+
+                JourneyInfo tmpji = null;
+                Journey tmpj = null;
+                Double price = 0.0;
+                for (int i=0; i<_currenttr.getJourneys().size(); i++) {
+                    tmpj = _currenttr.getJourneys().get(i);
+                    tmpji = TravelSearch.doJourneyInfoSearch(tmpj.getJourneyinfoid(), ComponentsBox.journeyshandler);
+                    if (tmpj.getJourneyclass().equals("Turista")) {
+                        price += tmpji.getTouristinfo().getPrice().getQuantity();
+                    } else {
+                        price += tmpji.getBusinessinfo().getPrice().getQuantity();
+                    }
+                }
+
+                // FIXME: It gets the last item currency. That's crap.
+                txtPrice1.setText(Double.toString(price) + " " + tmpji.getTouristinfo().getPrice().getCurrency());
+                txtSeats1.setText(Integer.toString(this._currenttr.getNtravelers()));
+            } catch (NotFoundException ex) {
+                Logger.getLogger(frmCart.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            txtOrigin1.setText("");
+            txtDestination1.setText("");
+            txtDeparture1.setText("");
+            txtArrival1.setText("");
+            txtPrice1.setText("");
+        }
+    }
+    private void updateJourneyDetails() {
+        if (this._currentji != null) {
+            txtOrigin.setText(this._currentji.getOrigin());
+            txtDestination.setText(this._currentji.getDestination());
+            txtDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(this._currentji.getDeparture().getTime()));
+            txtArrival.setText(JourneyInfo.DATETIMEFORMAT.format(this._currentji.getArrival().getTime()));
+            txtType.setText(this._currentji.getType());
+            if (this._currentj.getJourneyclass().equals("Turista")) {
+                txtPrice.setText(this._currentji.getTouristinfo().getPrice().toString());
+                txtClass.setText("Turista");
+            } else {
+                txtPrice.setText(this._currentji.getBusinessinfo().getPrice().toString());
+                txtClass.setText("Ejecutivo");
+            }
+        } else {
+            txtOrigin.setText("");
+            txtDestination.setText("");
+            txtDeparture.setText("");
+            txtArrival.setText("");
+            txtType.setText("");
+            txtPrice.setText("");
+            txtClass.setText("");
+        }
+    }
     /**
     * @param args the command line arguments
     */
@@ -482,7 +600,6 @@ public class frmCart extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -507,7 +624,6 @@ public class frmCart extends javax.swing.JDialog {
     private javax.swing.JTextField txtOrigin1;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtPrice1;
-    private javax.swing.JTextField txtSeats;
     private javax.swing.JTextField txtSeats1;
     private javax.swing.JList txtTravels;
     private javax.swing.JTextField txtType;
