@@ -268,6 +268,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         jButton10.setText("Reservar");
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel4.setText("Reservar contenido del carrito.");
@@ -431,6 +436,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         frmCart fc = new frmCart(this,true);
         fc.setVisible(true);
     }//GEN-LAST:event_txtCartActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        frmReserva fr = new frmReserva(this, true);
+        fr.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
     * @param args the command line arguments
