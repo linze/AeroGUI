@@ -1,4 +1,12 @@
 # Documento de historia de cambios
+## Iteracción 5
+<ul>
+    <li>Implementada la botonera de cambio de panel del menú principal</li>
+    <li>Diseñada la GUI del carrito</li>
+    <li>Implementada la adición de elementos al carrito</li>
+    <li>Implementada la visualización del carrito</li>
+</ul>
+
 ## Iteracción 4
 <ul>
     <li>Diseñado un diagrama de sequencia de la consulta de tarifas desde un origen</li>

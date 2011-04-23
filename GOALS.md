@@ -1,10 +1,9 @@
 # Documento de objetivos para la iteracción
 ## Iteración 5
 <pre>
-[X] Implementar la botonera de cambio de panel del menú principal
-[X] Diseñar la interfaz gráfica del carrito
-[X] Implementar la adición de elementos al carrito
-[X] Implementar la visualización del carrito
+[ ] Implementar la reserva (Req. FUN02)
+[ ] Implementar la compra (Req. FUN03)
+
 </pre>
 
 ### Leyenda:
@@ -18,7 +17,6 @@
 
 ## Posibles siguientes objetivos
 <ul>
-    <li>Implementar la reserva de objetos en el carrito</li>
-    <li>Implementar la compra de elementos reservados</li>
+    <li>Implementar el chequeo y actualización de asientos restantes</li>
     <li>Realizar gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)</li>
 </ul>
