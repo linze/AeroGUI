@@ -6,20 +6,161 @@
 /*
  * frmComprar.java
  *
- * Created on 19-abr-2011, 19:27:04
+ * Created on 23-abr-2011, 17:58:16
  */
 
 package aerogui;
+
+import classes.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 
 /**
  *
  * @author notrace
  */
-public class frmComprar extends javax.swing.JFrame {
+public class frmComprar extends javax.swing.JDialog {
+    private ArrayList<Operation> _ops;
+    private double _currentprice;
+    private Operation _currentoperation = null;
 
     /** Creates new form frmComprar */
-    public frmComprar() {
+    public frmComprar(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        fillList();
+    }
+
+    private void fillList() {
+        _ops = ComponentsBox.usershandler.getActiveuser().getReservedOperations();
+        DefaultListModel dlm = new DefaultListModel();       
+        for (int i=0; i<_ops.size(); i++) {
+            dlm.addElement("Reserva #" + Integer.toString(i+1));
+        }
+        txtReservations.setModel(dlm);
+
+    }
+
+    private void fillTree() {
+        Operation op = _currentoperation;
+
+        DefaultMutableTreeNode tntravel;
+        DefaultMutableTreeNode tnjourney;
+
+        // Get the tree
+        TreeModel model = new DefaultTreeModel(generateRootNode(op));
+        trContent.setModel(model);
+
+//        // Expand all
+//        for (int i = 0; i < trReservation.getRowCount(); i++)
+//            trReservation.expandRow(i);
+    }
+
+    private DefaultMutableTreeNode generateRootNode(Operation cart) {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Contenido de la reserva");
+
+        // Add the subnodes
+        Travel tr;
+        for(int i=0; i< cart.getTravels().size(); i++) {
+            tr = cart.getTravels().get(i);
+            root.add(generateTravelNode(tr, i+1));
+        }
+
+        // Add the price
+        DefaultMutableTreeNode nprice = new DefaultMutableTreeNode("Precio total: " + Double.toString(this._currentprice) + " EUR");
+        root.add(nprice);
+
+        return root;
+    }
+
+    private DefaultMutableTreeNode generateTravelNode(Travel tr, Integer num) {
+        DefaultMutableTreeNode result = new DefaultMutableTreeNode();
+
+        DefaultMutableTreeNode tmp;
+        tmp = new DefaultMutableTreeNode("Pasajeros: " + Integer.toString(tr.getNtravelers()));
+
+        Journey cj;
+        // Get the travel price
+        JourneyInfo ji;
+        double price = 0.0;
+        for (int i=0; i<tr.getJourneys().size(); i++) {
+            try {
+                cj = tr.getJourneys().get(i);
+                ji = TravelSearch.doJourneyInfoSearch(cj.getJourneyinfoid(), ComponentsBox.journeyshandler);
+                if (cj.getJourneyclass().equals("Turista")) {
+                    price += ji.getTouristinfo().getPrice().getQuantity();
+                } else {
+                    price += ji.getBusinessinfo().getPrice().getQuantity();
+                }
+            } catch (NotFoundException ex) {
+                Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        tmp = new DefaultMutableTreeNode("Precio del viaje: " + Double.toString(price));
+        result.add(tmp);
+        this._currentprice += price;
+
+        // Get the subnodes
+        for (int i=0; i<tr.getJourneys().size(); i++) {
+            cj = tr.getJourneys().get(i);
+            result.add(generateJourneyNode(cj, i+1));
+        }
+
+        // Place origin and destination in title
+        try {
+            String origin = TravelSearch.doJourneyInfoSearch(tr.getOriginJourneyId(), ComponentsBox.journeyshandler).getOrigin();
+            String destination = TravelSearch.doJourneyInfoSearch(tr.getDestinationJourneyId(), ComponentsBox.journeyshandler).getDestination();
+
+            result.setUserObject("Viaje " + Integer.toString(num) + ": " + origin + " - " + destination);
+        } catch (NotFoundException ex) {
+            Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
+
+    private DefaultMutableTreeNode generateJourneyNode(Journey jr, Integer num) {
+        DefaultMutableTreeNode result = new DefaultMutableTreeNode();
+        try {
+
+            DefaultMutableTreeNode tmp;
+            JourneyInfo ji = TravelSearch.doJourneyInfoSearch(jr.getJourneyinfoid(), ComponentsBox.journeyshandler);
+            tmp = new DefaultMutableTreeNode("Id trayecto: " + ji.getId());
+            result.add(tmp);
+            tmp = new DefaultMutableTreeNode("Origen: " + ji.getOrigin());
+            result.add(tmp);
+            tmp = new DefaultMutableTreeNode("Destino: " + ji.getDestination());
+            result.add(tmp);
+            tmp = new DefaultMutableTreeNode("Salida: " + JourneyInfo.DATETIMEFORMAT.format(ji.getDeparture().getTime()));
+            result.add(tmp);
+            tmp = new DefaultMutableTreeNode("Llegada: " + JourneyInfo.DATETIMEFORMAT.format(ji.getArrival().getTime()));
+            result.add(tmp);
+            if (jr.getJourneyclass().equals("Turista")) {
+                tmp = new DefaultMutableTreeNode("Clase: Turista");
+                result.add(tmp);
+                tmp = new DefaultMutableTreeNode("Precio: " +
+                        ji.getTouristinfo().getPrice().toString());
+                result.add(tmp);
+            } else {
+                tmp = new DefaultMutableTreeNode("Clase: Turista");
+                result.add(tmp);
+                tmp = new DefaultMutableTreeNode("Precio: " +
+                        ji.getBusinessinfo().getPrice().toString());
+                result.add(tmp);
+            }
+            String origin;
+            String destination;
+            result.setUserObject("Etapa " + Integer.toString(num) + ": " + ji.getOrigin() + " - " + ji.getDestination());
+
+        } catch (NotFoundException ex) {
+            Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     /** This method is called from within the constructor to
@@ -33,18 +174,20 @@ public class frmComprar extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
-        jButton1 = new javax.swing.JButton();
+        trContent = new javax.swing.JTree();
+        btnClose = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jButton2 = new javax.swing.JButton();
+        txtReservations = new javax.swing.JList();
+        btnBuy = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Contenido de la reserva"));
 
-        jScrollPane1.setViewportView(jTree1);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Seleccione la reserva a abonar");
+        trContent.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(trContent);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -57,16 +200,26 @@ public class frmComprar extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Cerrar");
+        btnClose.setText("Cerrar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Reservas"));
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        txtReservations.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        txtReservations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtReservationsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(txtReservations);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -79,27 +232,30 @@ public class frmComprar extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
         );
 
-        jButton2.setText("Comprar y cerrar");
+        btnBuy.setText("Comprar y cerrar");
+        btnBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 851, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(660, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnBuy)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnClose)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 433, Short.MAX_VALUE)
             .addGap(0, 433, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -107,13 +263,35 @@ public class frmComprar extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnClose)
+                    .addComponent(btnBuy))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtReservationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtReservationsMouseClicked
+        Integer index = txtReservations.getSelectedIndex();
+        if (index != -1) {
+            this._currentoperation = this._ops.get(txtReservations.getSelectedIndex());
+            fillTree();
+        }
+    }//GEN-LAST:event_txtReservationsMouseClicked
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
+        if (this._currentoperation != null) {
+            // TODO: Add seats existence check
+            this._currentoperation.setStatus(OperationStatus.BOUGHT);
+
+            // TODO: Notify success
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnBuyActionPerformed
 
     /**
     * @param args the command line arguments
@@ -121,20 +299,26 @@ public class frmComprar extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmComprar().setVisible(true);
+                frmComprar dialog = new frmComprar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JList jList1;
+    private javax.swing.JButton btnBuy;
+    private javax.swing.JButton btnClose;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JTree trContent;
+    private javax.swing.JList txtReservations;
     // End of variables declaration//GEN-END:variables
 
 }

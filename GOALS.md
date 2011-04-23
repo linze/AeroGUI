@@ -1,8 +1,8 @@
 # Documento de objetivos para la iteracción
 ## Iteración 5
 <pre>
-[ ] Implementar la reserva (Req. FUN02)
-[ ] Implementar la compra (Req. FUN03)
+[P] Implementar la reserva (Req. FUN02)
+[P] Implementar la compra (Req. FUN03)
 
 </pre>
 

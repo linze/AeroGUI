@@ -53,7 +53,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jButton13 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jButton12 = new javax.swing.JButton();
+        btnDoBuy = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -340,10 +340,15 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         pnlMenu.addTab("Reserva", jPanel4);
 
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tickets.png"))); // NOI18N
-        jButton12.setText("Comprar");
-        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDoBuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tickets.png"))); // NOI18N
+        btnDoBuy.setText("Comprar");
+        btnDoBuy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDoBuy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDoBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoBuyActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel5.setText("Abonar y obtener billetes de una reserva.");
@@ -354,7 +359,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDoBuy, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addContainerGap(174, Short.MAX_VALUE))
@@ -364,7 +369,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12)
+                    .addComponent(btnDoBuy)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel5)))
@@ -442,6 +447,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         fr.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void btnDoBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoBuyActionPerformed
+        frmComprar fcp = new frmComprar(this, true);
+        fcp.setVisible(true);
+    }//GEN-LAST:event_btnDoBuyActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -456,6 +466,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnDirectSearch;
+    private javax.swing.JButton btnDoBuy;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnJourneyInfoSearch;
     private javax.swing.JButton btnOriginSearch;
@@ -464,7 +475,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
