@@ -3,8 +3,8 @@
 <pre>
 [X] Implementar la botonera de cambio de panel del menú principal
 [X] Diseñar la interfaz gráfica del carrito
-[P] Implementar la adición de elementos al carrito
-[P] Implementar la visualización del carrito
+[X] Implementar la adición de elementos al carrito
+[X] Implementar la visualización del carrito
 </pre>
 
 ### Leyenda:
