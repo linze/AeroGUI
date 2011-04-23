@@ -33,7 +33,10 @@ public class frmCart extends javax.swing.JDialog {
     public frmCart(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        refreshOnCartList();
+    }
+
+    private void refreshOnCartList() {
         DefaultListModel dlm = new DefaultListModel();
         String origin;
         String destination;
@@ -50,7 +53,6 @@ public class frmCart extends javax.swing.JDialog {
         }
         txtTravels.setModel(dlm);
     }
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -108,6 +110,11 @@ public class frmCart extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Viajes"));
 
         btnRemoveTravel.setText("Eliminar viaje");
+        btnRemoveTravel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveTravelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -357,7 +364,6 @@ public class frmCart extends javax.swing.JDialog {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 129, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -385,6 +391,11 @@ public class frmCart extends javax.swing.JDialog {
         jTabbedPane1.addTab("Descripción de la etapa", jPanel7);
 
         btnRemoveAll.setText("Eliminar todo");
+        btnRemoveAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveAllActionPerformed(evt);
+            }
+        });
 
         btnClose.setText("Cerrar");
         btnClose.addActionListener(new java.awt.event.ActionListener() {
@@ -445,8 +456,29 @@ public class frmCart extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void removeCurrentTravel() {
+        int index = txtTravels.getSelectedIndex();
+        if (index != -1) {
+            this._cart.getTravels().remove(index);
+            refreshOnCartList();
+            /* TODO: Some improvements could be done so when the user
+             * removes a travel the table doesn't show its journeys even
+             * after the removal.
+             */
+        }
+    }
     private void btnRemoveJourneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveJourneyActionPerformed
-
+        int index = tblJourneys.getSelectedRow();
+        if (index != -1) {
+            if (!this._currenttr.isCompound()) {
+                // If it only one journey, we delete the complete travel
+                removeCurrentTravel();
+            } else {
+                this._currenttr.getJourneys().remove(index);
+                onTravelChange();
+            }
+            refreshOnCartList();
+        }
     }//GEN-LAST:event_btnRemoveJourneyActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
@@ -460,6 +492,17 @@ public class frmCart extends javax.swing.JDialog {
     private void tblJourneysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJourneysMouseClicked
         onJourneyChange();
     }//GEN-LAST:event_tblJourneysMouseClicked
+
+    private void btnRemoveTravelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTravelActionPerformed
+        removeCurrentTravel();
+    }//GEN-LAST:event_btnRemoveTravelActionPerformed
+
+    private void btnRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAllActionPerformed
+        // TODO: Ask before doing
+        this._cart.getTravels().clear();
+        // TODO: Notify before closing
+        this.dispose();
+    }//GEN-LAST:event_btnRemoveAllActionPerformed
 
     private void onTravelChange() {
         this._currenttr = this._cart.getTravels().get(txtTravels.getSelectedIndex());
