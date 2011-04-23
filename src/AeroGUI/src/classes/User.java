@@ -11,16 +11,12 @@ import security.*;
 
 public class User implements Serializable {
   private String _firstname;
-
   private String _lastname;
-
   private String _address;
-
   private String _email;
-
   private String _password;
-
   private ArrayList<Operation> _operations =  new ArrayList<Operation>();
+  private Operation _cart = new Operation();
 
   public User() {
   }
@@ -65,6 +61,15 @@ public class User implements Serializable {
         this._operations = _operations;
   }
 
+  public Operation getCart() {
+        return _cart;
+  }
+
+  public void setCart(Operation _cart) {
+        this._cart = _cart;
+  }
+
+
   public String getPasswordHash() {
         return _password;
   }
@@ -93,6 +98,30 @@ public class User implements Serializable {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+  }
+
+  public ArrayList<Operation> getReservedOperations() {
+      ArrayList<Operation> result = new ArrayList<Operation>();
+      Operation current;
+      for (int i=0; i<this._operations.size(); i++) {
+          current = this._operations.get(i);
+          if (current.getStatus() == OperationStatus.RESERVED)
+              result.add(current);
+      }
+
+      return result;
+  }
+
+  public ArrayList<Operation> getBoughtOperations() {
+      ArrayList<Operation> result = new ArrayList<Operation>();
+      Operation current;
+      for (int i=0; i<this._operations.size(); i++) {
+          current = this._operations.get(i);
+          if (current.getStatus() == OperationStatus.BOUGHT)
+              result.add(current);
+      }
+
+      return result;
   }
 
 }

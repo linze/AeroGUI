@@ -32,7 +32,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
+        txtCart = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnExit = new javax.swing.JButton();
         pnlMenu = new javax.swing.JTabbedPane();
@@ -95,7 +95,12 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/shopping_cart.png"))); // NOI18N
 
-        jButton9.setText("Administrar carro");
+        txtCart.setText("Administrar carro");
+        txtCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,7 +123,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addGap(32, 32, 32))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                        .addComponent(txtCart, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,7 +142,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
+                .addComponent(txtCart)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -422,6 +427,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         pnlMenu.setSelectedIndex(2);
     }//GEN-LAST:event_btnBuyActionPerformed
 
+    private void txtCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCartActionPerformed
+        frmCart fc = new frmCart(this,true);
+        fc.setVisible(true);
+    }//GEN-LAST:event_txtCartActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -446,7 +456,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -464,6 +473,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTabbedPane pnlMenu;
+    private javax.swing.JButton txtCart;
     // End of variables declaration//GEN-END:variables
 
 }

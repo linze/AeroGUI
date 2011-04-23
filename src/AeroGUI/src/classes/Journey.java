@@ -2,36 +2,35 @@
 package classes;
 
 public class Journey {
-  private Integer _travelid;
+  private String _journeyinfoid;
+  private String _journeyclass;
 
-  private Price _price =  new Price();
+    public Journey() {
+    }
 
-  public Journey() {
-  }
+    public Journey(String _journeyinfoid, String _journeyclass) {
+        this._journeyinfoid = _journeyinfoid;
+        this._journeyclass = _journeyclass;
+    }
 
-  public Journey(JourneyInfo journeyinfo) {
-        // TODO: Implement conversion
-  }
+    public Journey(JourneyInfo ji, String journeyclass) {
+        this._journeyinfoid = ji.getId();
+        this._journeyclass = journeyclass;
+    }
 
-  public Journey(Integer _travelid, Price _price) {
-        this._travelid = _travelid;
-        this._price = _price;
-  }
+    public String getJourneyclass() {
+        return _journeyclass;
+    }
 
-  public Price getPrice() {
-        return _price;
-  }
+    public void setJourneyclass(String _journeyclass) {
+        this._journeyclass = _journeyclass;
+    }
 
-  public void setPrice(Price _price) {
-        this._price = _price;
-  }
+    public String getJourneyinfoid() {
+        return _journeyinfoid;
+    }
 
-  public Integer getTravelid() {
-        return _travelid;
-  }
-
-  public void setTravelid(Integer _travelid) {
-        this._travelid = _travelid;
-  }
-
+    public void setJourneyinfoid(String _journeyinfoid) {
+        this._journeyinfoid = _journeyinfoid;
+    }
 }

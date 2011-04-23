@@ -12,7 +12,10 @@
 package aerogui;
 
 import classes.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -70,7 +73,7 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
         txtArrival = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         txtClose = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        addCart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -249,7 +252,12 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Añadir al carrito");
+        addCart.setText("Añadir al carrito");
+        addCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -258,14 +266,14 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtClose, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                    .addComponent(addCart, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(47, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(addCart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtClose))
         );
@@ -393,6 +401,25 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_txtCloseActionPerformed
 
+    private void addCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCartActionPerformed
+        if (this._currentji != null) {
+            // TODO: Show a dialog asking for confirmation
+            String selectedclass = (String)txtClass.getSelectedItem();
+            Journey newj = new Journey(this._currentji, selectedclass);
+            Travel newt = new Travel();
+            newt.setNtravelers((Integer)txtSeats.getValue());
+            newt.getJourneys().add(newj);
+
+            ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
+            try {
+                ComponentsBox.saveAll();
+            } catch (IOException ex) {
+                // TODO: Notice the user
+                Logger.getLogger(frmConsultaOrigen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_addCartActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -405,7 +432,7 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton addCart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

@@ -371,7 +371,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtClose" alignment="0" pref="148" max="32767" attributes="1"/>
-                          <Component id="jButton1" alignment="0" pref="148" max="32767" attributes="1"/>
+                          <Component id="addCart" alignment="0" pref="148" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -381,7 +381,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="47" max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="addCart" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtClose" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -397,10 +397,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCloseActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="addCart">
               <Properties>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir al carrito"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCartActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

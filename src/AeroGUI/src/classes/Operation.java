@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 public class Operation implements Serializable {
   private OperationStatus _status;
-
   private ArrayList<Travel> _travels =  new ArrayList<Travel>();
 
   public Operation() {
@@ -32,9 +31,13 @@ public class Operation implements Serializable {
         this._travels = _travels;
   }
 
-  public void addTravel(TravelInfo travelinfo, Integer ntravelers) {
-        Travel newTravel = new Travel(travelinfo);
-        newTravel.setNtravelers(ntravelers);
+  /*
+   * Note that this method is only useful when they're just one Journey in the
+   * TravelInfo or all the Journey inside have the same class. If not, they've
+   * to be added one by one.
+   */
+  public void addTravel(TravelInfo travelinfo, Integer ntravelers, String journeyclass) {
+        Travel newTravel = new Travel(travelinfo, ntravelers, journeyclass);
         this._travels.add(newTravel);
   }
 

@@ -2,9 +2,9 @@
 ## Iteración 5
 <pre>
 [X] Implementar la botonera de cambio de panel del menú principal
-[ ] Diseñar la interfaz gráfica del carrito
-[ ] Implementar la adición de elementos al carrito
-[ ] Implementar la visualización del carrito
+[P] Diseñar la interfaz gráfica del carrito
+[D] Implementar la adición de elementos al carrito
+[D] Implementar la visualización del carrito
 </pre>
 
 ### Leyenda:
