@@ -1,8 +1,10 @@
 # Documento de objetivos para la iteracción
-## Iteración 5
+## Iteración 7
 <pre>
-[X] Implementar la reserva (Req. FUN02)
-[X] Implementar la compra (Req. FUN03)
+[ ] Implementar el chequeo y actualización de asientos restantes
+[ ] Implementar la edición de datos del usuario (Req. FUN005)
+[ ] Implementar la eliminación de datos del usuario (Req. FUN006)
+[ ] Realizar gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)
 
 </pre>
 
@@ -16,7 +18,3 @@
 
 
 ## Posibles siguientes objetivos
-<ul>
-    <li>Implementar el chequeo y actualización de asientos restantes</li>
-    <li>Realizar gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)</li>
-</ul>

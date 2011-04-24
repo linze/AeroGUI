@@ -1,5 +1,11 @@
 # Documento de historia de cambios
-## Iteracción 5
+## Iteración 6
+<ul>
+    <li>Implementada la reserva (Req. FUN02)</li>
+    <li>Implementada la compra (Req. FUN03)</li>
+</ul>
+
+## Iteración 5
 <ul>
     <li>Implementada la botonera de cambio de panel del menú principal</li>
     <li>Diseñada la GUI del carrito</li>
@@ -14,7 +20,7 @@
     <li>Implementada la consulta de tarifas de transporte directo entre dos ciudades (Req. CONS03)</li>
 </ul>
 
-## Iteracción 3
+## Iteración 3
 <ul>
     <li>Diseñado un diagrama de secuencia para el registro</li>
     <li>Diseñado un diagrama de secuencia para el login</li>
@@ -23,7 +29,7 @@
     <li>Implementada la persistencia de datos (Req. FUN005)</li>
 </ul>
 
-## Iteracción 2
+## Iteración 2
 <ul>
     <li>Diseñado un diagrama de clases</li>
     <li>Implementada una versión básica de todas las clases</li>
@@ -31,7 +37,7 @@
     <li>Implementada la consulta de información de un transporte en concreto (Req. CONS04)</li>
 </ul>
 
-## Iteracción 1
+## Iteración 1
 <ul>
     <li>Desarrollada la primera especificación de requisitos.</li>
     <li>Desarrollado el primer documento de casos de uso.</li>
