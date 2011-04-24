@@ -1,4 +1,11 @@
 # Documento de historia de cambios
+## Iteración 7
+<ul>
+    <li>Implementado el chequeo y actualización de asientos restantes</li>
+    <li>Implementada la edición de datos del usuario (Req. FUN005)</li>
+    <li>Implementada la eliminación de datos del usuario (Req. FUN006)</li>
+    <li>Realizados gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)</li>
+</ul>
 ## Iteración 6
 <ul>
     <li>Implementada la reserva (Req. FUN02)</li>
