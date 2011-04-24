@@ -16,6 +16,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         ComponentsBox.initialize();
         frmLogin fl = new frmLogin(this, true);
         fl.setVisible(true);
+        // If the user have closed the login instead of login, close
+        if (ComponentsBox.usershandler.getActiveuser() == null)
+            System.exit(0);
         initComponents();
     }
 
@@ -58,7 +61,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnDoBuy = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);

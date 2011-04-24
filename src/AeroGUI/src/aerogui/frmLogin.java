@@ -29,7 +29,7 @@ public class frmLogin extends javax.swing.JDialog {
         this._parent = parent;
         initComponents();
         initSplash();
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private void initSplash() {
