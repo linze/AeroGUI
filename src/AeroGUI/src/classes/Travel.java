@@ -57,7 +57,6 @@ public class Travel implements Serializable {
   }
 
   public String getDestinationJourneyId() {
-        // TODO Remove this comment if size-1 is the correct index
         return this._journeys.get(this._journeys.size()-1).getJourneyinfoid();
   }
 

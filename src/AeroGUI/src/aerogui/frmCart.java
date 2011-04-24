@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -500,7 +501,7 @@ public class frmCart extends javax.swing.JDialog {
     private void btnRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAllActionPerformed
         // TODO: Ask before doing
         this._cart.getTravels().clear();
-        // TODO: Notify before closing
+        JOptionPane.showMessageDialog(this, "El carrito ahora está vacío.");
         this.dispose();
     }//GEN-LAST:event_btnRemoveAllActionPerformed
 

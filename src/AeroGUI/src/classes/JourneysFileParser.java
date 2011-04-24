@@ -32,7 +32,7 @@ public class JourneysFileParser {
                 journeyinfo.setOrigin(lineinfo[2]);
                 journeyinfo.setDestination(lineinfo[3]);
                 
-                // TODO: Check email to know teachers answer and date-time format
+                // Date and time information
                 journeyinfo.getDeparture().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[4] + " " + lineinfo[5]));
                 journeyinfo.getArrival().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[6] + " " + lineinfo[7]));
 

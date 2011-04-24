@@ -12,10 +12,12 @@
 package aerogui;
 
 import classes.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
@@ -285,11 +287,15 @@ public class frmComprar extends javax.swing.JDialog {
 
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
         if (this._currentoperation != null) {
-            // TODO: Add seats existence check
             this._currentoperation.setStatus(OperationStatus.BOUGHT);
-
-            // TODO: Notify success
-            this.dispose();
+            try {
+                ComponentsBox.saveAll();
+                JOptionPane.showMessageDialog(this, "La compra se ha realizado con éxito.");
+                this.dispose();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
+                Logger.getLogger(frmComprar.class.getName()).log(Level.SEVERE, null, ex);
+            }            
         }
     }//GEN-LAST:event_btnBuyActionPerformed
 

@@ -15,6 +15,7 @@ import classes.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
@@ -237,10 +238,10 @@ public class frmReserva extends javax.swing.JDialog {
         user.setCart(new Operation());
         try {
             ComponentsBox.saveAll();
-            // TODO Notify success
+            JOptionPane.showMessageDialog(this, "Los elementos se han reservado con éxito.");
             this.dispose();
         } catch (IOException ex) {
-            // TODO Notify error
+            JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
             Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -406,12 +407,13 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
                 ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
                 try {
                     ComponentsBox.saveAll();
+                    JOptionPane.showMessageDialog(this, "Los elementos se han añadido al carrito exitosamente.");
                 } catch (IOException ex) {
-                    // TODO: Notice the user
-                    Logger.getLogger(frmConsultaOrigen.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
+                    Logger.getLogger(frmConsultaDirecto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                // TODO: Notify the user that they're no seats
+                JOptionPane.showMessageDialog(this, "Lo lamentamos, el transporte no dispone de tantas plazas.");
             }
         }
     }//GEN-LAST:event_btnCartActionPerformed
