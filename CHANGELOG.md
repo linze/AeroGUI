@@ -13,7 +13,7 @@
     <li>Implementada la visualización del carrito</li>
 </ul>
 
-## Iteracción 4
+## Iteración 4
 <ul>
     <li>Diseñado un diagrama de sequencia de la consulta de tarifas desde un origen</li>
     <li>Implementada la consulta de tarifas desde un origen (Req. CONS01)</li>

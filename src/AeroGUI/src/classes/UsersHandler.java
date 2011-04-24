@@ -64,7 +64,7 @@ public class UsersHandler {
 
   public boolean login(String email, String password) {
         try {
-            User logUser = this._userslist.getUser(email);
+            User logUser = this._userslist.getUser(email.toLowerCase());
             return logUser.isPassword(password);
         } catch (NotFoundException ex) {
             return false;
@@ -81,7 +81,7 @@ public class UsersHandler {
             newUser.setFirstname(fname);
             newUser.setLastname(lname);
             newUser.setAddress(address);
-            newUser.setEmail(email);
+            newUser.setEmail(email.toLowerCase());
             newUser.setPassword(password);
 
             this._userslist.getUsers().add(newUser);
@@ -96,7 +96,8 @@ public class UsersHandler {
             usr.setFirstname(fname);
             usr.setLastname(lname);
             usr.setAddress(address);
-            usr.setPassword(password);
+            if (password != null)
+                usr.setPassword(password);
         } catch (NotFoundException ex) {
             Logger.getLogger(UsersHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

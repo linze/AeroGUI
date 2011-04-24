@@ -27,6 +27,7 @@ public class frmAdministrarUsuario extends javax.swing.JDialog {
     public frmAdministrarUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        fillComponents();
     }
 
     private void fillComponents() {
@@ -214,21 +215,40 @@ public class frmAdministrarUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean checkFields() {
-        return true;
+        String problems = "";
+        if (txtFname.getText().length() < 2)
+            problems += "El nombre es demasiado corto\n";
+        if (txtLname.getText().length() < 2)
+            problems += "Los apellidos son demasiado cortos\n";
+        if (txtAddress.getText().length() < 7)
+            problems += "La dirección es demasiado corta\n";
+        if (txtEmail.getText().length() < 8)
+            problems += "La dirección de correo electrónico es demiasiado corta\n";
+        if (txtPassword.getPassword().equals(txtPasswordCheck.getPassword()))
+            problems += "Las contraseñas no coinciden\n";
+
+        if (!problems.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos no se han completado correctamente:\n" + problems);
+        }
+        return problems.isEmpty();
     }
     
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         if (checkFields()) {
-            ComponentsBox.usershandler.update(txtFname.getText(), txtLname.getText(), txtAddress.getText(), txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
+            if (!String.valueOf(txtPassword.getPassword()).equals("")) {
+                ComponentsBox.usershandler.update(txtFname.getText(), txtLname.getText(), txtAddress.getText(), txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
+            } else {
+                ComponentsBox.usershandler.update(txtFname.getText(), txtLname.getText(), txtAddress.getText(), txtEmail.getText(), null);
+            }
+
             try {
                 ComponentsBox.saveAll();
-                JOptionPane.showMessageDialog(this, "¡El registro se ha llevado a cabo con éxito!");
+                JOptionPane.showMessageDialog(this, "¡La actualización de su registro se ha llevado a cabo con éxito!");
                 this.dispose();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Se ha producido un error al actualizar el fichero de datos.");
                 Logger.getLogger(frmAdministrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
 }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -239,8 +259,14 @@ public class frmAdministrarUsuario extends javax.swing.JDialog {
     private void btnRemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveUserActionPerformed
         // TODO: Ask user if he really wants to be deleted from the system
         ComponentsBox.usershandler.remove(ComponentsBox.usershandler.getActiveuseremail());
-        // TODO: Notify success
-        System.exit(0);
+            try {
+                ComponentsBox.saveAll();
+                JOptionPane.showMessageDialog(this, "Se ha eliminado su usuario. La aplicación se cerrará tras aceptar.");
+                System.exit(0);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Se ha producido un error al actualizar el fichero de datos.");
+                Logger.getLogger(frmAdministrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }        
     }//GEN-LAST:event_btnRemoveUserActionPerformed
 
     /**

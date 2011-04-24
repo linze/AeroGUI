@@ -198,10 +198,27 @@ public class frmRegistro extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  private boolean checkFields() {
-        // TODO: Check that fields have valid data
-        return true;
-  }
+    private boolean checkFields() {
+        String problems = "";
+        if (txtFname.getText().length() < 2)
+            problems += "El nombre es demasiado corto\n";
+        if (txtLname.getText().length() < 2)
+            problems += "Los apellidos son demasiado cortos\n";
+        if (txtAddress.getText().length() < 7)
+            problems += "La dirección es demasiado corta\n";
+        if (!txtEmail.getText().equals(txtEmailCheck.getText()))
+            problems += "Las direcciones de correo electrónico no coinciden\n";
+        if (txtEmail.getText().length() < 8)
+            problems += "La dirección de correo electrónico es demasiado corta\n";
+        if (!(String.valueOf(txtPassword.getPassword()).equals(String.valueOf(txtPasswordCheck.getPassword()))))
+            problems += "Las contraseñas no coinciden\n";
+        if (txtPassword.getPassword().toString().length() < 6)
+            problems += "La contraseña es demasiado corta\n";
+        if (!problems.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los campos no se han completado correctamente:\n" + problems);
+        }
+        return problems.isEmpty();
+    }
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         if (checkFields()) {

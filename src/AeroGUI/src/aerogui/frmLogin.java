@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class frmLogin extends javax.swing.JDialog {
     private java.awt.Frame _parent;
     private Timer _splashUpdater;
-    private long _msChangeTime = 3*1000;
+    private long _msChangeTime = 6*1000;
 
     /** Creates new form frmLogin */
     public frmLogin(java.awt.Frame parent, boolean modal) {
@@ -143,7 +143,7 @@ public class frmLogin extends javax.swing.JDialog {
         result = ComponentsBox.usershandler.login(txtEmail.getText().toLowerCase(),
                 String.valueOf(txtPassword.getPassword()));
         if (result == true) {
-            ComponentsBox.usershandler.setActive(txtEmail.getText());
+            ComponentsBox.usershandler.setActive(txtEmail.getText().toLowerCase());
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "La combinación de usuario y contraseña no es válida.");

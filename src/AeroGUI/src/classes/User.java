@@ -34,7 +34,7 @@ public class User implements Serializable {
   }
 
   public void setEmail(String _email) {
-        this._email = _email;
+        this._email = _email.toLowerCase();
   }
 
   public String getFirstname() {
