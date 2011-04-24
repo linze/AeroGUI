@@ -15,6 +15,7 @@ import classes.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -257,16 +258,19 @@ public class frmAdministrarUsuario extends javax.swing.JDialog {
 }//GEN-LAST:event_txtCloseActionPerformed
 
     private void btnRemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveUserActionPerformed
-        // TODO: Ask user if he really wants to be deleted from the system
-        ComponentsBox.usershandler.remove(ComponentsBox.usershandler.getActiveuseremail());
-            try {
-                ComponentsBox.saveAll();
-                JOptionPane.showMessageDialog(this, "Se ha eliminado su usuario. La aplicación se cerrará tras aceptar.");
-                System.exit(0);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Se ha producido un error al actualizar el fichero de datos.");
-                Logger.getLogger(frmAdministrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
-            }        
+        if (JOptionPane.showConfirmDialog(new JFrame(),
+            "¿Realmente eliminar sus datos del sistema?", "Confirmación",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            ComponentsBox.usershandler.remove(ComponentsBox.usershandler.getActiveuseremail());
+                try {
+                    ComponentsBox.saveAll();
+                    JOptionPane.showMessageDialog(this, "Se ha eliminado su usuario. La aplicación se cerrará tras aceptar.");
+                    System.exit(0);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Se ha producido un error al actualizar el fichero de datos.");
+                    Logger.getLogger(frmAdministrarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
     }//GEN-LAST:event_btnRemoveUserActionPerformed
 
     /**

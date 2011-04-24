@@ -404,7 +404,6 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
 
     private void addCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCartActionPerformed
         if (this._currentji != null) {
-            // TODO: Show a dialog asking for confirmation
             String selectedclass = (String)txtClass.getSelectedItem();
             Journey newj = new Journey(this._currentji, selectedclass);
             Travel newt = new Travel();

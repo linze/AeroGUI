@@ -6,6 +6,9 @@
 
 package aerogui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class frmPrincipal extends javax.swing.JFrame {
     
     /** Creates new form frmPrincipal */
@@ -427,7 +430,10 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOriginSearchActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
+        if (JOptionPane.showConfirmDialog(new JFrame(),
+            "¿Realmente desea salir de la aplicación?", "Confirmación",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnJourneyInfoSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJourneyInfoSearchActionPerformed

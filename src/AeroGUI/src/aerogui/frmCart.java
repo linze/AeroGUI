@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -499,10 +500,13 @@ public class frmCart extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRemoveTravelActionPerformed
 
     private void btnRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveAllActionPerformed
-        // TODO: Ask before doing
-        this._cart.getTravels().clear();
-        JOptionPane.showMessageDialog(this, "El carrito ahora está vacío.");
-        this.dispose();
+        if (JOptionPane.showConfirmDialog(new JFrame(),
+            "¿Realmente desea vaciar el carrito?", "Confirmación",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            this._cart.getTravels().clear();
+            JOptionPane.showMessageDialog(this, "El carrito ahora está vacío.");
+            this.dispose();
+        }
     }//GEN-LAST:event_btnRemoveAllActionPerformed
 
     private void onTravelChange() {
