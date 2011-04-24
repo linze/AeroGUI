@@ -230,22 +230,23 @@ public class frmReserva extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReserveActionPerformed
-        // TODO: Check that they're seats left
-        
         User user = ComponentsBox.usershandler.getActiveuser();
-        user.getCart().setStatus(OperationStatus.RESERVED);
-        user.getOperations().add(user.getCart());
-        user.setCart(new Operation());
-        try {
-            ComponentsBox.saveAll();
-            JOptionPane.showMessageDialog(this, "Los elementos se han reservado con éxito.");
-            this.dispose();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
-            Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
+        if (UserGUIActions.verifySeats(user.getCart())) {
+            user.getCart().setStatus(OperationStatus.RESERVED);
+            user.getOperations().add(user.getCart());
+            UserGUIActions.updateSeats(user.getCart());
+            user.setCart(new Operation());
+            try {
+                ComponentsBox.saveAll();
+                JOptionPane.showMessageDialog(this, "Los elementos se han reservado con éxito.");
+                this.dispose();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
+                Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Lo lamentamos, pero ya no se dispone de asientos suficientes para reservar esta operación.");
         }
-
-
     }//GEN-LAST:event_btnReserveActionPerformed
 
     /**

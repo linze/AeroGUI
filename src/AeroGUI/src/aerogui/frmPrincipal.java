@@ -54,8 +54,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton13 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnDoBuy = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -299,19 +297,12 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
         jButton11.setText("Ver");
+        jButton11.setEnabled(false);
         jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jLabel6.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel6.setText("Ver reservas realizadas.");
-
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
-        jButton13.setText("Anular");
-        jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        jLabel7.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
-        jLabel7.setText("Anular reserva realizada.");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -327,11 +318,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
+                        .addComponent(jLabel6)))
                 .addContainerGap(268, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -349,13 +336,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel7)))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         pnlMenu.addTab("Reserva", jPanel4);
@@ -508,7 +489,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnUserAdmin;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton13;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -516,7 +496,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
