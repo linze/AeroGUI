@@ -14,22 +14,29 @@ public class ComponentsBox {
     public static void initialize() {
         journeyshandler.setDatafilename("/tmp/viajes.txt");
         usershandler.setDatafilename("/tmp/data.bin");
-        try {
-            loadAll();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ComponentsBox.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ComponentsBox.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ComponentsBox.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ComponentsBox.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        loadAll();
     }
 
-    public static void loadAll() throws FileNotFoundException, ParseException, IOException, ClassNotFoundException {
-        journeyshandler.load();
-        usershandler.load();
+    public static void loadAll() {
+        try {
+            journeyshandler.load();
+        } catch (FileNotFoundException ex) {
+            System.out.println("[ERR] Travels information file not found.");
+        } catch (ParseException ex) {
+            System.out.println("[ERR] Travels information file have a wrong format.");
+        }
+        
+        try {
+            usershandler.load();
+        } catch (FileNotFoundException ex) {
+            System.out.println("[ERR] Users information file not found.");
+        } catch (IOException ex) {
+            System.out.println("[ERR] Users information file produced a error while reading.");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("[ERR] Users information file have a wrong format.");
+        } catch (ParseException ex) {
+            System.out.println("[ERR] Users information file have a wrong format.");
+        }
     }
 
     public static void saveAll() throws IOException {

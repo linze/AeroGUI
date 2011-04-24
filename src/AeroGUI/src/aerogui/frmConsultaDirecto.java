@@ -12,7 +12,10 @@
 package aerogui;
 
 import classes.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -71,7 +74,7 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
         txtArrival = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnCart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -264,7 +267,12 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Añadir al carrito");
+        btnCart.setText("Añadir al carrito");
+        btnCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -273,14 +281,14 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                    .addComponent(btnCart, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(47, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose))
         );
@@ -385,6 +393,29 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
         updateDetails();
     }//GEN-LAST:event_txtSeatsStateChanged
 
+    private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
+        if (this._currentji != null) {
+            // TODO: Show a dialog asking for confirmation
+            String selectedclass = (String)txtClass.getSelectedItem();
+            Journey newj = new Journey(this._currentji, selectedclass);
+            Travel newt = new Travel();
+            newt.setNtravelers((Integer)txtSeats.getValue());
+            newt.getJourneys().add(newj);
+
+            if (UserGUIActions.verifySeats(newt)) {
+                ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
+                try {
+                    ComponentsBox.saveAll();
+                } catch (IOException ex) {
+                    // TODO: Notice the user
+                    Logger.getLogger(frmConsultaOrigen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                // TODO: Notify the user that they're no seats
+            }
+        }
+    }//GEN-LAST:event_btnCartActionPerformed
+
     private void updateActualRecord() {
         Integer i = tbResults.getSelectedRow();
         this._currentji = this._sr.getTravelsinfo().get(i).getJourneysinfo().get(0);
@@ -431,8 +462,8 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCart;
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

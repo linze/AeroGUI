@@ -12,6 +12,7 @@
 package aerogui;
 
 import classes.*;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,9 +35,6 @@ public class frmReserva extends javax.swing.JDialog {
 
     private void fillTree() {
         Operation cart = ComponentsBox.usershandler.getActiveuser().getCart();
-
-        DefaultMutableTreeNode tntravel;
-        DefaultMutableTreeNode tnjourney;
 
         // Get the tree
         TreeModel model = new DefaultTreeModel(generateRootNode(cart));
@@ -237,9 +235,16 @@ public class frmReserva extends javax.swing.JDialog {
         user.getCart().setStatus(OperationStatus.RESERVED);
         user.getOperations().add(user.getCart());
         user.setCart(new Operation());
+        try {
+            ComponentsBox.saveAll();
+            // TODO Notify success
+            this.dispose();
+        } catch (IOException ex) {
+            // TODO Notify error
+            Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        // TODO Notify success
-        this.dispose();
+
     }//GEN-LAST:event_btnReserveActionPerformed
 
     /**

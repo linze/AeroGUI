@@ -90,4 +90,25 @@ public class UsersHandler {
         }
   }
 
+  public void update(String fname, String lname, String address, String email, String password) {
+        try {
+            User usr = this._userslist.getUser(email);
+            usr.setFirstname(fname);
+            usr.setLastname(lname);
+            usr.setAddress(address);
+            usr.setPassword(password);
+        } catch (NotFoundException ex) {
+            Logger.getLogger(UsersHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  }
+
+  public void remove(String email) {
+        try {
+            User usr = this._userslist.getUser(email);
+            this._userslist.getUsers().remove(usr);
+        } catch (NotFoundException ex) {
+            Logger.getLogger(UsersHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  }
+
 }

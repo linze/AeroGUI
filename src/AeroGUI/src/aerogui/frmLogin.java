@@ -11,6 +11,7 @@
 
 package aerogui;
 
+import java.util.Timer;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,13 +20,21 @@ import javax.swing.JOptionPane;
  */
 public class frmLogin extends javax.swing.JDialog {
     private java.awt.Frame _parent;
+    private Timer _splashUpdater;
+    private long _msChangeTime = 3*1000;
 
     /** Creates new form frmLogin */
     public frmLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         this._parent = parent;
         initComponents();
+        initSplash();
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+    }
+
+    private void initSplash() {
+        this._splashUpdater = new Timer();
+        this._splashUpdater.schedule(new SplashTask(lbSplash), 0, _msChangeTime);
     }
 
     /** This method is called from within the constructor to
@@ -44,6 +53,7 @@ public class frmLogin extends javax.swing.JDialog {
         txtPassword = new javax.swing.JPasswordField();
         txtLogin = new javax.swing.JButton();
         txtRegister = new javax.swing.JButton();
+        lbSplash = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,7 +61,7 @@ public class frmLogin extends javax.swing.JDialog {
 
         jLabel1.setText("Email");
 
-        jLabel2.setText("Constraseña");
+        jLabel2.setText("Contraseña");
 
         txtLogin.setText("Acceder");
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -72,45 +82,51 @@ public class frmLogin extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(txtLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRegister)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRegister)
-                    .addComponent(jLabel1)
-                    .addComponent(txtLogin))
+                    .addComponent(txtLogin)
+                    .addComponent(txtRegister))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lbSplash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbSplash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/splash1.png"))); // NOI18N
+        lbSplash.setBorder(null);
+        lbSplash.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbSplash.setIconTextGap(0);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 721, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbSplash, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(234, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(lbSplash)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -124,7 +140,8 @@ public class frmLogin extends javax.swing.JDialog {
 
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
         boolean result;
-        result = ComponentsBox.usershandler.login(txtEmail.getText(), String.valueOf(txtPassword.getPassword()));
+        result = ComponentsBox.usershandler.login(txtEmail.getText().toLowerCase(),
+                String.valueOf(txtPassword.getPassword()));
         if (result == true) {
             ComponentsBox.usershandler.setActive(txtEmail.getText());
             this.dispose();
@@ -154,6 +171,7 @@ public class frmLogin extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbSplash;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JButton txtLogin;
     private javax.swing.JPasswordField txtPassword;

@@ -410,12 +410,16 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
             newt.setNtravelers((Integer)txtSeats.getValue());
             newt.getJourneys().add(newj);
 
-            ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
-            try {
-                ComponentsBox.saveAll();
-            } catch (IOException ex) {
-                // TODO: Notice the user
-                Logger.getLogger(frmConsultaOrigen.class.getName()).log(Level.SEVERE, null, ex);
+            if (UserGUIActions.verifySeats(newt)) {
+                ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
+                try {
+                    ComponentsBox.saveAll();
+                } catch (IOException ex) {
+                    // TODO: Notice the user
+                    Logger.getLogger(frmConsultaOrigen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                // TODO: Notify the user that they're no seats
             }
         }
     }//GEN-LAST:event_addCartActionPerformed
