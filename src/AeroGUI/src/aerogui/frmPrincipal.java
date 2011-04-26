@@ -60,6 +60,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         btnDoBuy = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnDoBuy1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -212,6 +214,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         btnPathSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         btnPathSearch.setText("Rutas");
+        btnPathSearch.setEnabled(false);
         btnPathSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnPathSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
@@ -357,15 +360,35 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel5.setText("Abonar y obtener billetes de una reserva.");
 
+        jLabel7.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
+        jLabel7.setText("Ver compras realizadas.");
+
+        btnDoBuy1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tickets.png"))); // NOI18N
+        btnDoBuy1.setText("Ver");
+        btnDoBuy1.setEnabled(false);
+        btnDoBuy1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDoBuy1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDoBuy1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoBuy1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnDoBuy, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnDoBuy, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnDoBuy1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)))
                 .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -377,7 +400,14 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel5)))
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDoBuy1))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel7)))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         pnlMenu.addTab("Compra", jPanel5);
@@ -468,6 +498,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         fua.setVisible(true);
     }//GEN-LAST:event_btnUserAdminActionPerformed
 
+    private void btnDoBuy1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoBuy1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoBuy1ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -483,6 +517,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnDirectSearch;
     private javax.swing.JButton btnDoBuy;
+    private javax.swing.JButton btnDoBuy1;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnJourneyInfoSearch;
     private javax.swing.JButton btnOriginSearch;
@@ -499,6 +534,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

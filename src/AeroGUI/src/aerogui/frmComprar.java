@@ -287,6 +287,7 @@ public class frmComprar extends javax.swing.JDialog {
 
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
         if (this._currentoperation != null) {
+            // TODO: Show payment frame
             this._currentoperation.setStatus(OperationStatus.BOUGHT);
             try {
                 ComponentsBox.saveAll();

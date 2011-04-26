@@ -577,7 +577,6 @@ public class frmCart extends javax.swing.JDialog {
                     }
                 }
 
-                // FIXME: It gets the last item currency. That's crap.
                 txtPrice1.setText(Double.toString(price) + " " + tmpji.getTouristinfo().getPrice().getCurrency());
                 txtSeats1.setText(Integer.toString(this._currenttr.getNtravelers()));
             } catch (NotFoundException ex) {

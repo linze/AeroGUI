@@ -4,8 +4,6 @@ import classes.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ComponentsBox {
     public static UsersHandler usershandler = new UsersHandler();
