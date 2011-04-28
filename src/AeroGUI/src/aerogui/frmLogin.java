@@ -135,6 +135,7 @@ public class frmLogin extends javax.swing.JDialog {
 
     private void txtRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegisterActionPerformed
         frmRegistro fr = new frmRegistro(this._parent, true);
+        fr.setLocationRelativeTo(null);
         fr.setVisible(true);
     }//GEN-LAST:event_txtRegisterActionPerformed
 

@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class frmComprar extends javax.swing.JDialog {
+    public JFrame _parent;
     private ArrayList<Operation> _ops;
-    private double _currentprice;
     private Operation _currentoperation = null;
 
     /** Creates new form frmComprar */
@@ -176,16 +177,21 @@ public class frmComprar extends javax.swing.JDialog {
 
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
         if (this._currentoperation != null) {
-            // TODO: Show payment frame
-            this._currentoperation.setStatus(OperationStatus.BOUGHT);
-            try {
-                ComponentsBox.saveAll();
-                JOptionPane.showMessageDialog(this, "La compra se ha realizado con éxito.");
-                this.dispose();
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
-                Logger.getLogger(frmComprar.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+
+            frmPago fp = new frmPago(this._parent, true);
+            fp.setLocationRelativeTo(null);
+            fp.setVisible(true);
+            if (fp.paid) {
+                this._currentoperation.setStatus(OperationStatus.BOUGHT);
+                try {
+                    ComponentsBox.saveAll();
+                    JOptionPane.showMessageDialog(this, "La compra se ha realizado con éxito.");
+                    this.dispose();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
+                    Logger.getLogger(frmComprar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_btnBuyActionPerformed
 

@@ -15,6 +15,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         ComponentsBox.initialize();
         frmLogin fl = new frmLogin(this, true);
+        fl.setLocationRelativeTo(null);
         fl.setVisible(true);
         // If the user have closed the login instead of login, close
         if (ComponentsBox.usershandler.getActiveuser() == null)
@@ -440,6 +441,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void btnOriginSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOriginSearchActionPerformed
         frmConsultaOrigen fco = new frmConsultaOrigen();
         fco.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        fco.setLocationRelativeTo(null);
         fco.setVisible(true);
     }//GEN-LAST:event_btnOriginSearchActionPerformed
 
@@ -453,12 +455,14 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void btnJourneyInfoSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJourneyInfoSearchActionPerformed
         frmConsultaEstado fce = new frmConsultaEstado();
         fce.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        fce.setLocationRelativeTo(null);
         fce.setVisible(true);
     }//GEN-LAST:event_btnJourneyInfoSearchActionPerformed
 
     private void btnDirectSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDirectSearchActionPerformed
         frmConsultaDirecto fcd = new frmConsultaDirecto();
         fcd.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        fcd.setLocationRelativeTo(null);
         fcd.setVisible(true);
     }//GEN-LAST:event_btnDirectSearchActionPerformed
 
@@ -476,16 +480,20 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void txtCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCartActionPerformed
         frmCart fc = new frmCart(this,true);
+        fc.setLocationRelativeTo(null);
         fc.setVisible(true);
     }//GEN-LAST:event_txtCartActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         frmReserva fr = new frmReserva(this, true);
+        fr.setLocationRelativeTo(null);
         fr.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void btnDoBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoBuyActionPerformed
         frmComprar fcp = new frmComprar(this, true);
+        fcp._parent = this;
+        fcp.setLocationRelativeTo(null);
         fcp.setVisible(true);
     }//GEN-LAST:event_btnDoBuyActionPerformed
 
@@ -495,6 +503,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void btnUserAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserAdminActionPerformed
         frmAdministrarUsuario fua = new frmAdministrarUsuario(this, true);
+        fua.setLocationRelativeTo(null);
         fua.setVisible(true);
     }//GEN-LAST:event_btnUserAdminActionPerformed
 
@@ -508,7 +517,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmPrincipal().setVisible(true);
+                frmPrincipal fp = new frmPrincipal();
+                fp.setLocationRelativeTo(null);
+                fp.setVisible(true);
             }
         });
     }
