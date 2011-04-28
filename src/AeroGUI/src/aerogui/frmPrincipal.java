@@ -54,9 +54,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jButton10 = new javax.swing.JButton();
+        btnDoReservation = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
+        btnViewReservations = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnDoBuy = new javax.swing.JButton();
@@ -289,24 +289,28 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         pnlMenu.addTab("Consulta", jPanel3);
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
-        jButton10.setText("Reservar");
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnDoReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
+        btnDoReservation.setText("Reservar");
+        btnDoReservation.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDoReservation.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDoReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnDoReservationActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel4.setText("Reservar contenido del carrito.");
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
-        jButton11.setText("Ver");
-        jButton11.setEnabled(false);
-        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnViewReservations.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock.png"))); // NOI18N
+        btnViewReservations.setText("Ver");
+        btnViewReservations.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnViewReservations.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnViewReservations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewReservationsActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("DejaVu Sans", 0, 18));
         jLabel6.setText("Ver reservas realizadas.");
@@ -319,11 +323,11 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDoReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnViewReservations, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)))
                 .addContainerGap(268, Short.MAX_VALUE))
@@ -333,13 +337,13 @@ public class frmPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton10)
+                    .addComponent(btnDoReservation)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton11)
+                    .addComponent(btnViewReservations)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel6)))
@@ -366,7 +370,6 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         btnDoBuy1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tickets.png"))); // NOI18N
         btnDoBuy1.setText("Ver");
-        btnDoBuy1.setEnabled(false);
         btnDoBuy1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDoBuy1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnDoBuy1.addActionListener(new java.awt.event.ActionListener() {
@@ -484,14 +487,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         fc.setVisible(true);
     }//GEN-LAST:event_txtCartActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnDoReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoReservationActionPerformed
         frmReserva fr = new frmReserva(this, true);
         fr.setLocationRelativeTo(null);
         fr.setVisible(true);
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnDoReservationActionPerformed
 
     private void btnDoBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoBuyActionPerformed
-        frmComprar fcp = new frmComprar(this, true);
+        frmCompra fcp = new frmCompra(this, true);
         fcp._parent = this;
         fcp.setLocationRelativeTo(null);
         fcp.setVisible(true);
@@ -508,8 +511,16 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUserAdminActionPerformed
 
     private void btnDoBuy1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoBuy1ActionPerformed
-        // TODO add your handling code here:
+        frmCompraVer fcv = new frmCompraVer(this, true);
+        fcv.setLocationRelativeTo(null);
+        fcv.setVisible(true);
     }//GEN-LAST:event_btnDoBuy1ActionPerformed
+
+    private void btnViewReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewReservationsActionPerformed
+        frmReservaVer frv = new frmReservaVer(this, true);
+        frv.setLocationRelativeTo(null);
+        frv.setVisible(true);
+    }//GEN-LAST:event_btnViewReservationsActionPerformed
 
     /**
     * @param args the command line arguments
@@ -529,6 +540,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnDirectSearch;
     private javax.swing.JButton btnDoBuy;
     private javax.swing.JButton btnDoBuy1;
+    private javax.swing.JButton btnDoReservation;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnJourneyInfoSearch;
     private javax.swing.JButton btnOriginSearch;
@@ -536,8 +548,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnReserve;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUserAdmin;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
+    private javax.swing.JButton btnViewReservations;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;

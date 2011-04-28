@@ -4,42 +4,41 @@
  */
 
 /*
- * frmComprar.java
+ * frmCompraVer.java
  *
- * Created on 23-abr-2011, 17:58:16
+ * Created on 28-abr-2011, 21:15:56
  */
 
 package aerogui;
 
-import classes.*;
-import java.io.IOException;
+import classes.Operation;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-public class frmComprar extends javax.swing.JDialog {
+/**
+ *
+ * @author notrace
+ */
+public class frmCompraVer extends javax.swing.JDialog {
     public JFrame _parent;
     private ArrayList<Operation> _ops;
     private Operation _currentoperation = null;
 
-    /** Creates new form frmComprar */
-    public frmComprar(java.awt.Frame parent, boolean modal) {
+    /** Creates new form frmCompraVer */
+    public frmCompraVer(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         fillList();
     }
 
     private void fillList() {
-        _ops = ComponentsBox.usershandler.getActiveuser().getReservedOperations();
-        DefaultListModel dlm = new DefaultListModel();       
+        _ops = ComponentsBox.usershandler.getActiveuser().getBoughtOperations();
+        DefaultListModel dlm = new DefaultListModel();
         for (int i=0; i<_ops.size(); i++) {
-            dlm.addElement("Reserva #" + Integer.toString(i+1));
+            dlm.addElement("Compra #" + Integer.toString(i+1));
         }
         txtReservations.setModel(dlm);
-
     }
 
     private void fillTree() {
@@ -47,13 +46,7 @@ public class frmComprar extends javax.swing.JDialog {
 
         // Get the tree
         trContent.setModel(GUIActions.operationTree(op));
-
-//        // Expand all
-//        for (int i = 0; i < trReservation.getRowCount(); i++)
-//            trReservation.expandRow(i);
     }
-
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -71,13 +64,12 @@ public class frmComprar extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtReservations = new javax.swing.JList();
-        btnBuy = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Contenido de la reserva"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Contenido de la compra"));
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Seleccione la reserva a abonar");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Seleccione la compra a consultar");
         trContent.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(trContent);
 
@@ -99,7 +91,7 @@ public class frmComprar extends javax.swing.JDialog {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Reservas"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Compras"));
 
         txtReservations.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -124,44 +116,42 @@ public class frmComprar extends javax.swing.JDialog {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
         );
 
-        btnBuy.setText("Comprar y cerrar");
-        btnBuy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuyActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 851, Short.MAX_VALUE)
+            .addGap(0, 851, Short.MAX_VALUE)
+            .addGap(0, 851, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(660, Short.MAX_VALUE)
-                .addComponent(btnBuy)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(787, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 433, Short.MAX_VALUE)
+            .addGap(0, 433, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClose)
-                    .addComponent(btnBuy))
+                .addComponent(btnClose)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        this.dispose();
+}//GEN-LAST:event_btnCloseActionPerformed
 
     private void txtReservationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtReservationsMouseClicked
         Integer index = txtReservations.getSelectedIndex();
@@ -169,31 +159,7 @@ public class frmComprar extends javax.swing.JDialog {
             this._currentoperation = this._ops.get(txtReservations.getSelectedIndex());
             fillTree();
         }
-    }//GEN-LAST:event_txtReservationsMouseClicked
-
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCloseActionPerformed
-
-    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
-        if (this._currentoperation != null) {
-
-            frmPago fp = new frmPago(this._parent, true);
-            fp.setLocationRelativeTo(null);
-            fp.setVisible(true);
-            if (fp.paid) {
-                this._currentoperation.setStatus(OperationStatus.BOUGHT);
-                try {
-                    ComponentsBox.saveAll();
-                    JOptionPane.showMessageDialog(this, "La compra se ha realizado con éxito.");
-                    this.dispose();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
-                    Logger.getLogger(frmComprar.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_btnBuyActionPerformed
+}//GEN-LAST:event_txtReservationsMouseClicked
 
     /**
     * @param args the command line arguments
@@ -201,7 +167,7 @@ public class frmComprar extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                frmComprar dialog = new frmComprar(new javax.swing.JFrame(), true);
+                frmCompraVer dialog = new frmCompraVer(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -213,7 +179,6 @@ public class frmComprar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnClose;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
