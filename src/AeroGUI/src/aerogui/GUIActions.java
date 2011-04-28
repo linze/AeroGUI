@@ -318,7 +318,12 @@ public class GUIActions {
 
         return result;
     }
-  
+
+    /*
+     * Operation tree representation
+     */
+
+
     public static TreeModel operationTree(Operation o) {
          return new DefaultTreeModel(operationNodeTree(o));
     }
@@ -352,7 +357,6 @@ public class GUIActions {
         result.add(tmp);
 
         Journey cj;
-        JourneyInfo ji;
         // Get the subnodes
         for (int i=0; i<tr.getJourneys().size(); i++) {
             cj = tr.getJourneys().get(i);
@@ -394,7 +398,7 @@ public class GUIActions {
                         ji.getTouristinfo().getPrice().toString());
                 result.add(tmp);
             } else {
-                tmp = new DefaultMutableTreeNode("Clase: Turista");
+                tmp = new DefaultMutableTreeNode("Clase: Ejecutivo");
                 result.add(tmp);
                 tmp = new DefaultMutableTreeNode("Precio: " +
                         ji.getBusinessinfo().getPrice().toString());
@@ -405,6 +409,87 @@ public class GUIActions {
         } catch (NotFoundException ex) {
             Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
+    }
+
+    /*
+     * SearchResult tree representation
+     */
+
+    public static TreeModel searchTree(SearchResult sr) {
+         return new DefaultTreeModel(searchResultNodeTree(sr));
+    }
+
+    private static DefaultMutableTreeNode searchResultNodeTree(SearchResult sr) {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Contenido de la búsqueda");
+
+        // Add the price
+        //Price oprice = calcOperationPrice(o);
+        //DefaultMutableTreeNode nprice = new DefaultMutableTreeNode("Precio total: " + oprice.toString());
+        //root.add(nprice);
+
+        // Add the subnodes
+        TravelInfo ti;
+        for(int i=0; i< sr.getTravelsinfo().size(); i++) {
+            ti = sr.getTravelsinfo().get(i);
+            root.add(travelInfoNodeTree(ti, i+1));
+        }
+
+        return root;
+    }
+
+    private static DefaultMutableTreeNode travelInfoNodeTree(TravelInfo ti, Integer num) {
+        DefaultMutableTreeNode result = new DefaultMutableTreeNode();
+
+        //Price trprice = calcTravelPrice(tr);
+        //tmp = new DefaultMutableTreeNode("Precio del viaje: " + trprice.toString());
+        //result.add(tmp);
+
+        JourneyInfo ji;
+        // Get the subnodes
+        for (int i=0; i<ti.getJourneysinfo().size(); i++) {
+            ji = ti.getJourneysinfo().get(i);
+            result.add(journeyInfoNodeTree(ji, i+1));
+        }
+
+        // Place origin and destination in title
+        String origin = ti.getJourneysinfo().get(0).getOrigin();
+        String destination = ti.getJourneysinfo().get(ti.getJourneysinfo().size()-1).getDestination();
+
+        result.setUserObject("Viaje " + Integer.toString(num) + ": " + origin + " - " + destination);
+
+        return result;
+    }
+
+    private static DefaultMutableTreeNode journeyInfoNodeTree(JourneyInfo ji, Integer num) {
+        DefaultMutableTreeNode result = new DefaultMutableTreeNode();
+
+        DefaultMutableTreeNode tmp;
+        tmp = new DefaultMutableTreeNode("Id trayecto: " + ji.getId());
+        result.add(tmp);
+        tmp = new DefaultMutableTreeNode("Origen: " + ji.getOrigin());
+        result.add(tmp);
+        tmp = new DefaultMutableTreeNode("Destino: " + ji.getDestination());
+        result.add(tmp);
+        tmp = new DefaultMutableTreeNode("Salida: " + JourneyInfo.DATETIMEFORMAT.format(ji.getDeparture().getTime()));
+        result.add(tmp);
+        tmp = new DefaultMutableTreeNode("Llegada: " + JourneyInfo.DATETIMEFORMAT.format(ji.getArrival().getTime()));
+        result.add(tmp);
+
+        // FIXME: Do it fancier
+        tmp = new DefaultMutableTreeNode("Clase Turista");
+        result.add(tmp);
+        tmp = new DefaultMutableTreeNode("Precio: " + ji.getTouristinfo().getPrice().toString());
+        result.add(tmp);
+
+        // FIXME: Do it fancier
+        tmp = new DefaultMutableTreeNode("Clase: Ejecutivo");
+        result.add(tmp);
+        tmp = new DefaultMutableTreeNode("Precio: " + ji.getBusinessinfo().getPrice().toString());
+        result.add(tmp);
+
+        result.setUserObject("Etapa " + Integer.toString(num) + ": " + ji.getOrigin() + " - " + ji.getDestination());
+
         return result;
     }
 }
