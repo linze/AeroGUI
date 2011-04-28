@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class JourneysFileParser {
@@ -33,17 +34,24 @@ public class JourneysFileParser {
                 journeyinfo.setDestination(lineinfo[3]);
                 
                 // Date and time information
-                journeyinfo.getDeparture().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[4] + " " + lineinfo[5]));
-                journeyinfo.getArrival().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[6] + " " + lineinfo[7]));
+                if (lineinfo.length > 11) {
+                    journeyinfo.getDeparture().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[11] + " " + lineinfo[4]));
+                    journeyinfo.getArrival().setTime(JourneyInfo.DATETIMEFORMAT.parse(lineinfo[12] + " " + lineinfo[5]));
+                } else {
+                    Calendar calendar = Calendar.getInstance();
+                    journeyinfo.getDeparture().setTime(JourneyInfo.DATETIMEFORMAT.parse(JourneyInfo.DATEFORMAT.format(calendar.getTime()) + " " + lineinfo[4]));
+                    journeyinfo.getArrival().setTime(JourneyInfo.DATETIMEFORMAT.parse(JourneyInfo.DATEFORMAT.format(calendar.getTime()) + " " + lineinfo[5]));
+                }
+                
 
                 // Classes information
-                journeyinfo.getTouristinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[8]));
-                journeyinfo.getTouristinfo().setSeatsLeft(Integer.parseInt(lineinfo[9]));
-                journeyinfo.getBusinessinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[10]));
-                journeyinfo.getBusinessinfo().setSeatsLeft(Integer.parseInt(lineinfo[11]));
+                journeyinfo.getTouristinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[6]));
+                journeyinfo.getTouristinfo().setSeatsLeft(Integer.parseInt(lineinfo[7]));
+                journeyinfo.getBusinessinfo().getPrice().setQuantity(Double.parseDouble(lineinfo[8]));
+                journeyinfo.getBusinessinfo().setSeatsLeft(Integer.parseInt(lineinfo[9]));
 
                 // State information
-                journeyinfo.setStatus(lineinfo[12]);
+                journeyinfo.setStatus(lineinfo[10]);
 
                 // Append the new JourneyInfo
                 result.add(journeyinfo);
@@ -70,15 +78,15 @@ public class JourneysFileParser {
            pw.print(ji.getType() + "#");
            pw.print(ji.getOrigin() + "#");
            pw.print(ji.getDestination() + "#");
-           pw.print(JourneyInfo.DATEFORMAT.format(ji.getDeparture().getTime()) + "#");
            pw.print(JourneyInfo.TIMEFORMAT.format(ji.getDeparture().getTime()) + "#");
-           pw.print(JourneyInfo.DATEFORMAT.format(ji.getArrival().getTime()) + "#");
            pw.print(JourneyInfo.TIMEFORMAT.format(ji.getArrival().getTime()) + "#");
            pw.print(Double.toString(ji.getTouristinfo().getPrice().getQuantity()) + "#");
            pw.print(Integer.toString(ji.getTouristinfo().getSeatsLeft()) + "#");
            pw.print(Double.toString(ji.getBusinessinfo().getPrice().getQuantity()) + "#");
            pw.print(Integer.toString(ji.getBusinessinfo().getSeatsLeft()) + "#");
-           pw.println(ji.getStatus());
+           pw.println(ji.getStatus() + "#");
+           pw.print(JourneyInfo.DATEFORMAT.format(ji.getDeparture().getTime()) + "#");
+           pw.print(JourneyInfo.DATEFORMAT.format(ji.getArrival().getTime()));
        }
 
        pw.close();
