@@ -17,12 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author notrace
- */
 public class frmConsultaDirecto extends javax.swing.JFrame {
     private SearchResult _sr;
     private JourneyInfo _currentji;
@@ -346,23 +341,8 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
         this._sr = TravelSearch.doDirectSearch(origin, destination, ComponentsBox.journeyshandler);
         tbResults.removeAll();
 
-        // Create results representation
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[]{"Origen", "Destino", "Tipo", "Precio"});
-
-        JourneyInfo current;
-        for (int i=0; i < this._sr.getTravelsinfo().size(); i++) {
-            // We access to position 0 because origin searchs have only one step
-            current = this._sr.getTravelsinfo().get(i).getJourneysinfo().get(0);
-            model.addRow(new Object[]{current.getOrigin(),
-                current.getDestination(),
-                current.getType(),
-                "Tur: " + current.getTouristinfo().getPrice().toString() +
-                " Ejec: " + current.getBusinessinfo().getPrice().toString()});
-        }
-
         // Show the results
-        tbResults.setModel(model);
+        tbResults.setModel(GUIActions.oneItemSRTable(_sr));
     }//GEN-LAST:event_txtDestinationSearchItemStateChanged
 
     private void txtOriginSearchItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtOriginSearchItemStateChanged
@@ -402,7 +382,7 @@ public class frmConsultaDirecto extends javax.swing.JFrame {
             newt.setNtravelers((Integer)txtSeats.getValue());
             newt.getJourneys().add(newj);
 
-            if (UserGUIActions.verifySeats(newt)) {
+            if (GUIActions.verifySeats(newt)) {
                 ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
                 try {
                     ComponentsBox.saveAll();

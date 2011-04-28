@@ -16,17 +16,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 
-/**
- *
- * @author notrace
- */
 public class frmReserva extends javax.swing.JDialog {
-    private double _totalprice;
-
     /** Creates new form frmReserva */
     public frmReserva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,115 +29,14 @@ public class frmReserva extends javax.swing.JDialog {
         Operation cart = ComponentsBox.usershandler.getActiveuser().getCart();
 
         // Get the tree
-        TreeModel model = new DefaultTreeModel(generateRootNode(cart));
-        trReservation.setModel(model);
+        trReservation.setModel(GUIActions.operationTree(cart));
 
 //        // Expand all
 //        for (int i = 0; i < trReservation.getRowCount(); i++)
 //            trReservation.expandRow(i);
     }
 
-    private DefaultMutableTreeNode generateRootNode(Operation cart) {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Contenido de la reserva");
 
-        // Add the subnodes
-        Travel tr;
-        for(int i=0; i< cart.getTravels().size(); i++) {
-            tr = cart.getTravels().get(i);
-            root.add(generateTravelNode(tr, i+1));
-        }
-        
-        // Add the price
-        DefaultMutableTreeNode nprice = new DefaultMutableTreeNode("Precio total: " + Double.toString(this._totalprice) + " EUR");
-        root.add(nprice);
-
-        return root;
-    }
-
-    private DefaultMutableTreeNode generateTravelNode(Travel tr, Integer num) {
-        DefaultMutableTreeNode result = new DefaultMutableTreeNode();
-
-        DefaultMutableTreeNode tmp;
-        tmp = new DefaultMutableTreeNode("Pasajeros: " + Integer.toString(tr.getNtravelers()));
-
-        Journey cj;
-        // Get the travel price
-        JourneyInfo ji;
-        double price = 0.0;
-        for (int i=0; i<tr.getJourneys().size(); i++) {
-            try {
-                cj = tr.getJourneys().get(i);
-                ji = TravelSearch.doJourneyInfoSearch(cj.getJourneyinfoid(), ComponentsBox.journeyshandler);
-                if (cj.getJourneyclass().equals("Turista")) {
-                    price += ji.getTouristinfo().getPrice().getQuantity();
-                } else {
-                    price += ji.getBusinessinfo().getPrice().getQuantity();
-                }
-            } catch (NotFoundException ex) {
-                Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        tmp = new DefaultMutableTreeNode("Precio del viaje: " + Double.toString(price));
-        result.add(tmp);
-        this._totalprice += price;
-
-        // Get the subnodes
-        for (int i=0; i<tr.getJourneys().size(); i++) {
-            cj = tr.getJourneys().get(i);
-            result.add(generateJourneyNode(cj, i+1));
-        }
-        
-        // Place origin and destination in title
-        try {
-            String origin = TravelSearch.doJourneyInfoSearch(tr.getOriginJourneyId(), ComponentsBox.journeyshandler).getOrigin();
-            String destination = TravelSearch.doJourneyInfoSearch(tr.getDestinationJourneyId(), ComponentsBox.journeyshandler).getDestination();
-
-            result.setUserObject("Viaje " + Integer.toString(num) + ": " + origin + " - " + destination);
-        } catch (NotFoundException ex) {
-            Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return result;
-    }
-
-    private DefaultMutableTreeNode generateJourneyNode(Journey jr, Integer num) {
-        DefaultMutableTreeNode result = new DefaultMutableTreeNode();
-        try {
-            
-            DefaultMutableTreeNode tmp;
-            JourneyInfo ji = TravelSearch.doJourneyInfoSearch(jr.getJourneyinfoid(), ComponentsBox.journeyshandler);
-            tmp = new DefaultMutableTreeNode("Id trayecto: " + ji.getId());
-            result.add(tmp);
-            tmp = new DefaultMutableTreeNode("Origen: " + ji.getOrigin());
-            result.add(tmp);
-            tmp = new DefaultMutableTreeNode("Destino: " + ji.getDestination());
-            result.add(tmp);
-            tmp = new DefaultMutableTreeNode("Salida: " + JourneyInfo.DATETIMEFORMAT.format(ji.getDeparture().getTime()));
-            result.add(tmp);
-            tmp = new DefaultMutableTreeNode("Llegada: " + JourneyInfo.DATETIMEFORMAT.format(ji.getArrival().getTime()));
-            result.add(tmp);
-            if (jr.getJourneyclass().equals("Turista")) {
-                tmp = new DefaultMutableTreeNode("Clase: Turista");
-                result.add(tmp);
-                tmp = new DefaultMutableTreeNode("Precio: " +
-                        ji.getTouristinfo().getPrice().toString());
-                result.add(tmp);
-            } else {
-                tmp = new DefaultMutableTreeNode("Clase: Turista");
-                result.add(tmp);
-                tmp = new DefaultMutableTreeNode("Precio: " +
-                        ji.getBusinessinfo().getPrice().toString());
-                result.add(tmp);
-            }
-            String origin;
-            String destination;
-            result.setUserObject("Etapa " + Integer.toString(num) + ": " + ji.getOrigin() + " - " + ji.getDestination());
-            
-        } catch (NotFoundException ex) {
-            Logger.getLogger(frmReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -231,10 +121,10 @@ public class frmReserva extends javax.swing.JDialog {
 
     private void btnReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReserveActionPerformed
         User user = ComponentsBox.usershandler.getActiveuser();
-        if (UserGUIActions.verifySeats(user.getCart())) {
+        if (GUIActions.complexVerifySeats(user.getCart())) {
             user.getCart().setStatus(OperationStatus.RESERVED);
             user.getOperations().add(user.getCart());
-            UserGUIActions.updateSeats(user.getCart());
+            GUIActions.updateSeats(user.getCart());
             user.setCart(new Operation());
             try {
                 ComponentsBox.saveAll();

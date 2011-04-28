@@ -410,7 +410,7 @@ public class frmConsultaOrigen extends javax.swing.JFrame {
             newt.setNtravelers((Integer)txtSeats.getValue());
             newt.getJourneys().add(newj);
 
-            if (UserGUIActions.verifySeats(newt)) {
+            if (GUIActions.verifySeats(newt)) {
                 ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
                 try {
                     ComponentsBox.saveAll();

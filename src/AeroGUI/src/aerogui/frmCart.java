@@ -12,22 +12,14 @@
 package aerogui;
 
 import classes.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author notrace
- */
 public class frmCart extends javax.swing.JDialog {
     private Operation _cart = ComponentsBox.usershandler.getActiveuser().getCart();;
     private Travel _currenttr = null;
-    private ArrayList<JourneyInfo> _currentjis = null;
     private Journey _currentj = null;
     private JourneyInfo _currentji = null;
 
@@ -39,22 +31,9 @@ public class frmCart extends javax.swing.JDialog {
     }
 
     private void refreshOnCartList() {
-        DefaultListModel dlm = new DefaultListModel();
-        String origin;
-        String destination;
-        for (int i=0; i<_cart.getTravels().size(); i++) {
-            origin = _cart.getTravels().get(i).getOriginJourneyId();
-            destination = _cart.getTravels().get(i).getDestinationJourneyId();
-            try {
-                origin = TravelSearch.doJourneyInfoSearch(origin, ComponentsBox.journeyshandler).getOrigin();
-                destination = TravelSearch.doJourneyInfoSearch(destination, ComponentsBox.journeyshandler).getDestination();
-            } catch (NotFoundException ex) {
-                Logger.getLogger(frmCart.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            dlm.addElement(origin + "-" + destination);
-        }
-        txtTravels.setModel(dlm);
+        txtTravels.setModel(GUIActions.operationList(_cart));
     }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -511,34 +490,8 @@ public class frmCart extends javax.swing.JDialog {
 
     private void onTravelChange() {
         this._currenttr = this._cart.getTravels().get(txtTravels.getSelectedIndex());
-        this._currentjis = new ArrayList<JourneyInfo>();
         
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[]{"Origen", "Destino", "Tipo", "Precio"});
-
-        JourneyInfo ji;
-        Journey j;
-        for (int i=0; i<_currenttr.getJourneys().size(); i++) {
-            try {
-                j = this._currenttr.getJourneys().get(i);
-                ji = TravelSearch.doJourneyInfoSearch(j.getJourneyinfoid(), ComponentsBox.journeyshandler);
-                this._currentjis.add(ji);
-                if (j.getJourneyclass().equals("Turista")) {
-                    model.addRow(new Object[]{ji.getOrigin(),
-                        ji.getDestination(),
-                        ji.getType(),
-                        ji.getTouristinfo().getPrice().toString()});
-                } else {
-                    model.addRow(new Object[]{ji.getOrigin(),
-                        ji.getDestination(),
-                        ji.getType(),
-                        ji.getBusinessinfo().getPrice().toString()});
-                }
-            } catch (NotFoundException ex) {
-                Logger.getLogger(frmCart.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        tblJourneys.setModel(model);
+        tblJourneys.setModel(GUIActions.travelsTable(_currenttr));
 
         updateTravelDetails();
     }
