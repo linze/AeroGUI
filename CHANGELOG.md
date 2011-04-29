@@ -1,4 +1,18 @@
 # Documento de historia de cambios
+## Iteración 8
+<ul>
+    <li>Añadidas notificaciones de sucesos</li>
+    <li>Añadidas confirmaciones para varias acciones importantes</li>
+    <li>Solventado problema que impedía el cierre de la ventana de login</li>
+    <li>Implementado chequeo de asientos restantes</li>
+    <li>Implementado posicionamiento de las ventanas en la mitad de la pantalla</li>
+    <li>Implementada visualización de reservas realizadas</li>
+    <li>Implementada visualización de compras realizadas</li>
+    <li>Refactorizado código creando GUIActions</li>
+    <li>Implementados métodos para mostrar el contenido de las clases</li>
+    <li>Cambiado el formateo de viajes.txt a uno compatible con los requisitos</li>
+</ul>
+
 ## Iteración 7
 <ul>
     <li>Implementado el chequeo y actualización de asientos restantes</li>
@@ -6,6 +20,7 @@
     <li>Implementada la eliminación de datos del usuario (Req. FUN006)</li>
     <li>Realizados gráficos de bienvenida y presentación del producto para el login (Req. LOGI03)</li>
 </ul>
+
 ## Iteración 6
 <ul>
     <li>Implementada la reserva (Req. FUN02)</li>

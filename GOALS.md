@@ -1,6 +1,6 @@
 # Documento de objetivos para la iteracción
-## Iteración 8
-[X] Arreglos cara a la primera versión.
+## Iteración 9
+[ ] Implementar consulta de rutas compuesta
 
 ### Leyenda:
 <pre>
