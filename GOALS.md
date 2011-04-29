@@ -1,6 +1,6 @@
 # Documento de objetivos para la iteracción
 ## Iteración 8
-Arreglos cara a la primera versión.
+[X] Arreglos cara a la primera versión.
 
 ### Leyenda:
 <pre>
