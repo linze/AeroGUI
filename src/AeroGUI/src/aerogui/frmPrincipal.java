@@ -129,7 +129,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                             .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                                 .addComponent(lbElements)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -178,7 +178,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(642, Short.MAX_VALUE)
+                .addContainerGap(651, Short.MAX_VALUE)
                 .addComponent(btnUserAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,9 +215,13 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         btnPathSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         btnPathSearch.setText("Rutas");
-        btnPathSearch.setEnabled(false);
         btnPathSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnPathSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPathSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPathSearchActionPerformed(evt);
+            }
+        });
 
         btnJourneyInfoSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         btnJourneyInfoSearch.setText("Estado");
@@ -260,7 +264,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jLabel11))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +334,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(btnViewReservations, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)))
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(264, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +351,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel6)))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         pnlMenu.addTab("Reserva", jPanel4);
@@ -393,7 +397,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(btnDoBuy1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7)))
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,7 +415,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jLabel7)))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         pnlMenu.addTab("Compra", jPanel5);
@@ -522,11 +526,18 @@ public class frmPrincipal extends javax.swing.JFrame {
         frv.setVisible(true);
     }//GEN-LAST:event_btnViewReservationsActionPerformed
 
+    private void btnPathSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPathSearchActionPerformed
+        frmConsultaRutasCiudades fps = new frmConsultaRutasCiudades();
+        fps.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        fps.setVisible(true);
+    }//GEN-LAST:event_btnPathSearchActionPerformed
+
     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 frmPrincipal fp = new frmPrincipal();
                 fp.setLocationRelativeTo(null);
