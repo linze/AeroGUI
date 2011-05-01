@@ -321,7 +321,7 @@
                           <Component id="txtRDDestination" alignment="0" max="32767" attributes="1"/>
                           <Component id="txtRDOrigin" alignment="0" min="-2" pref="140" max="-2" attributes="1"/>
                       </Group>
-                      <EmptySpace pref="52" max="32767" attributes="0"/>
+                      <EmptySpace pref="42" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -468,13 +468,18 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="txtRouteSeats">
+              <Properties>
+                <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="1" type="code"/>
+                </Property>
+              </Properties>
               <Events>
                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="txtRouteSeatsStateChanged"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel18">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Saltos"/>
+                <Property name="text" type="java.lang.String" value="Escalas"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtRDStages">
@@ -633,6 +638,11 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="txtStageSeats">
+              <Properties>
+                <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="1" type="code"/>
+                </Property>
+              </Properties>
               <Events>
                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="txtStageSeatsStateChanged"/>
               </Events>

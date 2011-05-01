@@ -177,7 +177,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     
     private void routeSearch(TravelInfo journeys,ArrayList<String> vPlaces
                           , ArrayList<String> transportIds, String destParam
-                          , SearchResult sr, JourneyInfo current, ArrayList<String> visitedIds){
+                          , SearchResult sr, JourneyInfo current, boolean canContinue){
         
         //Last town visited array index : ltv
         int ltv = vPlaces.size()-1;
@@ -188,8 +188,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         /* When current journey departures from last town arrived (route's 
          * origin in first iteration) is a possible stage of the route.
          * */
-        if((stageOrigin.equals(vPlaces.get(ltv)))&& !(visitedIds.contains(current.getId()))){
-            visitedIds.add(current.getId());
+        if(stageOrigin.equals(vPlaces.get(ltv))){
+            
             //Check if route has reached destination
             if(stageDestination.equals(destParam)){
                 //The Id is added to the route. The route is then complete
@@ -212,26 +212,24 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 }
             //Finally the complete route info is added to the search result
             sr.addTravelInfo(route);
-            /*int vIdx = vPlaces.size()-1;
+            
             int tIdx = transportIds.size()-1;
             //Backtracking to continue searching
-            if(vIdx>0){
-                vPlaces.remove(vIdx);
+            if(ltv>0){
+                vPlaces.remove(ltv);
                 ltv--;
                 lastVisited = vPlaces.get(ltv);
                 transportIds.remove(tIdx);
-                /*int nBr;
-                for(nBr=0;nBr<journeys.getJourneysinfo().size();nBr++){
-                    current = journeys.getJourneysinfo().get(nBr);
-                    this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current);
-                }*/
+                canContinue = false;
+                int nBr;
+                //for(nBr=0;nBr<journeys.getJourneysinfo().size();nBr++){
+                    current = journeys.getJourneysinfo().get(0);
+                this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current, canContinue);
+                //}
+            }
+            else{
                 return;
-            //}
-            /*else{
-                //transportIds.clear();
-                start = 0;
-            }*/
-            
+            }
         }
         else{
             // Check possible loops in routes
@@ -257,20 +255,21 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 ltv++;
                 transportIds.add(current.getId());
                 lastVisited = vPlaces.get(ltv);
-                boolean canContinue = false;
+                canContinue = false;
                 int jidx;
                 for(jidx=0;jidx<journeyIndex;jidx++){
                     JourneyInfo readJi = journeys.getJourneysinfo().get(jidx);
                     if(readJi.getOrigin().equals(lastVisited)){
                         canContinue=true;
                         current = journeys.getJourneysinfo().get(jidx);
-                        this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current,visitedIds);
+                        this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current, canContinue);
                     }
                     
                 }
                 if(!canContinue){
                     vPlaces.remove(ltv);
                     ltv--;
+                    lastVisited = vPlaces.get(ltv);
                     int tIdsIdx = transportIds.size()-1;
                     transportIds.remove(tIdsIdx);
                 }
@@ -296,9 +295,9 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 int tinfIdx = 0;
                 while(true){
                     try{
-                        JourneyInfo currentStage = current.getJourneysinfo().get(tinfIdx);
+                        JourneyInfo currentStageTiming = current.getJourneysinfo().get(tinfIdx);
                         JourneyInfo nextStage = current.getJourneysinfo().get(tinfIdx+1);
-                        if(currentStage.getArrival().compareTo(nextStage.getDeparture())>=0){
+                        if(currentStageTiming.getArrival().compareTo(nextStage.getDeparture())>=0){
                             sr.getTravelsinfo().remove(srIdx);
                             break;
                         }
@@ -329,17 +328,17 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         
         ArrayList<String> transports = new ArrayList<String>();
         long journeyTime = 0;
-        TravelInfo currentRoute;
+        TravelInfo currentRouteRestrictions;
         int i = 0;
         //Start exploring the routes
         while (true){
             transports.clear();
             try{
-                currentRoute = sr.getTravelsinfo().get(i);
-                int lastStage = currentRoute.getJourneysinfo().size();
+                currentRouteRestrictions = sr.getTravelsinfo().get(i);
+                int lastStage = currentRouteRestrictions.getJourneysinfo().size();
                 // Get first departure and last arrival
-                Calendar starTime = currentRoute.getJourneysinfo().get(0).getDeparture();
-                Calendar endTime = currentRoute.getJourneysinfo().get(lastStage).getArrival();
+                Calendar starTime = currentRouteRestrictions.getJourneysinfo().get(0).getDeparture();
+                Calendar endTime = currentRouteRestrictions.getJourneysinfo().get(lastStage).getArrival();
                 // Set the time required to complete route
                 journeyTime = starTime.getTimeInMillis()-endTime.getTimeInMillis();
                 boolean train = false;
@@ -348,7 +347,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 boolean bus = false;
                 // fills an array with each stage transport
                 for(int j=0;j<lastStage;j++){
-                    transports.add(currentRoute.getJourneysinfo().get(lastStage).getType());
+                    transports.add(currentRouteRestrictions.getJourneysinfo().get(lastStage).getType());
                 }
                 // Check transport used
                 if(transports.contains("TR")){
@@ -615,13 +614,14 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         jLabel17.setText("Asientos");
 
+        txtRouteSeats.setValue(1);
         txtRouteSeats.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 txtRouteSeatsStateChanged(evt);
             }
         });
 
-        jLabel18.setText("Saltos");
+        jLabel18.setText("Escalas");
 
         txtRDStages.setBackground(new java.awt.Color(150, 150, 150));
         txtRDStages.setEnabled(false);
@@ -641,7 +641,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(txtRouteClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtRDDestination)
                     .addComponent(txtRDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14)
                     .addComponent(jLabel13)
@@ -714,6 +714,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         jLabel7.setText("Asientos");
 
+        txtStageSeats.setValue(1);
         txtStageSeats.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 txtStageSeatsStateChanged(evt);
@@ -904,9 +905,10 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         int journeysIndex = journeys.getJourneysinfo().size();
         JourneyInfo current = new JourneyInfo();
         ArrayList<String> visitedIds = new ArrayList<String>();
+        boolean canContinue = false;
         for(int or=0;or<journeysIndex;or++){
             current = journeys.getJourneysinfo().get(or);
-            this.routeSearch(this.journeys,vPlaces,transportIds,destParam,sr,current,visitedIds);
+            this.routeSearch(this.journeys,vPlaces,transportIds,destParam,sr,current,canContinue);
         }
         this.checkTiming(sr);
         this.checkRestrictions(sr);
