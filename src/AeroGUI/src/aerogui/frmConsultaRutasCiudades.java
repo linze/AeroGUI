@@ -55,6 +55,23 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         }   
         
     }
+    
+    private void updateActualStageRecord(TravelInfo route, int i) {
+        //Integer i = routeResults.getSelectedRow();
+        this.currentStage = route.getJourneysinfo().get(i);
+    }
+    
+    private double calcStagePrice() {
+        Integer seats = (Integer)txtStageSeats.getValue();
+        String selectedclass = (String)txtStageClass.getSelectedItem();
+        if (selectedclass.equals("Turista")) {
+            return this.currentStage.getTouristinfo().getPrice().getQuantity() * seats;
+        } else {
+            return this.currentStage.getBusinessinfo().getPrice().getQuantity() * seats;
+        }
+
+    }
+    
     private void updateStageDetails(JourneyInfo stage){
         if (stage != null) {
             txtSDOrigin.setText(stage.getOrigin());
@@ -62,7 +79,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             txtSDDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(stage.getDeparture().getTime()));
             txtSDArrival.setText(JourneyInfo.DATETIMEFORMAT.format(stage.getArrival().getTime()));
             txtSDType.setText(stage.getType());
-            //txtPrice.setText(Double.toString(calcPrice()));
+            txtSDPrice.setText(Double.toString(this.calcStagePrice()) + " Eur");
         } else {
             txtSDOrigin.setText("");
             txtSDDestination.setText("");
@@ -73,13 +90,30 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         }
     }
     
-    private void updateActualStageRecord(TravelInfo route, int i) {
-        //Integer i = routeResults.getSelectedRow();
-        this.currentStage = route.getJourneysinfo().get(i);
-    }
+    
     
     private void updateActualRoute(int r){
         this.currentRoute = this.sr.getTravelsinfo().get(r);
+    }
+    
+    private double calcRoutePrice(TravelInfo route){
+        int stages = route.getJourneysinfo().size();
+        double price = 0.0;
+        double added = 0.0;
+        String currentClass = (String)txtRouteClass.getSelectedItem(); 
+        for(int i=0;i<stages;i++){
+            JourneyInfo current = route.getJourneysinfo().get(i);     
+            if(currentClass.equals("Turista")){
+                added = current.getTouristinfo().getPrice().getQuantity() * 
+                        (Integer)txtRouteSeats.getValue();
+            }
+            else{
+                added = current.getBusinessinfo().getPrice().getQuantity() * 
+                        (Integer)txtRouteSeats.getValue();
+            }
+        price = price + added;
+        }
+        return price;
     }
     
     private void updateActualRouteDetails(TravelInfo route){
@@ -91,8 +125,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             txtRDDestination.setText(last.getDestination());
             txtRDDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(first.getDeparture().getTime()));
             txtRDArrival.setText(JourneyInfo.DATETIMEFORMAT.format(last.getArrival().getTime()));
-            txtRDStages.setText(Integer.toString(lastIndex-1));
-            //txtPrice.setText(Double.toString(calcPrice()));
+            txtRDStages.setText(Integer.toString(lastIndex));
+            txtRDPrice.setText(Double.toString(this.calcRoutePrice(currentRoute)) + " Eur");
         } else {
             txtSDOrigin.setText("");
             txtSDDestination.setText("");
@@ -392,10 +426,10 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         txtRDArrival = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         txtRDPrice = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox();
+        txtRouteClass = new javax.swing.JComboBox();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        txtRouteSeats = new javax.swing.JSpinner();
         jLabel18 = new javax.swing.JLabel();
         txtRDStages = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
@@ -408,9 +442,9 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtSDPrice = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        txtStageSeats = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        txtStageClass = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         txtSDType = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -570,14 +604,26 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         txtRDPrice.setBackground(new java.awt.Color(150, 150, 150));
         txtRDPrice.setEnabled(false);
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
+        txtRouteClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
+        txtRouteClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txtRouteClassItemStateChanged(evt);
+            }
+        });
 
         jLabel16.setText("Clase");
 
         jLabel17.setText("Asientos");
 
+        txtRouteSeats.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtRouteSeatsStateChanged(evt);
+            }
+        });
+
         jLabel18.setText("Saltos");
 
+        txtRDStages.setBackground(new java.awt.Color(150, 150, 150));
         txtRDStages.setEnabled(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -592,7 +638,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtRouteClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtRDDestination)
                     .addComponent(txtRDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
@@ -603,7 +649,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtRDArrival, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(txtRouteSeats, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                     .addComponent(txtRDDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -636,9 +682,9 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(txtRDArrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRouteClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRouteSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -668,9 +714,20 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         jLabel7.setText("Asientos");
 
+        txtStageSeats.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtStageSeatsStateChanged(evt);
+            }
+        });
+
         jLabel8.setText("Clase");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
+        txtStageClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
+        txtStageClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txtStageClassItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setText("Tipo");
 
@@ -696,7 +753,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSDDestination)
-                    .addComponent(jComboBox2, 0, 136, Short.MAX_VALUE)
+                    .addComponent(txtStageClass, 0, 136, Short.MAX_VALUE)
                     .addComponent(txtSDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -706,7 +763,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSDArrival, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSpinner1)
+                    .addComponent(txtStageSeats)
                     .addComponent(txtSDDeparture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -740,8 +797,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtStageSeats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtStageClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -896,6 +953,22 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         this.updateStageDetails(this.currentStage);
     }//GEN-LAST:event_routeResultsMouseClicked
 
+    private void txtStageSeatsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtStageSeatsStateChanged
+        this.updateStageDetails(currentStage);
+    }//GEN-LAST:event_txtStageSeatsStateChanged
+
+    private void txtStageClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtStageClassItemStateChanged
+        this.updateStageDetails(currentStage);
+    }//GEN-LAST:event_txtStageClassItemStateChanged
+
+    private void txtRouteSeatsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtRouteSeatsStateChanged
+        this.updateActualRouteDetails(currentRoute);
+    }//GEN-LAST:event_txtRouteSeatsStateChanged
+
+    private void txtRouteClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtRouteClassItemStateChanged
+        this.updateActualRouteDetails(currentRoute);
+    }//GEN-LAST:event_txtRouteClassItemStateChanged
+
     /**
     * @param args the command line arguments
     */
@@ -913,8 +986,6 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -941,8 +1012,6 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTable routeResults;
     private javax.swing.JComboBox routeSelection;
     private javax.swing.JTabbedPane stageDetails;
@@ -954,12 +1023,16 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     private javax.swing.JTextField txtRDOrigin;
     private javax.swing.JTextField txtRDPrice;
     private javax.swing.JTextField txtRDStages;
+    private javax.swing.JComboBox txtRouteClass;
+    private javax.swing.JSpinner txtRouteSeats;
     private javax.swing.JTextField txtSDArrival;
     private javax.swing.JTextField txtSDDeparture;
     private javax.swing.JTextField txtSDDestination;
     private javax.swing.JTextField txtSDOrigin;
     private javax.swing.JTextField txtSDPrice;
     private javax.swing.JTextField txtSDType;
+    private javax.swing.JComboBox txtStageClass;
+    private javax.swing.JSpinner txtStageSeats;
     // End of variables declaration//GEN-END:variables
 
 }
