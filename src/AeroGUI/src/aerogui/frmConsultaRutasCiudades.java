@@ -15,6 +15,7 @@ import classes.JourneyInfo;
 import classes.SearchResult;
 import classes.TravelInfo;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,6 +30,11 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     private String origin;
     private String destination;
     private SearchResult sr;
+    private TravelInfo currentRoute;
+    private JourneyInfo currentStage;
+    private final long _32h = 115200000;
+    private final long _48h = 172800000;
+    private final long _5d = 432000000;
  
     /** Creates new form frmConsultaRutasCiudades */
     public frmConsultaRutasCiudades() {
@@ -49,12 +55,60 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         }   
         
     }
+    private void updateStageDetails(JourneyInfo stage){
+        if (stage != null) {
+            txtSDOrigin.setText(stage.getOrigin());
+            txtSDDestination.setText(stage.getDestination());
+            txtSDDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(stage.getDeparture().getTime()));
+            txtSDArrival.setText(JourneyInfo.DATETIMEFORMAT.format(stage.getArrival().getTime()));
+            txtSDType.setText(stage.getType());
+            //txtPrice.setText(Double.toString(calcPrice()));
+        } else {
+            txtSDOrigin.setText("");
+            txtSDDestination.setText("");
+            txtSDDeparture.setText("");
+            txtSDArrival.setText("");
+            txtSDType.setText("");
+            txtSDPrice.setText("");
+        }
+    }
     
+    private void updateActualStageRecord(TravelInfo route, int i) {
+        //Integer i = routeResults.getSelectedRow();
+        this.currentStage = route.getJourneysinfo().get(i);
+    }
+    
+    private void updateActualRoute(int r){
+        this.currentRoute = this.sr.getTravelsinfo().get(r);
+    }
+    
+    private void updateActualRouteDetails(TravelInfo route){
+        if (route != null) {
+            int lastIndex = route.getJourneysinfo().size()-1;
+            JourneyInfo first = route.getJourneysinfo().get(0);
+            JourneyInfo last = route.getJourneysinfo().get(lastIndex);
+            txtRDOrigin.setText(first.getOrigin());
+            txtRDDestination.setText(last.getDestination());
+            txtRDDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(first.getDeparture().getTime()));
+            txtRDArrival.setText(JourneyInfo.DATETIMEFORMAT.format(last.getArrival().getTime()));
+            txtRDStages.setText(Integer.toString(lastIndex-1));
+            //txtPrice.setText(Double.toString(calcPrice()));
+        } else {
+            txtSDOrigin.setText("");
+            txtSDDestination.setText("");
+            txtSDDeparture.setText("");
+            txtSDArrival.setText("");
+            txtSDType.setText("");
+            txtSDPrice.setText("");
+        }
+    }
     //Creates routes list
     private void createRoutesList(SearchResult sr){
+            // Clean up previous search list
             routeSelection.removeAllItems();
             int nRoutes = sr.getTravelsinfo().size();
             String rName;
+            // Add an item for each route 
             for(int i=0;i<nRoutes;i++){
                 rName = "Ruta "+(i+1);
                 routeSelection.addItem(rName);
@@ -73,6 +127,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     int srIdx = sr.getTravelsinfo().get(index).getJourneysinfo().size();
                     for (int j=0;j<srIdx;j++){
                     currentResult = sr.getTravelsinfo().get(index).getJourneysinfo().get(j);
+                    //Adds selected fields to the model
                     model.addRow(new Object[]{currentResult.getOrigin(),
                         currentResult.getDestination(),currentResult.getType(),
                         JourneyInfo.DATETIMEFORMAT.format(currentResult.getDeparture().getTime()),
@@ -83,100 +138,119 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 jTable1.setModel(model);
         }
     
+    /* This method gets all possible routes between two given towns
+     * It doesn't take care of timing or restrictions*/
+    
     private void routeSearch(TravelInfo journeys,ArrayList<String> vPlaces
                           , ArrayList<String> transportIds, String destParam
-                          , SearchResult sr, JourneyInfo current, int start){
+                          , SearchResult sr, JourneyInfo current, ArrayList<String> visitedIds){
         
         //Last town visited array index : ltv
         int ltv = vPlaces.size()-1;
         int journeyIndex = journeys.getJourneysinfo().size();
         String stageDestination = current.getDestination();
+        String stageOrigin = current.getOrigin();
         String lastVisited;
-        if(current.getOrigin().equals(vPlaces.get(ltv))){
+        /* When current journey departures from last town arrived (route's 
+         * origin in first iteration) is a possible stage of the route.
+         * */
+        if((stageOrigin.equals(vPlaces.get(ltv)))&& !(visitedIds.contains(current.getId()))){
+            visitedIds.add(current.getId());
             //Check if route has reached destination
             if(stageDestination.equals(destParam)){
-                //This block retrieves the JourneyInfo associated to each Id.
+                //The Id is added to the route. The route is then complete
+                vPlaces.add(current.getDestination());
+                ltv++;
+                lastVisited = vPlaces.get(ltv);
                 transportIds.add(current.getId());
+                /* This block retrieves the JourneyInfo associated to each Id
+                 * and adds it to the TravelInfo variable.
+                 */
                 TravelInfo route = new TravelInfo();
                 for(int idIndex=0;idIndex<transportIds.size();idIndex++){
                     for(int jIndex=0;jIndex<journeyIndex;jIndex++){
                         JourneyInfo routeNode = journeys.getJourneysinfo().get(jIndex);
                         if(routeNode.getId().equals(transportIds.get(idIndex))){
                             route.addJourneyInfo(routeNode);
+                            break;
                         }
-                        
                     }
                 }
-            //Finally the route is added to the search result
+            //Finally the complete route info is added to the search result
             sr.addTravelInfo(route);
-            int vIdx = vPlaces.size()-1;
+            /*int vIdx = vPlaces.size()-1;
             int tIdx = transportIds.size()-1;
-            
+            //Backtracking to continue searching
             if(vIdx>0){
+                vPlaces.remove(vIdx);
+                ltv--;
+                lastVisited = vPlaces.get(ltv);
                 transportIds.remove(tIdx);
-                int newCurrentIndex = journeys.getJourneysinfo().indexOf(current)+1;
-                try{
-                    JourneyInfo nextCurrent = journeys.getJourneysinfo().get(newCurrentIndex);
-                    this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, nextCurrent, start);
-                }
-                catch(IndexOutOfBoundsException iobex){
-                    return;
-                }
-            }
-            else{
-                transportIds.clear();
+                /*int nBr;
+                for(nBr=0;nBr<journeys.getJourneysinfo().size();nBr++){
+                    current = journeys.getJourneysinfo().get(nBr);
+                    this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current);
+                }*/
+                return;
+            //}
+            /*else{
+                //transportIds.clear();
                 start = 0;
-            }
+            }*/
             
+        }
+        else{
+            // Check possible loops in routes
+            boolean loop = false;
+            int visitedIndex = 0;
+                
+            while(!loop){
+                try{
+                    if(vPlaces.get(visitedIndex).equals(stageDestination)){
+                        loop = true;
+                    }
+                    else{
+                        visitedIndex++;
+                    }
+                }
+                catch(IndexOutOfBoundsException iobe){
+                    break;
+                }
+            }
+                //if no loop is found search can continue
+            if(!loop){
+                vPlaces.add(stageDestination);
+                ltv++;
+                transportIds.add(current.getId());
+                lastVisited = vPlaces.get(ltv);
+                boolean canContinue = false;
+                int jidx;
+                for(jidx=0;jidx<journeyIndex;jidx++){
+                    JourneyInfo readJi = journeys.getJourneysinfo().get(jidx);
+                    if(readJi.getOrigin().equals(lastVisited)){
+                        canContinue=true;
+                        current = journeys.getJourneysinfo().get(jidx);
+                        this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current,visitedIds);
+                    }
+                    
+                }
+                if(!canContinue){
+                    vPlaces.remove(ltv);
+                    ltv--;
+                    int tIdsIdx = transportIds.size()-1;
+                    transportIds.remove(tIdsIdx);
+                }
             }
             else{
-                // Check possible loops in routes
-                boolean loop = false;
-                int visitedIndex = 0;
-                
-                while(!loop){
-                    try{
-                        if(vPlaces.get(visitedIndex).equals(stageDestination)){
-                            loop = true;
-                        }
-                        else{
-                            visitedIndex++;
-                        }
-                    }
-                    catch(IndexOutOfBoundsException iobe){
-                        break;
-                    }
-                }
-                //if no loop is found search can continue
-                if(!loop){
-                    vPlaces.add(stageDestination);
-                    ltv++;
-                    transportIds.add(current.getId());
-                    lastVisited = vPlaces.get(ltv);
-                    boolean canContinue = false;
-                    int jidx;
-                    for(jidx=start;jidx<journeyIndex;jidx++){
-                        JourneyInfo readJi = journeys.getJourneysinfo().get(jidx);
-                        if(readJi.getOrigin().equals(lastVisited)){
-                            canContinue=true;
-                            current = journeys.getJourneysinfo().get(jidx);
-                            this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current,start);
-                        }
-                    
-                    }
-                    if(!canContinue){
-                        vPlaces.remove(ltv);
-                        ltv--;
-                        int tIdsIdx = transportIds.size()-1;
-                        transportIds.remove(tIdsIdx);
-                    }
-                }
-                else{
-                    transportIds.clear();
-                }
+                vPlaces.remove(ltv);
+                ltv--;
+                lastVisited = vPlaces.get(ltv);
+                int tIdsIdx = transportIds.size()-1;
+                transportIds.remove(tIdsIdx);
             }
         }
     }
+}
     
     /*After getting the possible routes we'll check arrivals 
      * don't override next transport departure*/
@@ -209,7 +283,80 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             }
         }
     }
+    
+    /*
+     * This method checks restrictions to the routes:
+     *      1: route elapsed time > 32 h && neither train nor ship
+     *      2: route elapsed time > 48 h && train exclusively
+     *      3: route elapsed time > 120 h && ship included
+     */
 
+    private void checkRestrictions(SearchResult sr){
+        
+        ArrayList<String> transports = new ArrayList<String>();
+        long journeyTime = 0;
+        TravelInfo currentRoute;
+        int i = 0;
+        //Start exploring the routes
+        while (true){
+            transports.clear();
+            try{
+                currentRoute = sr.getTravelsinfo().get(i);
+                int lastStage = currentRoute.getJourneysinfo().size();
+                // Get first departure and last arrival
+                Calendar starTime = currentRoute.getJourneysinfo().get(0).getDeparture();
+                Calendar endTime = currentRoute.getJourneysinfo().get(lastStage).getArrival();
+                // Set the time required to complete route
+                journeyTime = starTime.getTimeInMillis()-endTime.getTimeInMillis();
+                boolean train = false;
+                boolean ship = false;
+                boolean plane = false;
+                boolean bus = false;
+                // fills an array with each stage transport
+                for(int j=0;j<lastStage;j++){
+                    transports.add(currentRoute.getJourneysinfo().get(lastStage).getType());
+                }
+                // Check transport used
+                if(transports.contains("TR")){
+                    train = true;
+                }
+                if(transports.contains("BA")){
+                    ship = true;
+                }
+                if(transports.contains("AV")){
+                    plane = true;
+                }
+                if(transports.contains("AU")){
+                    bus = true;
+                }
+                /* And finally check restrictions. 
+                 * If any then route will be deleted
+                 * 
+                 */
+                if((journeyTime>_32h)&& !train && !ship){
+                    sr.getTravelsinfo().remove(i);
+                }
+                else{
+                    if((journeyTime>_48h) && train && !ship && !plane && !bus){
+                        sr.getTravelsinfo().remove(i);
+                    }
+                    else{
+                        if((journeyTime>_5d) && ship){
+                            sr.getTravelsinfo().remove(i);
+                        }
+                        else{
+                            i++;
+                        }
+                    }
+                }
+            }
+            catch(IndexOutOfBoundsException iob){
+                break;
+            }
+        }
+    }
+    
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -232,42 +379,42 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         btnCerrar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        routeResults = new javax.swing.JTable();
+        stageDetails = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtRDOrigin = new javax.swing.JTextField();
+        txtRDDestination = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        txtRDDeparture = new javax.swing.JTextField();
+        txtRDArrival = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        txtRDPrice = new javax.swing.JTextField();
         jComboBox4 = new javax.swing.JComboBox();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jSpinner2 = new javax.swing.JSpinner();
         jLabel18 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        txtRDStages = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSDOrigin = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtSDDestination = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtSDDeparture = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtSDPrice = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtSDType = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtSDArrival = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         routeSelection = new javax.swing.JComboBox();
 
@@ -361,8 +508,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addGap(564, 564, 564))
         );
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        routeResults.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        routeResults.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -373,7 +520,12 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 "Origen", "Destino", "Tipo", "Salida", "Llegada"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        routeResults.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                routeResultsMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(routeResults);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -396,22 +548,27 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         jLabel12.setText("Origen");
 
-        jTextField7.setEnabled(false);
+        txtRDOrigin.setBackground(new java.awt.Color(150, 150, 150));
+        txtRDOrigin.setEnabled(false);
 
-        jTextField8.setEnabled(false);
+        txtRDDestination.setBackground(new java.awt.Color(150, 150, 150));
+        txtRDDestination.setEnabled(false);
 
         jLabel13.setText("Llegada");
 
         jLabel14.setText("Salida");
 
-        jTextField9.setEnabled(false);
+        txtRDDeparture.setBackground(new java.awt.Color(150, 150, 150));
+        txtRDDeparture.setEnabled(false);
 
-        jTextField10.setText("00/00/00 00:00");
-        jTextField10.setEnabled(false);
+        txtRDArrival.setBackground(new java.awt.Color(150, 150, 150));
+        txtRDArrival.setText("00/00/00 00:00");
+        txtRDArrival.setEnabled(false);
 
         jLabel15.setText("Precio");
 
-        jTextField11.setEnabled(false);
+        txtRDPrice.setBackground(new java.awt.Color(150, 150, 150));
+        txtRDPrice.setEnabled(false);
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
 
@@ -421,7 +578,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         jLabel18.setText("Saltos");
 
-        jTextField12.setEnabled(false);
+        txtRDStages.setEnabled(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -436,8 +593,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField8)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRDDestination)
+                    .addComponent(txtRDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14)
@@ -445,17 +602,17 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(jLabel17))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(txtRDArrival, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                     .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRDDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField11)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                    .addComponent(txtRDPrice)
+                    .addComponent(txtRDStages, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                 .addGap(37, 37, 37))
         );
         jPanel7Layout.setVerticalGroup(
@@ -464,19 +621,19 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRDStages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRDDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRDDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRDPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRDArrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -486,23 +643,28 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Ruta completa", jPanel7);
+        stageDetails.addTab("Ruta completa", jPanel7);
 
         jLabel2.setText("Origen");
 
-        jTextField1.setEnabled(false);
+        txtSDOrigin.setBackground(new java.awt.Color(150, 150, 150));
+        txtSDOrigin.setForeground(new java.awt.Color(243, 224, 224));
+        txtSDOrigin.setEnabled(false);
 
         jLabel3.setText("Destino");
 
-        jTextField2.setEnabled(false);
+        txtSDDestination.setBackground(new java.awt.Color(150, 150, 150));
+        txtSDDestination.setEnabled(false);
 
         jLabel4.setText("Salida");
 
-        jTextField3.setEnabled(false);
+        txtSDDeparture.setBackground(new java.awt.Color(150, 150, 150));
+        txtSDDeparture.setEnabled(false);
 
         jLabel6.setText("Precio");
 
-        jTextField5.setEnabled(false);
+        txtSDPrice.setBackground(new java.awt.Color(150, 150, 150));
+        txtSDPrice.setEnabled(false);
 
         jLabel7.setText("Asientos");
 
@@ -512,12 +674,14 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         jLabel5.setText("Tipo");
 
-        jTextField4.setEnabled(false);
+        txtSDType.setBackground(new java.awt.Color(150, 150, 150));
+        txtSDType.setEnabled(false);
 
         jLabel10.setText("Llegada");
 
-        jTextField6.setText("00/00/00 00:00");
-        jTextField6.setEnabled(false);
+        txtSDArrival.setBackground(new java.awt.Color(150, 150, 150));
+        txtSDArrival.setText("00/00/00 00:00");
+        txtSDArrival.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -531,9 +695,9 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2)
+                    .addComponent(txtSDDestination)
                     .addComponent(jComboBox2, 0, 136, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
@@ -541,17 +705,17 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSDArrival, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSpinner1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                    .addComponent(txtSDDeparture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                    .addComponent(txtSDPrice)
+                    .addComponent(txtSDType, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -560,19 +724,19 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSDDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSDOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSDType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSDDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSDPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSDArrival, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -582,7 +746,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Etapa", jPanel4);
+        stageDetails.addTab("Etapa", jPanel4);
 
         routeSelection.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
         routeSelection.addItemListener(new java.awt.event.ItemListener() {
@@ -624,7 +788,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(stageDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -655,7 +819,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stageDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(182, 182, 182)))
                 .addContainerGap())
@@ -673,7 +837,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         routeSelection.removeAllItems();
         //this.sr.getTravelsinfo().clear();
         sr = new SearchResult();
-        jTable1.removeAll();
+        routeResults.removeAll();
         this.origin = txtOriginSearch.getSelectedItem().toString();
         this.destination = txtDestinationSearch.getSelectedItem().toString();
         ArrayList<String> vPlaces = new ArrayList<String>();
@@ -682,21 +846,24 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         String destParam = this.destination;
         int journeysIndex = journeys.getJourneysinfo().size();
         JourneyInfo current = new JourneyInfo();
-        int start = 0;
+        ArrayList<String> visitedIds = new ArrayList<String>();
         for(int or=0;or<journeysIndex;or++){
             current = journeys.getJourneysinfo().get(or);
-            this.routeSearch(this.journeys,vPlaces,transportIds,destParam,sr,current,start);
+            this.routeSearch(this.journeys,vPlaces,transportIds,destParam,sr,current,visitedIds);
         }
         this.checkTiming(sr);
-        //this.checkRestrictions(sr)
+        this.checkRestrictions(sr);
         boolean emptyList = sr.getTravelsinfo().isEmpty();
         if (!emptyList){
             this.createRoutesList(sr);
-            this.showRoutes(sr, jTable1, 0);
+            this.updateActualRoute(routeSelection.getSelectedIndex());
+            this.updateActualStageRecord(this.currentRoute,0);
+            this.updateActualRouteDetails(this.currentRoute);
+            this.showRoutes(sr, routeResults, 0);
         
         }
         else{
-            jTable1.removeAll();
+            routeResults.removeAll();
             JOptionPane.showMessageDialog(this, "No se han encontrado rutas válidas"); 
         }
         
@@ -708,7 +875,12 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             
             if (routeSelection.getItemCount()>0){
                 int route = routeSelection.getSelectedIndex();
-                this.showRoutes(sr, jTable1, route);
+                this.updateActualRoute(route);
+                this.updateActualStageRecord(this.currentRoute,0);
+                this.updateActualRouteDetails(this.currentRoute);
+                this.updateStageDetails(this.currentStage);
+                this.showRoutes(sr, routeResults, route);
+                
             }
         
     }//GEN-LAST:event_routeSelectionItemStateChanged
@@ -716,6 +888,13 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     private void routeSelectionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_routeSelectionKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_routeSelectionKeyPressed
+
+    private void routeResultsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_routeResultsMouseClicked
+        this.updateActualRoute(routeSelection.getSelectedIndex());
+        this.updateActualStageRecord(this.currentRoute,this.routeResults.getSelectedRow());
+        this.updateActualRouteDetails(this.currentRoute);
+        this.updateStageDetails(this.currentStage);
+    }//GEN-LAST:event_routeResultsMouseClicked
 
     /**
     * @param args the command line arguments
@@ -764,23 +943,23 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTable routeResults;
     private javax.swing.JComboBox routeSelection;
+    private javax.swing.JTabbedPane stageDetails;
     private javax.swing.JComboBox txtDestinationSearch;
     private javax.swing.JComboBox txtOriginSearch;
+    private javax.swing.JTextField txtRDArrival;
+    private javax.swing.JTextField txtRDDeparture;
+    private javax.swing.JTextField txtRDDestination;
+    private javax.swing.JTextField txtRDOrigin;
+    private javax.swing.JTextField txtRDPrice;
+    private javax.swing.JTextField txtRDStages;
+    private javax.swing.JTextField txtSDArrival;
+    private javax.swing.JTextField txtSDDeparture;
+    private javax.swing.JTextField txtSDDestination;
+    private javax.swing.JTextField txtSDOrigin;
+    private javax.swing.JTextField txtSDPrice;
+    private javax.swing.JTextField txtSDType;
     // End of variables declaration//GEN-END:variables
 
 }
