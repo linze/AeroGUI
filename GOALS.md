@@ -1,6 +1,6 @@
 # Documento de objetivos para la iteracción
 ## Iteración 9
-[ ] Implementar consulta de rutas compuesta
+[P] Implementar consulta de rutas compuesta
 
 ### Leyenda:
 <pre>
