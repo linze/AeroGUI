@@ -31,6 +31,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     /** Creates new form frmConsultaRutasCiudades */
     public frmConsultaRutasCiudades() {
         initComponents();
+        this.setLocationRelativeTo(null);
         txtOriginSearch.removeAllItems();
         txtDestinationSearch.removeAllItems();
         ArrayList<String> origins = ComponentsBox.journeyshandler.getOrigins();
@@ -118,10 +119,20 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         jLabel7.setText("Clase");
 
         selClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Turista", "Ejecutivo" }));
+        selClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                selClassItemStateChanged(evt);
+            }
+        });
 
         jLabel17.setText("Asientos");
 
         txtSeats.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+        txtSeats.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtSeatsStateChanged(evt);
+            }
+        });
 
         btnSearch.setText("Buscar");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +165,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                         .addComponent(txtSeats, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,8 +304,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                         .addComponent(jLabel11))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtOrigin1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                        .addComponent(txtDestination1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                        .addComponent(txtOrigin1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                        .addComponent(txtDestination1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
                     .addGap(17, 17, 17)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel13)
@@ -331,7 +342,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                         .addComponent(txtDestination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13)
                         .addComponent(txtArrival1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(47, Short.MAX_VALUE)))
+                    .addContainerGap(55, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Descripción del viaje", jPanel6);
@@ -352,6 +363,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
         txtArrival.setEnabled(false);
 
+        txtDeparture.setForeground(new java.awt.Color(17, 5, 5));
         txtDeparture.setEnabled(false);
 
         jLabel5.setText("Tipo");
@@ -376,9 +388,9 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtOrigin, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                    .addComponent(txtDestination, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                    .addComponent(txtClass, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                    .addComponent(txtOrigin, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(txtDestination, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(txtClass, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel16)
@@ -394,7 +406,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -440,7 +452,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane1))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(73, Short.MAX_VALUE)
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -540,6 +552,16 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         onTravelChange();
     }//GEN-LAST:event_txtTravelsMouseClicked
 
+    private void txtSeatsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtSeatsStateChanged
+        updateTravelDetails();
+        updateJourneyDetails();
+    }//GEN-LAST:event_txtSeatsStateChanged
+
+    private void selClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selClassItemStateChanged
+        updateTravelDetails();
+        updateJourneyDetails();
+    }//GEN-LAST:event_selClassItemStateChanged
+
     private void updateActualRecord() {
         this._journey = _travel.getJourneysinfo().get(tblJourneys.getSelectedRow());
     }
@@ -566,6 +588,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             txtDestination1.setText(lastji.getDestination());
             txtDeparture1.setText(JourneyInfo.DATETIMEFORMAT.format(firstji.getDeparture().getTime()));
             txtArrival1.setText(JourneyInfo.DATETIMEFORMAT.format(lastji.getArrival().getTime()));
+            txtPrice1.setText(this.updateTravelPrice());
+            txtSeats1.setText(txtSeats.getValue().toString());
 
             // TODO: Add price and seats
             //txtSeats1.setText(Integer.toString(this._travel.getNtravelers()));
@@ -584,14 +608,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             txtDeparture.setText(JourneyInfo.DATETIMEFORMAT.format(this._journey.getDeparture().getTime()));
             txtArrival.setText(JourneyInfo.DATETIMEFORMAT.format(this._journey.getArrival().getTime()));
             txtType.setText(this._journey.getType());
-            // TODO: Indicate price and seat type
-//            if (_journey.getJourneyclass().equals("Turista")) {
-//                txtPrice.setText(this._journey.getTouristinfo().getPrice().toString());
-//                txtClass.setText("Turista");
-//            } else {
-//                txtPrice.setText(this._journey.getBusinessinfo().getPrice().toString());
-//                txtClass.setText("Ejecutivo");
-//            }
+            txtPrice.setText(String.valueOf(calcStagePrice(this._journey)));
+            txtClass.setText((String)selClass.getSelectedItem());
         } else {
             txtOrigin.setText("");
             txtDestination.setText("");
@@ -602,6 +620,31 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             txtClass.setText("");
         }
     }
+    
+    private double calcStagePrice(JourneyInfo journey) {
+        Integer seats = (Integer)txtSeats.getValue();
+        String selectedclass = (String)selClass.getSelectedItem();
+        if (selectedclass.equals("Turista")) {
+            return journey.getTouristinfo().getPrice().getQuantity() * seats;
+        } else {
+            return journey.getBusinessinfo().getPrice().getQuantity() * seats;
+        }
+
+    }
+    
+    private String updateTravelPrice(){
+        int travelSize = this._travel.getJourneysinfo().size();
+        String result;
+        double price = 0.0;
+        double added = 0.0;
+        for(int i=0;i<travelSize;i++){
+            JourneyInfo current = this._travel.getJourneysinfo().get(i);
+            added = calcStagePrice(current);
+            price += added;
+        }
+        result = String.valueOf(price);
+        return result;
+    }
 
     /**
     * @param args the command line arguments
@@ -610,6 +653,8 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frmConsultaRutasCiudades().setVisible(true);
+                       
+                
             }
         });
     }
