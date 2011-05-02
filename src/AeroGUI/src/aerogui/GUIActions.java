@@ -1,8 +1,6 @@
 package aerogui;
 
 import classes.*;
-import java.lang.Integer;
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -263,6 +261,22 @@ public class GUIActions {
             als.add(origin + "-" + destination);
         }
         
+        return stringList(als);
+    }
+
+    public static DefaultListModel searchResultList(SearchResult sr) {
+        ArrayList<String> als = new ArrayList<String>();
+
+        String origin;
+        String destination;
+        int i = 0;
+        for (TravelInfo travel : sr.getTravelsinfo()) {
+            origin = travel.getJourneysinfo().get(0).getOrigin();
+            destination = travel.getJourneysinfo().get(travel.getJourneysinfo().size()-1).getDestination();
+            als.add(origin + "-" + destination + " #" + Integer.toString(i));
+            i++;
+        }
+
         return stringList(als);
     }
 

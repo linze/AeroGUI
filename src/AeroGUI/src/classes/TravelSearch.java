@@ -66,4 +66,9 @@ public class TravelSearch {
         return sr;
   }
 
+  public static SearchResult doRouteSearch(String origin, String destination, JourneyHandler handler) {
+      RouteSearch rs = new RouteSearch(handler);
+      return rs.routeSearch(origin, destination);
+  }
+
 }

@@ -94,4 +94,18 @@ public class JourneyHandler {
       }
       return result;
   }
+
+  // TODO: Remove
+  public ArrayList<JourneyInfo> getDestinationsJourneys(String origin) {
+      ArrayList<JourneyInfo> result = new ArrayList<JourneyInfo>();
+
+      JourneyInfo current;
+      for (int i=0; i<this._journeysinfo.size(); i++) {
+          current = this._journeysinfo.get(i);
+          if (current.getOrigin().equals(origin)) {
+            result.add(current);
+          }
+      }
+      return result;
+  }
 }
