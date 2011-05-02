@@ -177,111 +177,114 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
     
     private void routeSearch(TravelInfo journeys,ArrayList<String> vPlaces
                           , ArrayList<String> transportIds, String destParam
-                          , SearchResult sr, JourneyInfo current, boolean canContinue){
+                          , SearchResult sr, JourneyInfo current
+                          , boolean canContinue, ArrayList<String> marked
+                          , int ltv, boolean loop){
         
         //Last town visited array index : ltv
-        int ltv = vPlaces.size()-1;
-        int journeyIndex = journeys.getJourneysinfo().size();
+        ltv = vPlaces.size()-1;
+        int journeyIndex = journeys.getJourneysinfo().size()-1;
         String stageDestination = current.getDestination();
         String stageOrigin = current.getOrigin();
-        String lastVisited;
+        String mark = current.getId();
         /* When current journey departures from last town arrived (route's 
          * origin in first iteration) is a possible stage of the route.
          * */
         if(stageOrigin.equals(vPlaces.get(ltv))){
             
-            //Check if route has reached destination
-            if(stageDestination.equals(destParam)){
-                //The Id is added to the route. The route is then complete
-                vPlaces.add(current.getDestination());
-                ltv++;
-                lastVisited = vPlaces.get(ltv);
-                transportIds.add(current.getId());
-                /* This block retrieves the JourneyInfo associated to each Id
-                 * and adds it to the TravelInfo variable.
-                 */
-                TravelInfo route = new TravelInfo();
-                for(int idIndex=0;idIndex<transportIds.size();idIndex++){
-                    for(int jIndex=0;jIndex<journeyIndex;jIndex++){
-                        JourneyInfo routeNode = journeys.getJourneysinfo().get(jIndex);
-                        if(routeNode.getId().equals(transportIds.get(idIndex))){
-                            route.addJourneyInfo(routeNode);
-                            break;
-                        }
-                    }
-                }
-            //Finally the complete route info is added to the search result
-            sr.addTravelInfo(route);
-            
-            int tIdx = transportIds.size()-1;
-            //Backtracking to continue searching
-            if(ltv>0){
-                vPlaces.remove(ltv);
-                ltv--;
-                lastVisited = vPlaces.get(ltv);
-                transportIds.remove(tIdx);
-                canContinue = false;
-                int nBr;
-                //for(nBr=0;nBr<journeys.getJourneysinfo().size();nBr++){
-                    current = journeys.getJourneysinfo().get(0);
-                this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current, canContinue);
-                //}
-            }
-            else{
-                return;
-            }
-        }
-        else{
             // Check possible loops in routes
-            boolean loop = false;
+            loop = false;
             int visitedIndex = 0;
-                
-            while(!loop){
-                try{
-                    if(vPlaces.get(visitedIndex).equals(stageDestination)){
-                        loop = true;
-                    }
-                    else{
-                        visitedIndex++;
-                    }
-                }
-                catch(IndexOutOfBoundsException iobe){
-                    break;
-                }
-            }
-                //if no loop is found search can continue
-            if(!loop){
-                vPlaces.add(stageDestination);
-                ltv++;
-                transportIds.add(current.getId());
-                lastVisited = vPlaces.get(ltv);
-                canContinue = false;
-                int jidx;
-                for(jidx=0;jidx<journeyIndex;jidx++){
-                    JourneyInfo readJi = journeys.getJourneysinfo().get(jidx);
-                    if(readJi.getOrigin().equals(lastVisited)){
-                        canContinue=true;
-                        current = journeys.getJourneysinfo().get(jidx);
-                        this.routeSearch(journeys, vPlaces, transportIds, destParam, sr, current, canContinue);
-                    }
-                    
-                }
-                if(!canContinue){
-                    vPlaces.remove(ltv);
-                    ltv--;
-                    lastVisited = vPlaces.get(ltv);
-                    int tIdsIdx = transportIds.size()-1;
-                    transportIds.remove(tIdsIdx);
-                }
-            }
-            else{
+            if(vPlaces.contains(current.getDestination())){
+                loop = true;
+            }   
+            
+            if(loop){
+                marked.add(mark);
                 vPlaces.remove(ltv);
                 ltv--;
-                lastVisited = vPlaces.get(ltv);
                 int tIdsIdx = transportIds.size()-1;
                 transportIds.remove(tIdsIdx);
+                return;
             }
-        }
+            else{
+                if(!(marked.contains(mark))){
+                    marked.add(mark);
+                    vPlaces.add(stageDestination);
+                    ltv++;
+                    transportIds.add(current.getId());
+                    //Check if route has reached destination
+                    if(stageDestination.equals(destParam)){
+                        // The route is then complete
+                        
+                        /* This block retrieves the JourneyInfo associated to each Id
+                         * and adds it to the TravelInfo variable.
+                         */
+                        TravelInfo route = new TravelInfo();
+                        for(int idIndex=0;idIndex<transportIds.size();idIndex++){
+                            for(int jIndex=0;jIndex<journeyIndex;jIndex++){
+                                JourneyInfo routeNode = journeys.getJourneysinfo().get(jIndex);
+                                if(routeNode.getId().equals(transportIds.get(idIndex))){
+                                    route.addJourneyInfo(routeNode);
+                                    break;
+                                }
+                            }
+                        }
+                    //Finally the complete route info is added to the search result
+                    sr.addTravelInfo(route);
+                    int tIdx = transportIds.size()-1;
+                    for(int routeIndex=0;routeIndex<tIdx;routeIndex++){
+                        int mkIndex= 0;
+                        while(true){
+                            try{
+                                String ct = transportIds.get(routeIndex);
+                                String mt = marked.get(mkIndex);
+                                if(!ct.equals(mt)){
+                                    marked.remove(mt);
+                                    break;
+                                }
+                                else{
+                                    mkIndex++;
+                                }
+                            }
+                            catch(IndexOutOfBoundsException e){
+                                break;
+                            }
+                        }
+                    }
+                    
+                    //Backtracking to continue searching
+                    vPlaces.remove(ltv);
+                    ltv--;
+                    transportIds.remove(tIdx);
+                    canContinue = false;
+                    return;
+               }
+                    canContinue = false;
+                    int jidx;
+                    for(jidx=0;jidx<journeyIndex;jidx++){
+                        ltv = vPlaces.size()-1;
+                        JourneyInfo readJi = journeys.getJourneysinfo().get(jidx);
+                        if(readJi.getOrigin().equals(vPlaces.get(ltv))){
+                            canContinue=true;
+                            current = journeys.getJourneysinfo().get(jidx);
+                            this.routeSearch(journeys, vPlaces, transportIds, 
+                                 destParam, sr, current, canContinue, marked, ltv, loop);
+                        }
+
+                    }
+                }
+            }
+            // If there's no more cities to chain it must go back
+            if(!canContinue){
+                vPlaces.remove(ltv);
+                ltv--;
+                int tIdsIdx = transportIds.size()-1;
+                transportIds.remove(tIdsIdx);
+                return;
+            }
+            
+            
     }
 }
     
@@ -906,12 +909,16 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         JourneyInfo current = new JourneyInfo();
         ArrayList<String> visitedIds = new ArrayList<String>();
         boolean canContinue = false;
+        ArrayList<String> marked = new ArrayList<String>();
+        int ltv = 0;
+        boolean loop = false;
         for(int or=0;or<journeysIndex;or++){
             current = journeys.getJourneysinfo().get(or);
-            this.routeSearch(this.journeys,vPlaces,transportIds,destParam,sr,current,canContinue);
+            this.routeSearch(this.journeys,vPlaces,transportIds,destParam,sr
+                             ,current,canContinue,marked, ltv, loop);
         }
-        this.checkTiming(sr);
-        this.checkRestrictions(sr);
+        //this.checkTiming(sr);
+        //this.checkRestrictions(sr);
         boolean emptyList = sr.getTravelsinfo().isEmpty();
         if (!emptyList){
             this.createRoutesList(sr);
