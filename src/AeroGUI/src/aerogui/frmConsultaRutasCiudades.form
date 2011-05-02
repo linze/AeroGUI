@@ -200,7 +200,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="btnCerrar" alignment="0" pref="160" max="32767" attributes="1"/>
-                      <Component id="jButton1" alignment="0" pref="160" max="32767" attributes="1"/>
+                      <Component id="btnCart" alignment="0" pref="160" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -210,7 +210,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCart" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnCerrar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="564" max="-2" attributes="0"/>
@@ -219,10 +219,13 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnCart">
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir al carrito"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCartActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCerrar">
           <Properties>

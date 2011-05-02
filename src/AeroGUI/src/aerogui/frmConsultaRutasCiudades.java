@@ -11,11 +11,16 @@
 
 package aerogui;
 
+import classes.Journey;
 import classes.JourneyInfo;
 import classes.SearchResult;
+import classes.Travel;
 import classes.TravelInfo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -411,7 +416,7 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnCart = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -514,7 +519,12 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             .addGap(0, 608, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Añadir al carrito");
+        btnCart.setText("Añadir al carrito");
+        btnCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCartActionPerformed(evt);
+            }
+        });
 
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -531,14 +541,14 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCerrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                    .addComponent(btnCart, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCart)
                 .addGap(18, 18, 18)
                 .addComponent(btnCerrar)
                 .addGap(564, 564, 564))
@@ -978,6 +988,35 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         this.updateActualRouteDetails(currentRoute);
     }//GEN-LAST:event_txtRouteClassItemStateChanged
 
+    private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
+        
+        if (!this.sr.getTravelsinfo().isEmpty()){ 
+            int cRoute = routeSelection.getSelectedIndex();
+            this.currentRoute= this.sr.getTravelsinfo().get(cRoute);
+            for(int it=0;it<this.currentRoute.getJourneysinfo().size();it++){
+            this.currentStage = this.currentRoute.getJourneysinfo().get(it);
+            String selectedclass = (String)txtRouteClass.getSelectedItem();
+            Journey newj = new Journey(this.currentStage, selectedclass);
+            Travel newt = new Travel();
+            newt.setNtravelers((Integer)this.txtRouteSeats.getValue());
+            newt.getJourneys().add(newj);
+
+            if (GUIActions.verifySeats(newt)) {
+                ComponentsBox.usershandler.getActiveuser().getCart().getTravels().add(newt);
+                try {
+                    ComponentsBox.saveAll();
+                    JOptionPane.showMessageDialog(this, "Los elementos se han añadido al carrito exitosamente.");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Se ha producido un error al guardar los datos.");
+                    Logger.getLogger(frmConsultaRutasCiudades.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Lo lamentamos, el transporte no dispone de tantas plazas.");
+            }
+            }
+        }
+    }//GEN-LAST:event_btnCartActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -992,9 +1031,9 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCart;
     private javax.swing.JButton btnCerrar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
