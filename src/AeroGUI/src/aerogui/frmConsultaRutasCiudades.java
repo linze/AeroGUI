@@ -538,14 +538,18 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
         String destination = (String)txtDestinationSearch.getSelectedItem();
         this._sr = TravelSearch.doRouteSearch(origin, destination, ComponentsBox.journeyshandler);
         tblJourneys.removeAll();
-
-        System.out.println("Busqueda completa");
-        for (TravelInfo t : _sr.getTravelsinfo()) {
-            System.out.println("+ Viaje ");
-            for (JourneyInfo j : t.getJourneysinfo())
-                System.out.println("|---- " + j.getOrigin() + "->" +j.getDestination());
-        }
+        if(!this._sr.getTravelsinfo().isEmpty()){
+            System.out.println("Busqueda completa");
+            for (TravelInfo t : _sr.getTravelsinfo()) {
+                System.out.println("+ Viaje ");
+                for (JourneyInfo j : t.getJourneysinfo())
+                    System.out.println("|---- " + j.getOrigin() + "->" +j.getDestination());
+            }
         txtTravels.setModel(GUIActions.searchResultList(_sr));
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No se han encontrado rutas válidas");
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtTravelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTravelsMouseClicked
@@ -591,8 +595,6 @@ public class frmConsultaRutasCiudades extends javax.swing.JFrame {
             txtPrice1.setText(this.updateTravelPrice());
             txtSeats1.setText(txtSeats.getValue().toString());
 
-            // TODO: Add price and seats
-            //txtSeats1.setText(Integer.toString(this._travel.getNtravelers()));
         } else {
             txtOrigin1.setText("");
             txtDestination1.setText("");
