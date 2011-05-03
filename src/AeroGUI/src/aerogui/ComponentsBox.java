@@ -10,8 +10,8 @@ public class ComponentsBox {
     public static JourneyHandler journeyshandler = new JourneyHandler();
 
     public static void initialize() {
-        journeyshandler.setDatafilename("/tmp/viajes.txt");
-        usershandler.setDatafilename("/tmp/data.bin");
+        journeyshandler.setDatafilename("viajes.txt");
+        usershandler.setDatafilename("data.bin");
         loadAll();
     }
 

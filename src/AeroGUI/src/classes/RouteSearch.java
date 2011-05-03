@@ -201,6 +201,19 @@ public class RouteSearch {
         }
     }
 
+    /* Remove next places that does not apply the restrictions.
+     *
+     * This should not be visible from outside.
+     *
+     * @param nexts
+     *  ArrayList of JourneyInfo with places that we are considering.
+     *
+     * @param visited
+     *  ArrayList of String with places that we have already visited.
+     *
+     * @param transports
+     *  ArrayList of JourneyInfo with transports that we have already used.
+     */
     private void cleanInvalid(ArrayList<JourneyInfo> nexts, ArrayList<String> visited,
             ArrayList<JourneyInfo> transports) {
         ArrayList<Integer> indexes = new ArrayList<Integer>();
@@ -213,8 +226,6 @@ public class RouteSearch {
 
             // Remove it if have passed
             if (!isFuture(current)) {
-                // TODO: Remove this
-                System.out.println(JourneyInfo.DATETIMEFORMAT.format(current.getDeparture().getTime()));
                 indexes.add(nexts.indexOf(current));
                 continue;
             }
@@ -231,17 +242,42 @@ public class RouteSearch {
                 indexes.add(nexts.indexOf(current));
                 continue;
             }
+
+            // Remove if it status is suspended
+            if (isSuspended(current)) {
+                indexes.add(nexts.indexOf(current));
+                continue;
+            }
         }
 
         // Remove the indexes detected
         for (int i=indexes.size()-1; i >=0; i--)
             nexts.remove((int) indexes.get(i));
     }
-    
+
+    /* Check if a place have been visited or not
+     *
+     * @param city
+     *  City that we want to check
+     *
+     * @param visited
+     *  ArrayList of String with places that we have already visited.
+     *
+     * @returns
+     *  True if visited, false if not.
+     */
     private boolean isVisited(String city, ArrayList<String> visited) {
         return visited.contains(city);
     }
 
+     /* Check if a journey have not departure yet
+     *
+     * @param transport
+     *  JourneyInfo that we want to check for departure.
+     *
+     * @return
+     *  True if we can get it, false if it's past.
+     */
     private boolean isFuture(JourneyInfo transport) {
         Calendar now = Calendar.getInstance();
         return transport.getDeparture().compareTo(now) > 0;
@@ -296,6 +332,18 @@ public class RouteSearch {
                 return true;
 
         return false;
+    }
+
+    /* Check if a journey have been suspended or not
+     *
+     * @param transport
+     *  JourneyInfo that we want to check for suspension.
+     *
+     * @return
+     *  True if suspended, false if not.
+     */
+    private boolean isSuspended(JourneyInfo transport) {
+        return transport.getStatus().equals("SUSPENDIDO");
     }
 
     /* Find if a trayect uses or not a bus
